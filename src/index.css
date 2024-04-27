@@ -89,3 +89,8 @@
 .page.first {
   height: 90vh !important;
 }
+
+.semibold {
+  font-weight: 500;
+  display: inline;
+}

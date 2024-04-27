@@ -1,0 +1,92 @@
+.page.dashboard.first {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page.dashboard.first .left {
+  width: 50vw;
+  height: 90vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.page.dashboard.first .left .time {
+  height: 10vw;
+  width: 30vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.page.dashboard.first .left .time-bold {
+  font-weight: bold;
+  font-size: 3.5rem;
+}
+
+.page.dashboard.first .left .next-activities {
+  margin-top: 3vh;
+  width: 40vw;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.page.dashboard.first .left .next-activities .title {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  text-decoration: 0.5px solid underline grey;
+  text-underline-offset: 6px;
+}
+
+.page.dashboard.first .left .next-activities ul {
+  width: 40vw;
+}
+
+.page.dashboard.first .left .next-activities ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 8px;
+}
+
+.page.dashboard.first .left .buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.page.dashboard.first .left .buttons .button {
+  padding: 12px 16px;
+}
+
+.page.dashboard.first .v-sep {
+  height: 80vh;
+  width: 1px;
+  background-color: rgb(189, 189, 189);
+}
+
+.page.dashboard.first .right {
+  width: 50vw;
+  height: 90vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.page.dashboard.first .right .button {
+  padding: 12px 16px;
+}
