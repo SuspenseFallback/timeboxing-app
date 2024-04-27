@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SignUp.css";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,10 @@ import {
   FormMessage,
 } from "../components/ui/form";
 import { Input } from "../components/ui/input";
+import { signUpWithEmail } from "../firebase/firebase";
+import { useNavigate } from "react-router";
+import { Eye, EyeOff } from "lucide-react";
+import { Toggle } from "../components/ui/toggle";
 
 const formSchema = z.object({
   username: z
@@ -40,6 +44,8 @@ const formSchema = z.object({
 });
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,11 +55,14 @@ const SignUp = () => {
     },
   });
 
-  // 2. Define a submit handler.
+  const [visible, setVisible] = useState(false);
+
   function onSubmit(values) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    const { username, email, password } = values;
+
+    signUpWithEmail(username, email, password, (data, error) => {
+      if (error) console.error(error);
+    });
   }
 
   return (
@@ -97,11 +106,23 @@ const SignUp = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Password goes here..."
-                    {...field}
-                  />
+                  <div className="flex w-full max-w-sm items-center space-x-1">
+                    <Input
+                      type={visible ? "text" : "password"}
+                      placeholder="Password goes here..."
+                      {...field}
+                    />
+                    <Toggle
+                      aria-label="Toggle visibility"
+                      onClick={() => setVisible(!visible)}
+                    >
+                      {visible ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Toggle>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

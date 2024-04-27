@@ -21,6 +21,8 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
+console.log(import.meta.env);
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -54,7 +56,7 @@ export const signUpWithEmail = (username, email, password, callback) => {
       setDoc(user, {
         username: username,
         email: email,
-        history: {},
+        boxes: [],
         id: data.user.uid,
       }).then((db_data) => {
         callback(data, false);
