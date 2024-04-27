@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="nav">
@@ -10,13 +12,36 @@ const Navbar = () => {
           <p className="logo">Timeboxing</p>
         </div>
         <div className="nav-items">
-          <div className="nav-item">Home</div>
-          <div className="nav-item">Today's timebox</div>
+          <div className="nav-item" onClick={() => navigate("/")}>
+            Home
+          </div>
+          <div
+            className="nav-item"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Today's timebox
+          </div>
         </div>
         <div className="nav-buttons">
           <div className="nav-button">New timebox</div>
-          <div className="nav-button">Sign up</div>
-          <div className="nav-button">Log in</div>
+          <div
+            className="nav-button"
+            onClick={() => {
+              navigate("/sign-up");
+            }}
+          >
+            Sign up
+          </div>
+          <div
+            className="nav-button"
+            onClick={() => {
+              navigate("/log-in");
+            }}
+          >
+            Log in
+          </div>
         </div>
       </div>
       <Outlet />
