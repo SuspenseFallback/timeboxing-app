@@ -10,6 +10,8 @@ import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "non.geist";
+import ReverseProtectedRoute from "./helpers/ReverseProtected.jsx";
+import ProtectedRoute from "./helpers/Protected.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,11 +21,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <ReverseProtectedRoute>
+            <Home />
+          </ReverseProtectedRoute>
+        ),
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/sign-up",

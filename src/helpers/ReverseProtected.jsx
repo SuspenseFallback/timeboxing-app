@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getUser } from "../../firebase/firebase";
+import { getUser } from "../firebase/firebase";
 import { useNavigate } from "react-router";
+
+import Spinner from "../components/Spinner";
 
 const ReverseProtectedRoute = ({ children }) => {
   const [loading, set_loading] = useState(true);
@@ -30,7 +32,7 @@ const ReverseProtectedRoute = ({ children }) => {
 
   return loading ? (
     <div className="page">
-      <p>Loading...</p>
+      <Spinner />
     </div>
   ) : (
     <>{renderChildren()}</>

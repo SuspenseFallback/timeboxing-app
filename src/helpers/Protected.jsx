@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getUser } from "../../firebase/firebase";
+import { getUser } from "../firebase/firebase";
 import { useNavigate } from "react-router";
-import "./ProtectedRoute.css";
+import Spinner from "../components/Spinner";
 
 const ProtectedRoute = ({ children }) => {
   const [loading, set_loading] = useState(true);
@@ -30,8 +30,8 @@ const ProtectedRoute = ({ children }) => {
   };
 
   return loading ? (
-    <div className="page page-1 loading-page">
-      <span className="icon pi pi-spinner pi-spin"></span>
+    <div className="page">
+      <Spinner />
     </div>
   ) : (
     <>{renderChildren()}</>
