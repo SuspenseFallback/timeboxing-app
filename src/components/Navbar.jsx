@@ -10,9 +10,14 @@ import {
 } from "@/components/ui/navigation-menu";
 
 import React, { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
 
 const Navbar = () => {
-  return <></>;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 export default Navbar;
