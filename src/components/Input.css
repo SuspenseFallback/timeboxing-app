@@ -1,0 +1,12 @@
+.input-bottom {
+  border-bottom: 1px solid grey;
+  font-size: 16px;
+  padding: 4px;
+  transition: all 0.25s;
+}
+
+.input-bottom:focus {
+  border-bottom: 2px solid #000;
+  outline: none;
+  padding: 5px;
+}

@@ -6,6 +6,11 @@
   padding: 8px;
   border-radius: 8px;
 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -16,4 +21,20 @@
 
 .button:disabled {
   background-color: #747474;
+}
+
+.button.outline {
+  background-color: #fff;
+  color: rgb(0, 132, 255);
+}
+
+.button.outline:hover {
+  background-color: #ebebeb;
+  color: rgb(0, 81, 255);
+}
+
+.button svg {
+  /* display: inline; */
+  width: 16px;
+  height: 16px;
 }

@@ -1,0 +1,126 @@
+.new-timebox {
+  display: flex;
+
+  position: relative;
+}
+
+.new-timebox .slides {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 400vw;
+  height: 80vh;
+
+  position: absolute;
+  left: 0;
+
+  transition: all 0.5s;
+}
+
+.new-timebox .slides.index-2 {
+  left: -100vw;
+}
+
+.new-timebox .slides.index-3 {
+  left: -200vw;
+}
+
+.new-timebox .slides.index-4 {
+  left: -300vw;
+}
+
+.new-timebox .slides .slide {
+  width: 100vw;
+  height: 80vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-timebox .slides .slide .header {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.new-timebox .slides .slide .caption {
+  font-weight: 500;
+  color: grey;
+
+  margin-top: 0.75rem;
+}
+
+.new-timebox .slides .slide .text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-timebox .slides .slide-1 .calendar-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 40vw;
+}
+
+.new-timebox .slides .slide-1 .calendar-wrapper .button {
+  margin-top: 1rem;
+  display: inline;
+  width: 10vw;
+}
+
+.new-timebox .slides .slide-2 {
+  justify-content: flex-start;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+
+  height: 55vh;
+
+  margin-top: 3rem;
+  flex-wrap: wrap;
+
+  transition: all 0.25s;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper .item {
+  width: 20vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 0 0 10%;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper .item input {
+  max-width: 300px;
+  min-width: 100px;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper .item svg {
+  height: 18px;
+  width: 18px;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper .item .icon {
+  cursor: pointer;
+  border-radius: 50px;
+  background-color: #fff;
+  transition: all 0.25s;
+  padding: 8px;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper .item .icon:hover {
+  background-color: #ebebeb;
+}
