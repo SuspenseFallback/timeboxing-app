@@ -37,11 +37,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/sign-up",
-        element: <SignUp />,
+        element: (
+          <ReverseProtectedRoute>
+            <SignUp />
+          </ReverseProtectedRoute>
+        ),
       },
       {
         path: "/log-in",
-        element: <LogIn />,
+        element: (
+          <ReverseProtectedRoute>
+            <LogIn />
+          </ReverseProtectedRoute>
+        ),
       },
     ],
   },
