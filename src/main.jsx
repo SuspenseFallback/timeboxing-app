@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import LogIn from "./pages/LogIn.jsx";
 import Navbar from "./components/Navbar.jsx";
+import NotFound from "./helpers/NotFound.jsx";
 import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Navbar />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/",
