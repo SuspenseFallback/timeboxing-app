@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Home from "./pages/Home.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import SignUp from "./pages/SignUp.jsx";
 import Navbar from "./components/Navbar.jsx";
 import "./index.css";
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUp />,
       },
     ],
   },
