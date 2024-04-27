@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../pages/NewTimebox.css";
 import { Calendar } from "@/components/ui/calendar";
-import { ChevronRight, Trash2 } from "lucide-react";
+import { ChevronRight, Trash2, Equal, ArrowRight } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import Button from "../components/Button.jsx";
 import Input from "../components/Input.jsx";
@@ -11,9 +13,39 @@ const NewTimebox = () => {
   const [index, setIndex] = useState(1);
   const [items, setItems] = useState(["", "", "", "", ""]);
 
+  const [times, setTimes] = useState([
+    { time: "6:00", activity: "" },
+    { time: "7:00", activity: "" },
+    { time: "8:00", activity: "" },
+    { time: "9:00", activity: "" },
+    { time: "10:00", activity: "" },
+    { time: "11:00", activity: "" },
+    { time: "12:00", activity: "" },
+    { time: "13:00", activity: "" },
+    { time: "14:00", activity: "" },
+    { time: "15:00", activity: "" },
+    { time: "16:00", activity: "" },
+    { time: "17:00", activity: "" },
+    { time: "18:00", activity: "" },
+    { time: "19:00", activity: "" },
+    { time: "20:00", activity: "" },
+    { time: "21:00", activity: "" },
+    { time: "22:00", activity: "" },
+  ]);
+
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
+
   const deleteItem = (i) => {
     const copy = [...items];
     copy.splice(i, 1);
+    setItems(copy);
+  };
+
+  const changeItem = (i, text) => {
+    const copy = [...items];
+    copy.splice(i, 1, text);
     setItems(copy);
   };
 
@@ -23,13 +55,20 @@ const NewTimebox = () => {
     setItems(copy);
   };
 
+  const changeTime = (i, text) => {
+    const copy = [...times];
+    copy[i].activity = text;
+    setTimes(copy);
+    console.log(copy);
+  };
+
   return (
     <>
       <div className="page first new-timebox">
         <div className={`slides index-${index}`}>
           <div className="slide slide-1">
             <div className="text-container">
-              <h2 className="header">Step 1 of 4</h2>
+              <h2 className="header">Step 1 of 3</h2>
               <p className="caption">Pick a date</p>
             </div>
             <div className="calendar-wrapper">
@@ -41,14 +80,12 @@ const NewTimebox = () => {
                 className="rounded-md border"
                 fixedWeeks
               />
-              <Button className="outline" onClick={() => setIndex(index + 1)}>
-                Next
-              </Button>
+              <Button onClick={() => setIndex(index + 1)}>Next</Button>
             </div>
           </div>
           <div className="slide slide-2">
             <div className="text-container">
-              <h2 className="header">Step 2 of 4</h2>
+              <h2 className="header">Step 2 of 3</h2>
               <p className="caption">What do you need to do on this day?</p>
             </div>
             <div className="items-wrapper">
@@ -63,24 +100,89 @@ const NewTimebox = () => {
                       <Trash2 />
                     </button>
                     <p className="index">{index + 1}</p>
-                    <Input />
+                    <Input
+                      value={items[index]}
+                      onChange={(e) => changeItem(index, e.target.value)}
+                    />
                   </div>
                 );
               })}
             </div>
-            <Button
-              className="outline"
-              onClick={addItem}
-              disabled={items.length >= 24}
-            >
-              Add item
-            </Button>
+            <div className="button-row">
+              <Button
+                className="outline"
+                onClick={() => setItems(["", "", "", "", ""])}
+              >
+                Reset
+              </Button>
+              <Button onClick={addItem} disabled={items.length >= 24}>
+                Add item
+              </Button>
+            </div>
+
+            <br />
+            <div className="button-row">
+              <Button className="outline" onClick={() => setIndex(index - 1)}>
+                Back
+              </Button>
+              <Button
+                onClick={() => setIndex(index + 1)}
+                disabled={items.includes("")}
+              >
+                Next
+              </Button>
+            </div>
           </div>
           <div className="slide slide-3">
-            <h2 className="header">Step 3 of 4</h2>
-          </div>
-          <div className="slide slide-4">
-            <h2 className="header">Step 4 of 4</h2>
+            <div className="text-container">
+              <h2 className="header">Step 3 of 3</h2>
+              <p className="caption">Create timebox</p>
+            </div>
+            <div className="wrapper">
+              <div className="left">
+                <ol className="og-list">
+                  {items.map((item, index) => {
+                    return (
+                      <li key={index + 1000}>
+                        <span>{index + 1}. </span>
+                        {item}
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
+              <ArrowRight />
+              <div className="right">
+                <ScrollArea className="time-scroll rounded-md border p-4">
+                  <ul className="times-wrapper">
+                    {times.map((item, index) => {
+                      return (
+                        <>
+                          <li className="time-item">
+                            <p className="time">{item.time}</p>
+                            <Input
+                              value={times[index].activity}
+                              onChange={(e) =>
+                                changeTime(index, e.target.value)
+                              }
+                            />
+                          </li>
+                          <li>
+                            <Separator />
+                          </li>
+                        </>
+                      );
+                    })}
+                  </ul>
+                </ScrollArea>
+              </div>
+            </div>
+            <div className="button-row">
+              <Button className="outline" onClick={() => setIndex(index - 1)}>
+                Back
+              </Button>
+              <Button onClick={() => setIndex(index + 1)}>Next</Button>
+            </div>
           </div>
         </div>
       </div>

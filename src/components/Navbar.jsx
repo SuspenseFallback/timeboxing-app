@@ -25,7 +25,9 @@ const Navbar = () => {
           </div>
         </div>
         <div className="nav-buttons">
-          <div className="nav-button">New timebox</div>
+          <div className="nav-button" onClick={() => navigate("/new-timebox")}>
+            New timebox
+          </div>
           <div
             className="nav-button"
             onClick={() => {

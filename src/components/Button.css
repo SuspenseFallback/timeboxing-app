@@ -33,6 +33,17 @@
   color: rgb(0, 81, 255);
 }
 
+.button.outline:disabled {
+  background-color: #eaeaea;
+  color: rgb(131, 170, 255);
+  cursor: not-allowed;
+}
+
+.button.outline:disabled:hover {
+  background-color: #eaeaea;
+  color: rgb(131, 170, 255);
+}
+
 .button svg {
   /* display: inline; */
   width: 16px;
