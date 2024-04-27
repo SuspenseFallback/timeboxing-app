@@ -1,0 +1,19 @@
+.button {
+  background-color: #000;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 8px;
+
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button:hover {
+  background-color: #3b3b3b;
+}
+
+.button:disabled {
+  background-color: #747474;
+}

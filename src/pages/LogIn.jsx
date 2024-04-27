@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./SignUp.css";
 
-import { Button } from "../components/ui/button";
+import Button from "../components/Button.jsx";
 import { Input } from "../components/ui/input";
 import { signInWithEmail } from "../firebase/firebase";
 import { useNavigate } from "react-router";
