@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar.jsx";
 import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "non.geist";
 
 const router = createBrowserRouter([
   {

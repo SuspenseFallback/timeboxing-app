@@ -1,0 +1,75 @@
+.nav {
+  width: 100vw;
+  height: 10vh;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  width: 25vw;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.nav-logo .logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding-left: 1rem;
+}
+
+.nav-items {
+  width: 40vw;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav .nav-items .nav-item {
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 4px;
+  margin-right: 4px;
+
+  background-color: #fff;
+  transition: all 0.2s;
+}
+
+.nav .nav-items .nav-item:hover {
+  background-color: #edecec;
+}
+
+.nav-buttons {
+  width: 25vw;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+
+  margin-right: 20px;
+}
+
+.nav-buttons .nav-button {
+  padding: 8px 14px;
+  border-radius: 12px;
+  background-color: #000;
+
+  text-align: center;
+  color: white;
+
+  margin-left: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-buttons .nav-button:hover {
+  background-color: #3b3b3b;
+}
