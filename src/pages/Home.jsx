@@ -6,7 +6,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="page">
+    <div className="page first">
       <h1>Home</h1>
     </div>
   );

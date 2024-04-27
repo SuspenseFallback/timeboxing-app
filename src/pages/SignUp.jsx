@@ -61,12 +61,16 @@ const SignUp = () => {
     const { username, email, password } = values;
 
     signUpWithEmail(username, email, password, (data, error) => {
-      if (error) console.error(error);
+      if (error) {
+        console.error(error);
+      } else {
+        navigate("/dashboard");
+      }
     });
   }
 
   return (
-    <div className="page signup">
+    <div className="page signup first">
       <h1 className="header">Sign up</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="form">
