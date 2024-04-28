@@ -14,6 +14,13 @@ import "non.geist";
 import ReverseProtectedRoute from "./helpers/ReverseProtected.jsx";
 import ProtectedRoute from "./helpers/Protected.jsx";
 
+if ("serviceWorker" in navigator) {
+  console.log(new URL("service-worker.js", import.meta.url));
+  navigator.serviceWorker.register(
+    new URL("service-worker.js", import.meta.url)
+  );
+}
+
 const router = createBrowserRouter([
   {
     path: "/",

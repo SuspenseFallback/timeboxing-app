@@ -62,6 +62,33 @@ const NewTimebox = () => {
     console.log(copy);
   };
 
+  const notify = () => {
+    navigator.serviceWorker
+      .getRegistration("/src/service-worker.js")
+      .then((reg) => {
+        console.log(reg);
+        Notification.requestPermission().then((permission) => {
+          if (permission !== "granted") {
+            alert(
+              "Please allow push notifications for our website to alert you when your timebox has changed."
+            );
+          } else {
+            const timestamp = new Date().getTime() + 10000; // now plus 5000ms
+            reg.showNotification("Demo Push Notification", {
+              tag: timestamp, // a unique ID
+              body: "Hello World", // content of the push notification
+              timestamp: timestamp, // set the time for the push notification
+              data: {
+                url: window.location.href, // pass the current url to the notification
+              },
+              badge: "./assets/badge.png",
+              icon: "./assets/icon.png",
+            });
+          }
+        });
+      });
+  };
+
   return (
     <>
       <div className="page first new-timebox">
@@ -181,7 +208,7 @@ const NewTimebox = () => {
               <Button className="outline" onClick={() => setIndex(index - 1)}>
                 Back
               </Button>
-              <Button onClick={() => setIndex(index + 1)}>Next</Button>
+              <Button onClick={notify}>Next</Button>
             </div>
           </div>
         </div>
