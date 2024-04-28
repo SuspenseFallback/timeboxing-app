@@ -44,6 +44,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+export const messaging = getMessaging();
 
 // AUTHENTICATION
 
@@ -100,3 +101,22 @@ export const getUser = async (callback) => {
     }
   });
 };
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register(new URL("../service-worker.js", import.meta.url))
+    .then((registration) => {
+      console.log("Service Worker registered with scope:", registration);
+
+      getToken(messaging, {
+        serviceWorkerRegistration: registration,
+        vapidKey:
+          "BLvkBwI6BosymWMscxHeIeE1Je8Qg42IGluxYeTigWDvI0WjAxgTL6La09gvjTqDgqfLTm8G-nXPJnDDoScs4Fc",
+      }).then((currentToken) => {
+        console.log("currentToken", currentToken);
+      });
+    })
+    .catch((error) => {
+      console.error("Service Worker registration failed:", error);
+    });
+}
