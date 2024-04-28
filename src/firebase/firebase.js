@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getMessaging } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 
 import {
   getAuth,
@@ -101,3 +101,10 @@ export const getUser = async (callback) => {
     }
   });
 };
+
+getToken(messaging, {
+  vapidKey:
+    "BLvkBwI6BosymWMscxHeIeE1Je8Qg42IGluxYeTigWDvI0WjAxgTL6La09gvjTqDgqfLTm8G-nXPJnDDoScs4Fc",
+}).then((currentToken) => {
+  console.log("currentToken", currentToken);
+});

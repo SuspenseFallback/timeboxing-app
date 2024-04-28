@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import Home from "./pages/Home.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import NewTimebox from "./pages/NewTimebox.jsx";
+import AllowNotifications from "./pages/AllowNotifications.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import LogIn from "./pages/LogIn.jsx";
 import Navbar from "./components/Navbar.jsx";
@@ -13,13 +14,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "non.geist";
 import ReverseProtectedRoute from "./helpers/ReverseProtected.jsx";
 import ProtectedRoute from "./helpers/Protected.jsx";
-
-if ("serviceWorker" in navigator) {
-  console.log(new URL("service-worker.js", import.meta.url));
-  navigator.serviceWorker.register(
-    new URL("service-worker.js", import.meta.url)
-  );
-}
 
 const router = createBrowserRouter([
   {
@@ -50,6 +44,10 @@ const router = createBrowserRouter([
             <NewTimebox />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/allow-notifications",
+        element: <AllowNotifications />,
       },
       {
         path: "/sign-up",
