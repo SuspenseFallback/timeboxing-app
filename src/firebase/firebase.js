@@ -101,10 +101,3 @@ export const getUser = async (callback) => {
     }
   });
 };
-
-getToken(messaging, {
-  vapidKey:
-    "BLvkBwI6BosymWMscxHeIeE1Je8Qg42IGluxYeTigWDvI0WjAxgTL6La09gvjTqDgqfLTm8G-nXPJnDDoScs4Fc",
-}).then((currentToken) => {
-  console.log("currentToken", currentToken);
-});
