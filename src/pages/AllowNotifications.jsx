@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const AllowNotifications = () => {
-  function requestPermission() {
-    console.log("Requesting permission...");
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("Notification permission granted.");
-      }
-    });
-  }
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(requestPermission, 2000);
+    setTimeout(() => {
+      console.log("Requesting permission...");
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          console.log("Notification permission granted.");
+          navigate("/");
+        }
+      });
+    }, 2000);
   }, []);
 
   return (

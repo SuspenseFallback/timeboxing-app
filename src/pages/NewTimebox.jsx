@@ -15,8 +15,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useNavigate } from "react-router";
 
 const NewTimebox = () => {
+  const navigate = useNavigate();
+
   const [date, setDate] = useState(new Date());
   const [index, setIndex] = useState(1);
   const [items, setItems] = useState(["Free time", "Free time", "", "", ""]);
@@ -97,7 +100,7 @@ const NewTimebox = () => {
       date: date.toDateString(),
       activities: times,
     }).then((res) => {
-      console.log(res);
+      navigate("/allow-notifications");
     });
   };
 
