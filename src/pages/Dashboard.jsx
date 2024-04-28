@@ -5,8 +5,11 @@ import Button from "../components/Button";
 import Spinner from "../components/Spinner";
 
 import "./Dashboard.css";
+import { useNavigate } from "react-router";
 
 const Dashboard = ({ user }) => {
+  const navigate = useNavigate();
+
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   const [date, setDate] = useState(new Date());
   const [activities, setActivities] = useState(null);
@@ -103,7 +106,7 @@ const Dashboard = ({ user }) => {
           <div className="buttons">
             {isTimebox ? (
               <>
-                <Button>View full timebox</Button>
+                <Button>View timebox</Button>
                 <Button>Edit timebox</Button>
               </>
             ) : (
@@ -122,7 +125,9 @@ const Dashboard = ({ user }) => {
             fixedWeeks
           />
           <p className="text">There is no timebox for the selected date.</p>
-          <Button>Create timebox</Button>
+          <Button onClick={() => navigate("/new-timebox")}>
+            Create timebox
+          </Button>
         </div>
       </div>
     </>

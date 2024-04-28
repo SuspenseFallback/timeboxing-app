@@ -1,0 +1,23 @@
+.view-timebox .header {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 5vh;
+}
+
+.view-timebox .times-wrapper {
+  width: 40vw;
+}
+
+.view-timebox .times-wrapper li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 8px;
+}
+
+.view-timebox .time-scroll {
+  width: calc(40vw + 36px);
+  height: 60vh;
+}
