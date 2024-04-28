@@ -1,7 +1,7 @@
 .input-bottom {
   border-bottom: 1px solid grey;
   font-size: 16px;
-  padding: 4px;
+  padding: 4px 8px;
   transition: all 0.25s;
 }
 
@@ -9,4 +9,10 @@
   border-bottom: 2px solid #000;
   outline: none;
   padding: 5px;
+}
+
+.input-bottom:disabled {
+  color: #3f3f3f;
+  background-color: #eaeaea;
+  border-bottom: 1px solid rgb(155, 155, 155);
 }

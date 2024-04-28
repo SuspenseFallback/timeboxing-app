@@ -101,6 +101,10 @@
   transition: all 0.25s;
 }
 
+.new-timebox .slides .slide-2 .items-wrapper .item.wide {
+  width: 23vw;
+}
+
 .new-timebox .slides .slide-2 .items-wrapper .item input {
   max-width: 300px;
   min-width: 100px;
@@ -109,6 +113,30 @@
 .new-timebox .slides .slide-2 .items-wrapper .item svg {
   height: 18px;
   width: 18px;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper .item .help {
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: all 0.1s;
+  padding: 6px;
+  border-radius: 50px;
+  background-color: #fff;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper .item .help:hover {
+  background-color: #f0f0f0;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper .item .link {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
+
+.new-timebox .slides .slide-2 .items-wrapper .item .help svg {
+  height: 15px;
+  width: 15px;
 }
 
 .new-timebox .slides .slide-2 .items-wrapper .item .icon {
@@ -192,4 +220,10 @@
   align-items: center;
 
   padding: 8px;
+}
+
+.new-timebox .slides .slide-3 .desc {
+  color: grey;
+  font-size: 14px;
+  padding: 16px;
 }

@@ -22,8 +22,6 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-console.log(import.meta.env);
-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -101,6 +99,29 @@ export const getUser = async (callback) => {
     }
   });
 };
+
+// timeboxes
+
+export const newTimebox = async (data) => {
+  getUser((user) => {
+    if (user) {
+      const copy = [...user.boxes];
+      console.log(user);
+      const userDoc = doc(db, "users", user.id);
+
+      copy.push(data);
+      updateDoc(userDoc, {
+        boxes: copy,
+      }).then((data) => {
+        return data;
+      });
+    } else {
+      return [{}, { code: 401, message: "Not authenticated" }];
+    }
+  });
+};
+
+// messaging
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker

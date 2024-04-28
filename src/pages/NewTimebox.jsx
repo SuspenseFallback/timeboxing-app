@@ -1,21 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../pages/NewTimebox.css";
 import { Calendar } from "@/components/ui/calendar";
-import { ChevronRight, Trash2, Equal, ArrowRight } from "lucide-react";
+import { Trash2, ArrowRight, CircleHelp } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import Button from "../components/Button.jsx";
 import Input from "../components/Input.jsx";
+import { newTimebox } from "../firebase/firebase.js";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const NewTimebox = () => {
   const [date, setDate] = useState(new Date());
   const [index, setIndex] = useState(1);
-  const [items, setItems] = useState(["", "", "", "", ""]);
+  const [items, setItems] = useState(["Free time", "Free time", "", "", ""]);
 
+  const [disabled, setDisabled] = useState(true);
   const [times, setTimes] = useState([
-    { time: "6:00", activity: "" },
-    { time: "7:00", activity: "" },
+    { time: "6:00", activity: "Free time" },
+    { time: "7:00", activity: "Free time" },
     { time: "8:00", activity: "" },
     { time: "9:00", activity: "" },
     { time: "10:00", activity: "" },
@@ -34,8 +43,30 @@ const NewTimebox = () => {
   ]);
 
   useEffect(() => {
-    console.log(items);
-  }, [items]);
+    const copy = [];
+
+    console.log(copy);
+
+    times.forEach((time) => {
+      copy.push(time.activity);
+    });
+
+    if (copy.filter((t) => t == "Free time") < 2) {
+      return setDisabled(true);
+    }
+
+    let dis = false;
+
+    items.forEach((item) => {
+      console.log(copy.includes(item));
+      if (!copy.includes(item)) {
+        dis = true;
+        return;
+      }
+    });
+
+    setDisabled(dis);
+  }, [times]);
 
   const deleteItem = (i) => {
     const copy = [...items];
@@ -59,34 +90,15 @@ const NewTimebox = () => {
     const copy = [...times];
     copy[i].activity = text;
     setTimes(copy);
-    console.log(copy);
   };
 
-  const notify = () => {
-    navigator.serviceWorker
-      .getRegistration("/src/service-worker.js")
-      .then((reg) => {
-        console.log(reg);
-        Notification.requestPermission().then((permission) => {
-          if (permission !== "granted") {
-            alert(
-              "Please allow push notifications for our website to alert you when your timebox has changed."
-            );
-          } else {
-            const timestamp = new Date().getTime() + 10000; // now plus 5000ms
-            reg.showNotification("Demo Push Notification", {
-              tag: timestamp, // a unique ID
-              body: "Hello World", // content of the push notification
-              timestamp: timestamp, // set the time for the push notification
-              data: {
-                url: window.location.href, // pass the current url to the notification
-              },
-              badge: "./assets/badge.png",
-              icon: "./assets/icon.png",
-            });
-          }
-        });
-      });
+  const submit = () => {
+    newTimebox({
+      date: date.toDateString(),
+      activities: times,
+    }).then((res) => {
+      console.log(res);
+    });
   };
 
   return (
@@ -113,15 +125,35 @@ const NewTimebox = () => {
           <div className="slide slide-2">
             <div className="text-container">
               <h2 className="header">Step 2 of 3</h2>
-              <p className="caption">What do you need to do on this day?</p>
+              <p className="caption">What are your goals for today?</p>
             </div>
             <div className="items-wrapper">
               {items.map((item, index) => {
                 return (
-                  <div className="item" key={index}>
+                  <div
+                    className={"item " + (index <= 1 ? "wide" : "")}
+                    key={index}
+                  >
+                    {index <= 1 ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <div className="help">
+                              <CircleHelp />{" "}
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              You need at least 2 free hours.{" "}
+                              <span className="link">Learn more</span>
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : null}
                     <button
                       className="icon"
-                      disabled={items.length == 1}
+                      disabled={index <= 1 ? true : items.length == 3}
                       onClick={() => deleteItem(index)}
                     >
                       <Trash2 />
@@ -130,6 +162,7 @@ const NewTimebox = () => {
                     <Input
                       value={items[index]}
                       onChange={(e) => changeItem(index, e.target.value)}
+                      disabled={index <= 1}
                     />
                   </div>
                 );
@@ -138,7 +171,7 @@ const NewTimebox = () => {
             <div className="button-row">
               <Button
                 className="outline"
-                onClick={() => setItems(["", "", "", "", ""])}
+                onClick={() => setItems(["Free time", "Free time", "", "", ""])}
               >
                 Reset
               </Button>
@@ -204,11 +237,16 @@ const NewTimebox = () => {
                 </ScrollArea>
               </div>
             </div>
+            <p className="desc">
+              Remember to include both free time slots and all of your goals!
+            </p>
             <div className="button-row">
               <Button className="outline" onClick={() => setIndex(index - 1)}>
                 Back
               </Button>
-              <Button onClick={notify}>Next</Button>
+              <Button onClick={submit} disabled={disabled}>
+                Next
+              </Button>
             </div>
           </div>
         </div>
