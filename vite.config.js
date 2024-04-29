@@ -37,8 +37,8 @@ export default defineConfig(({ command }) => {
             "mask-icon.svg",
           ],
           manifest: {
-            name: "Timeboxer",
-            short_name: "Timeboxer",
+            name: "Samayam",
+            short_name: "Samayam",
             theme_color: "#ffffff",
             icons: [
               {
