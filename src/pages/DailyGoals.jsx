@@ -90,7 +90,11 @@ const DailyGoals = ({ user }) => {
 
   const submit = () => {
     newDailyGoals({ goals: goals, time: new Date().toString() }).then(() => {
-      navigate("/dashboard");
+      if (isNew) {
+        window.location.assign("/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     });
   };
 

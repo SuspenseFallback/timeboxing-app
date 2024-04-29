@@ -21,6 +21,10 @@ const SixMonthlyGoals = ({ user }) => {
     if (user && user.six_monthly_goals) {
       setGoals(user.six_monthly_goals.goals);
     }
+
+    if (searchParams.get("new")) {
+      setIsNew(true);
+    }
   }, []);
 
   useEffect(() => {
