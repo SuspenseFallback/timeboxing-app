@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import { getUser } from "../firebase/firebase";
+import { getUser, logOut } from "../firebase/firebase";
 import Spinner from "./Spinner";
 
 import { User, Settings, LogOut } from "lucide-react";
@@ -90,7 +90,13 @@ const Navbar = () => {
                     <p className="text">Settings</p>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      logOut(() => {
+                        navigate("/");
+                      })
+                    }
+                  >
                     <LogOut className="mr-2 h-4 w-4" />
                     <p className="text">Log out</p>
                   </DropdownMenuItem>
