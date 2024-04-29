@@ -20,6 +20,14 @@ const Dashboard = ({ user }) => {
   const [rightIsTimebox, setRightIsTimebox] = useState(false);
 
   useEffect(() => {
+    if (user) {
+      if (!user.six_monthly_goals || !user.weekly_goals || !user.daily_goals) {
+        navigate("/six-monthly-goals?new=true");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     setInterval(() => {
       setTime(new Date().toLocaleTimeString());
     }, 1000);

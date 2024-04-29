@@ -87,7 +87,7 @@ const SixMonthlyGoals = ({ user }) => {
     newSixMonthlyGoals({ goals: goals, time: new Date().toString() }).then(
       () => {
         if (isNew) {
-          navigate("/weekly-goals");
+          navigate("/weekly-goals?new=true");
         } else {
           navigate("/dashboard");
         }

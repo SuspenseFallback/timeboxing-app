@@ -90,7 +90,7 @@ const WeeklyGoals = ({ user }) => {
   const submit = () => {
     newWeeklyGoals({ goals: goals, time: new Date().toString() }).then(() => {
       if (isNew) {
-        navigate("/daily-goals");
+        navigate("/daily-goals?new=true");
       } else {
         navigate("/dashboard");
       }
