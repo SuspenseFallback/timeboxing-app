@@ -3,11 +3,14 @@ import "./DailyGoals.css";
 import Input from "../components/Input.jsx";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { newDailyGoals } from "../firebase/firebase";
 
 const DailyGoals = ({ user }) => {
   const navigate = useNavigate();
+  let [searchParams, setSearchParams] = useSearchParams();
+
+  const [isNew, setIsNew] = useState(false);
 
   const [goals, setGoals] = useState([
     { goal: "", weeklyHours: 1, days: "weekdays" },
@@ -18,6 +21,10 @@ const DailyGoals = ({ user }) => {
   useEffect(() => {
     if (user && user.daily_goals) {
       setGoals(user.daily_goals.goals);
+    }
+
+    if (searchParams.get("new")) {
+      setIsNew(true);
     }
   }, []);
 
@@ -83,7 +90,7 @@ const DailyGoals = ({ user }) => {
 
   const submit = () => {
     newDailyGoals({ goals: goals, time: new Date().toString() }).then(() => {
-      navigate("/goal-setting");
+      navigate("/dashboard");
     });
   };
 
@@ -113,7 +120,6 @@ const DailyGoals = ({ user }) => {
                   </div>
                   <div className="col col-2">
                     <input
-                      type="text"
                       className="input-bottom"
                       type="number"
                       onChange={(e) => changeHours(index, e.target.value)}

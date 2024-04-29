@@ -3,11 +3,13 @@ import "./WeeklyGoals.css";
 import Input from "../components/Input.jsx";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { newWeeklyGoals } from "../firebase/firebase";
 
 const WeeklyGoals = ({ user }) => {
   const navigate = useNavigate();
+  let [searchParams, setSearchParams] = useSearchParams();
+  const [isNew, setIsNew] = useState(false);
 
   const [goals, setGoals] = useState([
     { goal: "", weeklyHours: 1, days: "weekdays" },
@@ -18,6 +20,10 @@ const WeeklyGoals = ({ user }) => {
   useEffect(() => {
     if (user && user.weekly_goals) {
       setGoals(user.weekly_goals.goals);
+    }
+
+    if (searchParams.get("new")) {
+      setIsNew(true);
     }
   }, []);
 
@@ -83,7 +89,11 @@ const WeeklyGoals = ({ user }) => {
 
   const submit = () => {
     newWeeklyGoals({ goals: goals, time: new Date().toString() }).then(() => {
-      navigate("/goal-setting");
+      if (isNew) {
+        navigate("/daily-goals");
+      } else {
+        navigate("/dashboard");
+      }
     });
   };
 
@@ -113,7 +123,6 @@ const WeeklyGoals = ({ user }) => {
                   </div>
                   <div className="col col-2">
                     <input
-                      type="text"
                       className="input-bottom"
                       type="number"
                       onChange={(e) => changeHours(index, e.target.value)}
@@ -169,7 +178,7 @@ const WeeklyGoals = ({ user }) => {
           </div>
         </div>
         <button className="button button-block submit" onClick={submit}>
-          Submit
+          {isNew ? "Next" : "Submit"}
         </button>
         <p className="muted">
           You can change these once they have been submitted.

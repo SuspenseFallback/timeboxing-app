@@ -3,11 +3,13 @@ import "./SixMonthlyGoals.css";
 import Input from "../components/Input.jsx";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { newSixMonthlyGoals } from "../firebase/firebase";
 
 const SixMonthlyGoals = ({ user }) => {
   const navigate = useNavigate();
+  let [searchParams, setSearchParams] = useSearchParams();
+  const [isNew, setIsNew] = useState(false);
 
   const [goals, setGoals] = useState([
     { goal: "", weeklyHours: 1, days: "weekdays" },
@@ -84,7 +86,11 @@ const SixMonthlyGoals = ({ user }) => {
   const submit = () => {
     newSixMonthlyGoals({ goals: goals, time: new Date().toString() }).then(
       () => {
-        navigate("/goal-setting");
+        if (isNew) {
+          navigate("/weekly-goals");
+        } else {
+          navigate("/dashboard");
+        }
       }
     );
   };
@@ -115,7 +121,6 @@ const SixMonthlyGoals = ({ user }) => {
                   </div>
                   <div className="col col-2">
                     <input
-                      type="text"
                       className="input-bottom"
                       type="number"
                       onChange={(e) => changeHours(index, e.target.value)}
@@ -171,7 +176,7 @@ const SixMonthlyGoals = ({ user }) => {
           </div>
         </div>
         <button className="button button-block submit" onClick={submit}>
-          Submit
+          {isNew ? "Next" : "Submit"}
         </button>
         <p className="muted">
           You can change these once they have been submitted.
