@@ -99,6 +99,7 @@ const NewTimebox = () => {
     newTimebox({
       date: date.toDateString(),
       activities: times,
+      items: items,
     }).then((res) => {
       navigate("/allow-notifications");
     });

@@ -22,40 +22,25 @@ const EditTimebox = ({ user }) => {
   const navigate = useNavigate();
 
   const [index, setIndex] = useState(1);
+
   const [items, setItems] = useState(null);
+  const [times, setTimes] = useState(null);
 
   const [disabled, setDisabled] = useState(true);
-  const [times, setTimes] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const today = user.boxes.filter((b) => b.date == new Date().toDateString());
 
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    times.forEach((time) => {
-      copy.push(time.activity);
-    });
-
-    if (copy.filter((t) => t == "Free time") < 2) {
-      return setDisabled(true);
+    if (today) {
+      const box = today[0];
+      setItems(box.items);
+      setTimes(box.activities);
     }
 
-    let dis = false;
-
-    items.forEach((item) => {
-      console.log(copy.includes(item));
-      if (!copy.includes(item)) {
-        dis = true;
-        return;
-      }
-    });
-
-    setDisabled(dis);
-  }, [times]);
+    setLoading(false);
+  }, []);
 
   const addItem = () => {
     const copy = [...items];
@@ -97,7 +82,7 @@ const EditTimebox = ({ user }) => {
     </>
   ) : (
     <>
-      <div className="page first new-timebox">
+      <div className="page first edit-timebox">
         <div className={`slides index-${index}`}>
           <div className="slide slide-1">
             <div className="text-container">
