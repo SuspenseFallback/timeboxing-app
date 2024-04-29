@@ -94,7 +94,7 @@ const Dashboard = ({ user }) => {
             <p className="time-bold">{time}</p>
             <p className="activity">
               <p className="semibold">Current activity:</p>{" "}
-              {activities ? activities[0].activity : "-"}
+              {activities && activities[0] ? activities[0].activity : "-"}
             </p>
           </div>
           <div className="next-activities">
@@ -103,21 +103,27 @@ const Dashboard = ({ user }) => {
             <ul>
               <li>
                 <p>{times[1]}</p>
-                <p>{activities ? activities[1].activity : "-"}</p>
+                <p>
+                  {activities && activities[1] ? activities[1].activity : "-"}
+                </p>
               </li>
               <li>
                 <Separator />
               </li>
               <li>
                 <p>{times[2]}</p>
-                <p>{activities ? activities[2].activity : "-"}</p>
+                <p>
+                  {activities && activities[2] ? activities[2].activity : "-"}
+                </p>
               </li>
               <li>
                 <Separator />
               </li>
               <li>
                 <p>{times[3]}</p>
-                <p>{activities ? activities[3].activity : "-"}</p>
+                <p>
+                  {activities && activities[3] ? activities[3].activity : "-"}
+                </p>
               </li>
               <li>
                 <Separator />
