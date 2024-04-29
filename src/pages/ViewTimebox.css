@@ -28,3 +28,14 @@
   align-items: center;
   gap: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  .view-timebox .header {
+    font-size: 1.7rem;
+    text-align: center;
+  }
+
+  .view-timebox .button-row {
+    flex-direction: column;
+  }
+}
