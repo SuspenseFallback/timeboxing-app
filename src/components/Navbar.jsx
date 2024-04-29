@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <>
       <div className="nav">
-        <div className="nav-logo">
+        <div className="nav-logo" onClick={() => navigate("/")}>
           <p className="logo">Timeboxing</p>
         </div>
         <div className="nav-items">
@@ -18,7 +18,10 @@ const Navbar = () => {
           <div
             className="nav-item"
             onClick={() => {
-              navigate("/");
+              navigate(
+                "/view-timebox/" +
+                  new Date().toLocaleDateString().replaceAll("/", "-")
+              );
             }}
           >
             Today's timebox
