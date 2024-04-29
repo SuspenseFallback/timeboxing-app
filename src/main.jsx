@@ -17,6 +17,12 @@ import "non.geist";
 import ReverseProtectedRoute from "./helpers/ReverseProtected.jsx";
 import ProtectedRoute from "./helpers/Protected.jsx";
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js", { scope: "/" });
+  });
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
