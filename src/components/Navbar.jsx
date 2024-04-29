@@ -25,7 +25,15 @@ const Navbar = () => {
           </div>
         </div>
         <div className="nav-buttons">
-          <div className="nav-button" onClick={() => navigate("/new-timebox")}>
+          <div
+            className="nav-button"
+            onClick={() =>
+              navigate(
+                "/new-timebox/" +
+                  new Date().toLocaleDateString().replaceAll("/", "-")
+              )
+            }
+          >
             New timebox
           </div>
           <div

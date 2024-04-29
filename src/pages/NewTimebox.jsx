@@ -15,12 +15,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const NewTimebox = () => {
   const navigate = useNavigate();
+  const { day } = useParams();
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(
+    new Date(
+      parseInt(day.split("-")[2]),
+      parseInt(day.split("-")[1]) - 1,
+      parseInt(day.split("-")[0])
+    )
+  );
   const [index, setIndex] = useState(1);
   const [items, setItems] = useState(["Free time", "Free time", "", "", ""]);
 
@@ -46,6 +53,8 @@ const NewTimebox = () => {
   ]);
 
   useEffect(() => {
+    console.log(date);
+
     const copy = [];
 
     console.log(copy);
