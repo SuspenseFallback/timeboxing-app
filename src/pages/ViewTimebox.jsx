@@ -5,6 +5,8 @@ import "./ViewTimebox.css";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useParams, useNavigate } from "react-router";
 
+import { DatePicker } from "../components/ui/date-picker.jsx";
+
 import Button from "../components/Button.jsx";
 
 const ViewTimebox = ({ user }) => {
@@ -23,7 +25,7 @@ const ViewTimebox = ({ user }) => {
     }
 
     setLoading(false);
-  }, []);
+  }, [date]);
 
   return loading ? (
     <div className="page first">
@@ -52,17 +54,33 @@ const ViewTimebox = ({ user }) => {
             </ul>
           </ScrollArea>
           <br />
-          <Button onClick={() => navigate("/edit-timebox/" + day)}>
-            Edit timebox
-          </Button>
+          <div className="button-row">
+            <Button onClick={() => navigate("/edit-timebox/" + day)}>
+              Edit timebox
+            </Button>
+            <DatePicker
+              onSelect={(time) =>
+                window.location.replace(
+                  "/view-timebox/" +
+                    new Date(time).toLocaleDateString().replaceAll("/", "-")
+                )
+              }
+            />
+          </div>
         </>
       ) : (
         <>
           <p>There is no timebox for today.</p>
           <br />
-          <Button onClick={() => navigate("/new-timebox")}>
-            Create timebox
-          </Button>
+          <div className="button-row">
+            <Button
+              onClick={() => {
+                navigate("/new-timebox/" + date.replaceAll("/", "-"));
+              }}
+            >
+              Create timebox
+            </Button>
+          </div>
         </>
       )}
     </div>

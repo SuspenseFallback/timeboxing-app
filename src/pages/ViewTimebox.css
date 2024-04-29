@@ -21,3 +21,10 @@
   width: calc(40vw + 36px);
   height: 60vh;
 }
+
+.view-timebox .button-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}

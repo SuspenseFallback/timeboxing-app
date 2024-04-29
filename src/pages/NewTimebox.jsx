@@ -28,6 +28,7 @@ const NewTimebox = ({ user }) => {
       parseInt(day.split("-")[0])
     )
   );
+
   const [index, setIndex] = useState(1);
   const [items, setItems] = useState(["Free time", "Free time", "", "", ""]);
 
