@@ -90,3 +90,34 @@
 .page.dashboard.first .right .button {
   padding: 12px 16px;
 }
+
+@media screen and (max-width: 768px) {
+  .page.dashboard.first {
+    height: 170vh !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .page.dashboard.first .v-sep {
+    display: none;
+  }
+
+  .page.dashboard.first .left {
+    width: 90vw;
+    height: 90vh;
+  }
+
+  .page.dashboard.first .left .next-activities {
+    margin-top: 3vh;
+    width: 90vw;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page.dashboard.first .left .next-activities ul {
+    width: 90vw;
+  }
+}
