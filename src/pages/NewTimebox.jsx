@@ -40,6 +40,8 @@ const NewTimebox = ({ user }) => {
 
   const [stage1Error, setStage1Error] = useState("");
   const [stage1Disabled, setStage1Disabled] = useState(false);
+  const [stage2Error, setStage2Error] = useState("");
+  const [stage2Disabled, setStage2Disabled] = useState(false);
 
   const [times, setTimes] = useState([
     { time: "6:00", activity: "Free time" },
@@ -217,6 +219,14 @@ const NewTimebox = ({ user }) => {
     });
 
     setSum(acc);
+
+    if (acc >= 18) {
+      setStage2Disabled(true);
+      setStage2Error(true);
+    } else {
+      setStage2Disabled(false);
+      setStage2Error(false);
+    }
   }, [items]);
 
   const deleteItem = (i) => {
@@ -345,11 +355,18 @@ const NewTimebox = ({ user }) => {
                       onChange={(e) => changeItem(index, e.target.value)}
                       disabled={index <= 1}
                     />
+                    <span className="hours">H: {item.hours}</span>
                   </div>
                 );
               })}
             </div>
-            <p className="hours">Hours: {sum}</p>
+            {stage2Error ? (
+              <p className="error">
+                Too many hours - please prioritize your tasks
+              </p>
+            ) : (
+              <p className="hours">Hours: {sum}</p>
+            )}
             <div className="button-row">
               <Button
                 className="outline"
