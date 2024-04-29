@@ -1,0 +1,14 @@
+.goal-setting .header {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.goal-setting .tabs-panel {
+  width: 90vw;
+  height: 70vh;
+}
+
+.goal-setting .tab-panel-selector {
+  width: 90vw;
+  justify-content: flex-start;
+}
