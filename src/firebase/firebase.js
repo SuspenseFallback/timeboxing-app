@@ -183,6 +183,22 @@ export const newWeeklyGoals = async (data) => {
   });
 };
 
+export const newSixMonthlyGoals = async (data) => {
+  getUser((user) => {
+    if (user) {
+      const userDoc = doc(db, "users", user.id);
+
+      updateDoc(userDoc, {
+        six_monthly_goals: data,
+      }).then((data) => {
+        return data;
+      });
+    } else {
+      return [{}, { code: 401, message: "Not authenticated" }];
+    }
+  });
+};
+
 // messaging
 
 if ("serviceWorker" in navigator) {
