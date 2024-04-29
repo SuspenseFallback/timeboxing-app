@@ -53,6 +53,14 @@ const Navbar = () => {
           >
             Today's timebox
           </div>
+          <div
+            className="nav-item"
+            onClick={() => {
+              navigate("/goal-setting");
+            }}
+          >
+            Goals
+          </div>
         </div>
         <div className="nav-buttons">
           <div

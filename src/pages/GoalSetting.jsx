@@ -13,7 +13,54 @@ const GoalSetting = ({ user }) => {
             <TabsTrigger value="weekly">Weekly goals</TabsTrigger>
             <TabsTrigger value="6-month">6-monthly goals</TabsTrigger>
           </TabsList>
-          <TabsContent value="daily">Daily goals</TabsContent>
+          <TabsContent value="daily">
+            <div className="table">
+              <div className="header row">
+                <div className="col col-1">What is your goal?</div>
+                <div className="col col-2">Weekly hours</div>
+                <div className="col col-3">On weekdays</div>
+                <div className="col col-4">On weekends</div>
+                <div className="col col-5">Hours per day</div>
+              </div>
+              <div className="body">
+                {user.daily_goals.goals.map((goal, index) => {
+                  return (
+                    <div className="row">
+                      <div className="col col-1">
+                        <p>{goal.goal}</p>
+                      </div>
+                      <div className="col col-2">
+                        <p>{goal.weeklyHours}</p>
+                      </div>
+                      <div className="col col-3">
+                        {goal.days == "weekdays" || goal.days == "both"
+                          ? "Yes"
+                          : "No"}
+                      </div>
+                      <div className="col col-4">
+                        {goal.days == "weekends" || goal.days == "both"
+                          ? "Yes"
+                          : "No"}
+                      </div>
+                      <div className="col col-5">
+                        <p className="muted">
+                          {(
+                            goal.weeklyHours /
+                            (goal.days == "both"
+                              ? 7
+                              : goal.days == "weekdays"
+                              ? 5
+                              : 2)
+                          ).toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <button className="button button-block submit">Edit goals</button>
+          </TabsContent>
           <TabsContent value="weekly">Weekly goals</TabsContent>
           <TabsContent value="6-month">6-monthly goals</TabsContent>
         </Tabs>

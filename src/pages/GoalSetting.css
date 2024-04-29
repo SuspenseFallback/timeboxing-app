@@ -1,4 +1,4 @@
-.goal-setting .header {
+.goal-setting > .header {
   font-size: 2.5rem;
   font-weight: bold;
 }
@@ -11,4 +11,119 @@
 .goal-setting .tab-panel-selector {
   width: 90vw;
   justify-content: flex-start;
+}
+
+.goal-setting .table {
+  height: 50vh;
+  width: 90vw;
+  border: 1px solid rgb(185, 185, 185);
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: scroll;
+
+  margin-top: 5vh;
+}
+
+.goal-setting .table .row {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  border-bottom: 1px solid rgb(185, 185, 185);
+}
+
+.goal-setting .table .col {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.goal-setting .table .header .col {
+  padding: 8px;
+  font-weight: 500;
+}
+
+.goal-setting .table .body .col {
+  height: 3rem;
+}
+
+.goal-setting .table .header {
+  border-bottom: 1px solid rgb(185, 185, 185);
+}
+
+.goal-setting .table .row .col-1 {
+  width: 50%;
+  text-align: left;
+  border-right: 1px solid rgb(185, 185, 185);
+  padding-left: 1rem;
+}
+
+.goal-setting .table .row .col-2 {
+  width: 20%;
+  text-align: left;
+  border-right: 1px solid rgb(185, 185, 185);
+  padding-left: 1rem;
+}
+
+.goal-setting .table .row .col-3 {
+  width: 10%;
+  border-right: 1px solid rgb(185, 185, 185);
+  justify-content: center;
+}
+
+.goal-setting .table .row .col-4 {
+  width: 10%;
+  border-right: 1px solid rgb(185, 185, 185);
+  text-align: center;
+  justify-content: center;
+}
+
+.goal-setting .table .row .col-5 {
+  width: 10%;
+  text-align: center;
+  justify-content: center;
+}
+
+.goal-setting .table .body .col input {
+  width: 90%;
+}
+
+.goal-setting .muted {
+  color: grey;
+}
+
+.goal-setting .table .body .row .col-3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.goal-setting .table .button-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  flex: 1;
+}
+
+.goal-setting .button-block {
+  width: 100%;
+}
+
+.goal-setting .button-block.submit {
+  margin-top: 3vh;
+}
+
+.goal-setting > .muted {
+  color: grey;
+  font-size: 14px;
+  padding: 6px;
 }
