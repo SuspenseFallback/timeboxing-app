@@ -138,7 +138,6 @@ export const updateTimebox = async (data) => {
 
       const userDoc = doc(db, "users", user.id);
 
-      copy.push(data);
       updateDoc(userDoc, {
         boxes: copy,
       }).then((data) => {
