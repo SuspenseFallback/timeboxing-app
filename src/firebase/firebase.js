@@ -149,6 +149,24 @@ export const updateTimebox = async (data) => {
   });
 };
 
+// goals
+
+export const newDailyGoals = async (data) => {
+  getUser((user) => {
+    if (user) {
+      const userDoc = doc(db, "users", user.id);
+
+      updateDoc(userDoc, {
+        daily_goals: data,
+      }).then((data) => {
+        return data;
+      });
+    } else {
+      return [{}, { code: 401, message: "Not authenticated" }];
+    }
+  });
+};
+
 // messaging
 
 if ("serviceWorker" in navigator) {

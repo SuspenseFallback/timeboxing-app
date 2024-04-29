@@ -1,0 +1,118 @@
+.daily-goals > h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.daily-goals .table {
+  height: 65vh;
+  width: 95vw;
+  border: 1px solid rgb(185, 185, 185);
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: scroll;
+}
+
+.daily-goals .table .row {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  border-bottom: 1px solid rgb(185, 185, 185);
+}
+
+.daily-goals .table .col {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.daily-goals .table .header .col {
+  padding: 8px;
+  font-weight: 500;
+}
+
+.daily-goals .table .body .col {
+  height: 3rem;
+}
+
+.daily-goals .table .header {
+  border-bottom: 1px solid rgb(185, 185, 185);
+}
+
+.daily-goals .table .row .col-1 {
+  width: 50%;
+  text-align: left;
+  border-right: 1px solid rgb(185, 185, 185);
+  padding-left: 1rem;
+}
+
+.daily-goals .table .row .col-2 {
+  width: 20%;
+  text-align: left;
+  border-right: 1px solid rgb(185, 185, 185);
+  padding-left: 1rem;
+}
+
+.daily-goals .table .row .col-3 {
+  width: 10%;
+  border-right: 1px solid rgb(185, 185, 185);
+  justify-content: center;
+}
+
+.daily-goals .table .row .col-4 {
+  width: 10%;
+  border-right: 1px solid rgb(185, 185, 185);
+  text-align: center;
+  justify-content: center;
+}
+
+.daily-goals .table .row .col-5 {
+  width: 10%;
+  text-align: center;
+  justify-content: center;
+}
+
+.daily-goals .table .body .col input {
+  width: 90%;
+}
+
+.daily-goals .muted {
+  color: grey;
+}
+
+.daily-goals .table .body .row .col-3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.daily-goals .table .button-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  flex: 1;
+}
+
+.daily-goals .button-block {
+  width: 95%;
+}
+
+.daily-goals .button-block.submit {
+  margin-top: 3vh;
+}
+
+.daily-goals > .muted {
+  color: grey;
+  font-size: 14px;
+  padding: 6px;
+}

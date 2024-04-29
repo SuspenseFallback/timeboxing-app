@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
         set_loading(false);
       } else {
         set_loading(false);
-        navigate("/login");
+        navigate("/log-in");
       }
     });
   }, []);

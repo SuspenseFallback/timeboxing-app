@@ -13,11 +13,9 @@ const GoalSetting = ({ user }) => {
             <TabsTrigger value="weekly">Weekly goals</TabsTrigger>
             <TabsTrigger value="6-month">6-monthly goals</TabsTrigger>
           </TabsList>
-          <TabsContent value="daily">
-            Make changes to your account here.
-          </TabsContent>
-          <TabsContent value="weekly">Change your password here.</TabsContent>
-          <TabsContent value="6-month">Change your password here.</TabsContent>
+          <TabsContent value="daily">Daily goals</TabsContent>
+          <TabsContent value="weekly">Weekly goals</TabsContent>
+          <TabsContent value="6-month">6-monthly goals</TabsContent>
         </Tabs>
       </div>
     </>
