@@ -17,11 +17,21 @@ const Dashboard = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [isTimebox, setIsTimebox] = useState(true);
 
+  const [rightIsTimebox, setRightIsTimebox] = useState(false);
+
   useEffect(() => {
     setInterval(() => {
       setTime(new Date().toLocaleTimeString());
     }, 1000);
   }, []);
+
+  useEffect(() => {
+    const date_str = date.toLocaleDateString();
+
+    const box = user.boxes.filter((b) => b.date == date_str);
+
+    setRightIsTimebox(box.length != 0);
+  }, [date]);
 
   useEffect(() => {
     const now = new Date();
@@ -147,10 +157,25 @@ const Dashboard = ({ user }) => {
             className="rounded-md border"
             fixedWeeks
           />
-          <p className="text">There is no timebox for the selected date.</p>
-          <Button onClick={() => navigate("/new-timebox")}>
-            Create timebox
-          </Button>
+          {rightIsTimebox ? (
+            <>
+              <p className="text">
+                There is a timebox for {date.toLocaleDateString()}!
+              </p>
+              <Button onClick={() => navigate("/new-timebox")}>
+                View timebox
+              </Button>
+            </>
+          ) : (
+            <>
+              <p className="text">
+                There is no timebox for {date.toLocaleDateString()}.
+              </p>
+              <Button onClick={() => navigate("/new-timebox")}>
+                Create timebox
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </>
