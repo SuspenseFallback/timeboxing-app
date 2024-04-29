@@ -35,7 +35,9 @@ const Dashboard = ({ user }) => {
 
     setTimes(new_times);
 
-    const today = user.boxes.filter((b) => b.date == new Date().toDateString());
+    const today = user.boxes.filter(
+      (b) => b.date == new Date().toLocaleDateString()
+    );
 
     console.log(today);
 
@@ -116,10 +118,22 @@ const Dashboard = ({ user }) => {
             {isTimebox ? (
               <>
                 <Button>View timebox</Button>
-                <Button>Edit timebox</Button>
+                <Button
+                  onClick={() => {
+                    const date = new Date()
+                      .toLocaleDateString("en-sg")
+                      .replaceAll("/", "-");
+                    navigate("/edit-timebox/" + date);
+                  }}
+                >
+                  Edit timebox
+                </Button>
               </>
             ) : (
-              <Button>Create timebox for today</Button>
+              <>
+                <p>You have not created a timebox for today.</p>
+                <Button>Create timebox</Button>
+              </>
             )}
           </div>
         </div>

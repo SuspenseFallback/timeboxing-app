@@ -125,8 +125,8 @@ export const updateTimebox = async (data) => {
   getUser((user) => {
     if (user) {
       let copy = [...user.boxes];
-      let box = copy.filter((b) => d.date == data.date);
-      copy = copy.filter((b) => d.date != data.date);
+      let box = copy.filter((b) => b.date == data.date);
+      copy = copy.filter((b) => b.date != data.date);
 
       if (box) {
         box = data;

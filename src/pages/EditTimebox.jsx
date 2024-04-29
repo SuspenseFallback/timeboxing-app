@@ -33,7 +33,9 @@ const EditTimebox = ({ user }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const today = user.boxes.filter((b) => b.date == new Date().toDateString());
+    const today = user.boxes.filter(
+      (b) => b.date == new Date().toLocaleDateString()
+    );
 
     if (today) {
       const box = today[0];
@@ -99,6 +101,7 @@ const EditTimebox = ({ user }) => {
   const submit = () => {
     updateTimebox({
       date: date,
+      items: items,
       activities: times,
     }).then((res) => {
       navigate("/allow-notifications");
