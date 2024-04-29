@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/edit-timebox",
+        path: "/edit-timebox/:day",
         element: (
           <ProtectedRoute>
             <EditTimebox />

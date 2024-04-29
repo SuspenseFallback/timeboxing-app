@@ -7,7 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import Button from "../components/Button.jsx";
 import Input from "../components/Input.jsx";
-import { newTimebox } from "../firebase/firebase.js";
+import { updateTimebox } from "../firebase/firebase.js";
 
 import {
   Tooltip,
@@ -15,11 +15,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Spinner from "../components/Spinner.jsx";
 
 const EditTimebox = ({ user }) => {
   const navigate = useNavigate();
+  const { day } = useParams();
+  const date = day.replaceAll("-", "/");
 
   const [index, setIndex] = useState(1);
 
@@ -41,6 +43,34 @@ const EditTimebox = ({ user }) => {
 
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      const copy = [];
+
+      console.log(copy);
+
+      times.forEach((time) => {
+        copy.push(time.activity);
+      });
+
+      if (copy.filter((t) => t == "Free time") < 2) {
+        return setDisabled(true);
+      }
+
+      let dis = false;
+
+      items.forEach((item) => {
+        console.log(copy.includes(item));
+        if (!copy.includes(item)) {
+          dis = true;
+          return;
+        }
+      });
+
+      setDisabled(dis);
+    }
+  }, [times, items]);
 
   const addItem = () => {
     const copy = [...items];
@@ -67,7 +97,8 @@ const EditTimebox = ({ user }) => {
   };
 
   const submit = () => {
-    newTimebox({
+    updateTimebox({
+      date: date,
       activities: times,
     }).then((res) => {
       navigate("/allow-notifications");

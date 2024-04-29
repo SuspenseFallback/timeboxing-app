@@ -97,7 +97,7 @@ const NewTimebox = () => {
 
   const submit = () => {
     newTimebox({
-      date: date.toDateString(),
+      date: date.toLocaleDateString("en-sg"),
       activities: times,
       items: items,
     }).then((res) => {

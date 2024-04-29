@@ -121,6 +121,35 @@ export const newTimebox = async (data) => {
   });
 };
 
+export const updateTimebox = async (data) => {
+  getUser((user) => {
+    if (user) {
+      let copy = [...user.boxes];
+      let box = copy.filter((b) => d.date == data.date);
+      copy = copy.filter((b) => d.date != data.date);
+
+      if (box) {
+        box = data;
+      } else {
+        return { code: 407, message: "Already exists", err: true };
+      }
+
+      copy.push(box);
+
+      const userDoc = doc(db, "users", user.id);
+
+      copy.push(data);
+      updateDoc(userDoc, {
+        boxes: copy,
+      }).then((data) => {
+        return { ...data, err: false };
+      });
+    } else {
+      return { code: 401, message: "Not authenticated", err: true };
+    }
+  });
+};
+
 // messaging
 
 if ("serviceWorker" in navigator) {
