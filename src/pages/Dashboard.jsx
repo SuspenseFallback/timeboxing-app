@@ -36,12 +36,16 @@ const Dashboard = ({ user }) => {
   useEffect(() => {
     const now = new Date();
 
-    const new_times = [
-      `${now.getHours()}:00`,
-      `${now.getHours() + 1}:00`,
-      `${now.getHours() + 2}:00`,
-      `${now.getHours() + 3}:00`,
-    ];
+    const new_times = [`${now.getHours()}:00`];
+
+    now.setHours(now.getHours() + 1);
+    new_times.push(`${now.getHours()}:00`);
+
+    now.setHours(now.getHours() + 1);
+    new_times.push(`${now.getHours()}:00`);
+
+    now.setHours(now.getHours() + 1);
+    new_times.push(`${now.getHours()}:00`);
 
     setTimes(new_times);
 
