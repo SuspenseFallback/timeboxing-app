@@ -232,3 +232,8 @@
   font-size: 14px;
   color: red;
 }
+
+.new-timebox .hours {
+  font-size: 14px;
+  padding-bottom: 6px;
+}

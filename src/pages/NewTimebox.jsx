@@ -30,9 +30,13 @@ const NewTimebox = ({ user }) => {
   );
 
   const [index, setIndex] = useState(1);
-  const [items, setItems] = useState(["Free time", "Free time", "", "", ""]);
+  const [items, setItems] = useState([
+    { item: "Free time", hours: 1 },
+    { item: "Free time", hours: 1 },
+  ]);
 
   const [disabled, setDisabled] = useState(true);
+  const [sum, setSum] = useState(2);
 
   const [stage1Error, setStage1Error] = useState("");
   const [stage1Disabled, setStage1Disabled] = useState(false);
@@ -56,6 +60,116 @@ const NewTimebox = ({ user }) => {
     { time: "21:00", activity: "" },
     { time: "22:00", activity: "" },
   ]);
+
+  useEffect(() => {
+    document.title = "New timebox";
+
+    const copy = [...items];
+
+    if (user.daily_goals) {
+      user.daily_goals.goals.forEach((g) => {
+        if (g.days == "both") {
+          copy.push({
+            item: g.goal,
+            hours: Math.ceil(
+              g.weeklyHours /
+                (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
+            ),
+          });
+        } else {
+          const num = new Date().getDate();
+
+          if (num % 6 == 0 && g.days == "weekends") {
+            copy.push({
+              item: g.goal,
+              hours: Math.ceil(
+                g.weeklyHours /
+                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
+              ),
+            });
+          } else if (num % 6 != 0 && g.days == "weekdays") {
+            copy.push({
+              item: g.goal,
+              hours: Math.ceil(
+                g.weeklyHours /
+                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
+              ),
+            });
+          }
+        }
+      });
+    }
+
+    if (user.weekly_goals) {
+      user.weekly_goals.goals.forEach((g) => {
+        if (g.days == "both") {
+          copy.push({
+            item: g.goal,
+            hours: Math.ceil(
+              g.weeklyHours /
+                (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
+            ),
+          });
+        } else {
+          const num = new Date().getDate();
+
+          if (num % 6 == 0 && g.days == "weekends") {
+            copy.push({
+              item: g.goal,
+              hours: Math.ceil(
+                g.weeklyHours /
+                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
+              ),
+            });
+          } else if (num % 6 != 0 && g.days == "weekdays") {
+            copy.push({
+              item: g.goal,
+              hours: Math.ceil(
+                g.weeklyHours /
+                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
+              ),
+            });
+          }
+        }
+      });
+    }
+
+    if (user.six_monthly_goals) {
+      user.six_monthly_goals.goals.forEach((g) => {
+        if (g.days == "both") {
+          copy.push({
+            item: g.goal,
+            hours: Math.ceil(
+              g.weeklyHours /
+                (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
+            ),
+          });
+        } else {
+          const num = new Date().getDate();
+
+          if (num % 6 == 0 && g.days == "weekends") {
+            copy.push({
+              item: g.goal,
+              hours: Math.ceil(
+                g.weeklyHours /
+                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
+              ),
+            });
+          } else if (num % 6 != 0 && g.days == "weekdays") {
+            copy.push({
+              item: g.goal,
+              hours: Math.ceil(
+                g.weeklyHours /
+                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
+              ),
+            });
+          }
+        }
+      });
+    }
+
+    setItems(copy);
+  }, []);
 
   useEffect(() => {
     const cur_date = date.toLocaleDateString();
@@ -86,8 +200,7 @@ const NewTimebox = ({ user }) => {
     let dis = false;
 
     items.forEach((item) => {
-      console.log(copy.includes(item));
-      if (!copy.includes(item)) {
+      if (!copy.includes(item.item)) {
         dis = true;
         return;
       }
@@ -95,6 +208,16 @@ const NewTimebox = ({ user }) => {
 
     setDisabled(dis);
   }, [times]);
+
+  useEffect(() => {
+    let acc = 0;
+
+    items.forEach((i) => {
+      acc += i.hours;
+    });
+
+    setSum(acc);
+  }, [items]);
 
   const deleteItem = (i) => {
     const copy = [...items];
@@ -104,13 +227,13 @@ const NewTimebox = ({ user }) => {
 
   const changeItem = (i, text) => {
     const copy = [...items];
-    copy.splice(i, 1, text);
+    copy[i].item = text;
     setItems(copy);
   };
 
   const addItem = () => {
     const copy = [...items];
-    copy.push("");
+    copy.push({ item: "", hours: 1 });
     setItems(copy);
   };
 
@@ -118,6 +241,27 @@ const NewTimebox = ({ user }) => {
     const copy = [...times];
     copy[i].activity = text;
     setTimes(copy);
+  };
+
+  const toStage3 = () => {
+    const copy = [...times];
+    const items_copy = [...items];
+
+    items_copy.forEach((item, index) => {
+      for (var i = 0; i < item.hours - 1; i++) {
+        items_copy.splice(index, 0, item);
+      }
+    });
+
+    if (items_copy.length < copy.length) {
+      items_copy.forEach((item, index) => {
+        copy[index].activity = item.item;
+      });
+    }
+
+    console.log(copy, items_copy);
+    setTimes(copy);
+    setIndex(index + 1);
   };
 
   const submit = () => {
@@ -197,7 +341,7 @@ const NewTimebox = ({ user }) => {
                     </button>
                     <p className="index">{index + 1}</p>
                     <Input
-                      value={items[index]}
+                      value={items[index].item}
                       onChange={(e) => changeItem(index, e.target.value)}
                       disabled={index <= 1}
                     />
@@ -205,10 +349,19 @@ const NewTimebox = ({ user }) => {
                 );
               })}
             </div>
+            <p className="hours">Hours: {sum}</p>
             <div className="button-row">
               <Button
                 className="outline"
-                onClick={() => setItems(["Free time", "Free time", "", "", ""])}
+                onClick={() =>
+                  setItems([
+                    { item: "Free time", hours: 1 },
+                    { item: "Free time", hours: 1 },
+                    { item: "", hours: 1 },
+                    { item: "", hours: 1 },
+                    { item: "", hours: 1 },
+                  ])
+                }
               >
                 Reset
               </Button>
@@ -222,10 +375,7 @@ const NewTimebox = ({ user }) => {
               <Button className="outline" onClick={() => setIndex(index - 1)}>
                 Back
               </Button>
-              <Button
-                onClick={() => setIndex(index + 1)}
-                disabled={items.includes("")}
-              >
+              <Button onClick={toStage3} disabled={items.includes("")}>
                 Next
               </Button>
             </div>
@@ -242,7 +392,7 @@ const NewTimebox = ({ user }) => {
                     return (
                       <li key={index + 1000}>
                         <span>{index + 1}. </span>
-                        {item}
+                        {item.item}, hours: {item.hours}
                       </li>
                     );
                   })}

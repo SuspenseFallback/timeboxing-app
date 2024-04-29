@@ -10,9 +10,9 @@ const SixMonthlyGoals = ({ user }) => {
   const navigate = useNavigate();
 
   const [goals, setGoals] = useState([
-    { goal: "", six_monthlyHours: 1, days: "weekdays" },
-    { goal: "", six_monthlyHours: 1, days: "weekdays" },
-    { goal: "", six_monthlyHours: 1, days: "weekdays" },
+    { goal: "", weeklyHours: 1, days: "weekdays" },
+    { goal: "", weeklyHours: 1, days: "weekdays" },
+    { goal: "", weeklyHours: 1, days: "weekdays" },
   ]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const SixMonthlyGoals = ({ user }) => {
 
   const changeHours = (index, new_text) => {
     const copy = [...goals];
-    copy[index].six_monthlyHours = new_text;
+    copy[index].weeklyHours = new_text;
     setGoals(copy);
   };
 
@@ -77,7 +77,7 @@ const SixMonthlyGoals = ({ user }) => {
     }
 
     const copy = [...goals];
-    copy.push({ goal: "", six_monthlyHours: 0, days: "", numDays: 0 });
+    copy.push({ goal: "", weeklyHours: 0, days: "", numDays: 0 });
     setGoals(copy);
   };
 
@@ -121,7 +121,7 @@ const SixMonthlyGoals = ({ user }) => {
                       onChange={(e) => changeHours(index, e.target.value)}
                       min={1}
                       max={168}
-                      value={goals[index].six_monthlyHours}
+                      value={goals[index].weeklyHours}
                     />
                   </div>
                   <div className="col col-3">
@@ -147,7 +147,7 @@ const SixMonthlyGoals = ({ user }) => {
                   <div className="col col-5">
                     <p className="muted">
                       {(
-                        goals[index].six_monthlyHours /
+                        goals[index].weeklyHours /
                         (goals[index].days == "both"
                           ? 7
                           : goals[index].days == "weekdays"
