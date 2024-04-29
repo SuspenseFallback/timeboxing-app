@@ -56,7 +56,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/view-timebox",
+        path: "/view-timebox/:day",
         element: (
           <ProtectedRoute>
             <ViewTimebox />

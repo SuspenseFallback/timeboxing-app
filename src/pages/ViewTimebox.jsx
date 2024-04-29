@@ -3,13 +3,17 @@ import Spinner from "../components/Spinner";
 import { Separator } from "@/components/ui/separator";
 import "./ViewTimebox.css";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useParams } from "react-router";
 
 const ViewTimebox = ({ user }) => {
+  const { day } = useParams();
+  const date = day.replaceAll("-", "/");
+
   const [loading, setLoading] = useState(true);
   const [activities, setActivities] = useState(null);
 
   useEffect(() => {
-    const today = user.boxes.filter((b) => b.date == new Date().toDateString());
+    const today = user.boxes.filter((b) => b.date == date);
 
     if (today.length > 0) {
       setActivities(today[0].activities);
@@ -24,9 +28,7 @@ const ViewTimebox = ({ user }) => {
     </div>
   ) : (
     <div className="page first view-timebox">
-      <h1 className="header">
-        View timebox for {new Date().toLocaleDateString()}
-      </h1>
+      <h1 className="header">View timebox for {date}</h1>
       {activities ? (
         <ScrollArea className="time-scroll rounded-md border p-4">
           <ul className="times-wrapper">

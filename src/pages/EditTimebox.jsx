@@ -33,9 +33,7 @@ const EditTimebox = ({ user }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const today = user.boxes.filter(
-      (b) => b.date == new Date().toLocaleDateString()
-    );
+    const today = user.boxes.filter((b) => b.date == date);
 
     if (today) {
       const box = today[0];
