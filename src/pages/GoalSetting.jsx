@@ -2,7 +2,11 @@ import React from "react";
 import "./GoalSetting.css";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { useNavigate } from "react-router-dom";
+
 const GoalSetting = ({ user }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="page first goal-setting">
@@ -65,7 +69,12 @@ const GoalSetting = ({ user }) => {
                 )}
               </div>
             </div>
-            <button className="button button-block submit">Edit goals</button>
+            <button
+              className="button button-block submit"
+              onClick={() => navigate("/daily-goals")}
+            >
+              Edit goals
+            </button>
           </TabsContent>
           <TabsContent value="weekly">
             <div className="table">
@@ -119,7 +128,12 @@ const GoalSetting = ({ user }) => {
                 )}
               </div>
             </div>
-            <button className="button button-block submit">Edit goals</button>
+            <button
+              className="button button-block submit"
+              onClick={() => navigate("/weekly-goals")}
+            >
+              Edit goals
+            </button>
           </TabsContent>
           <TabsContent value="6-month">
             <div className="table">
@@ -173,7 +187,12 @@ const GoalSetting = ({ user }) => {
                 )}
               </div>
             </div>
-            <button className="button button-block submit">Edit goals</button>
+            <button
+              className="button button-block submit"
+              onClick={() => navigate("/six-monthly-goals")}
+            >
+              Edit goals
+            </button>
           </TabsContent>
         </Tabs>
       </div>
