@@ -227,3 +227,8 @@
   font-size: 14px;
   padding: 16px;
 }
+
+.new-timebox .error {
+  font-size: 14px;
+  color: red;
+}

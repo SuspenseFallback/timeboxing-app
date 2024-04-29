@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useNavigate, useParams } from "react-router";
 
-const NewTimebox = () => {
+const NewTimebox = ({ user }) => {
   const navigate = useNavigate();
   const { day } = useParams();
 
@@ -32,6 +32,10 @@ const NewTimebox = () => {
   const [items, setItems] = useState(["Free time", "Free time", "", "", ""]);
 
   const [disabled, setDisabled] = useState(true);
+
+  const [stage1Error, setStage1Error] = useState("");
+  const [stage1Disabled, setStage1Disabled] = useState(false);
+
   const [times, setTimes] = useState([
     { time: "6:00", activity: "Free time" },
     { time: "7:00", activity: "Free time" },
@@ -53,11 +57,22 @@ const NewTimebox = () => {
   ]);
 
   useEffect(() => {
-    console.log(date);
+    const cur_date = date.toLocaleDateString();
 
+    const box = user.boxes.filter((b) => b.date == cur_date);
+    console.log(box);
+
+    if (box.length > 0) {
+      setStage1Error("You already have a timebox for this day.");
+      setStage1Disabled(true);
+    } else {
+      setStage1Error("");
+      setStage1Disabled(false);
+    }
+  }, [date]);
+
+  useEffect(() => {
     const copy = [];
-
-    console.log(copy);
 
     times.forEach((time) => {
       copy.push(time.activity);
@@ -131,8 +146,16 @@ const NewTimebox = () => {
                 onSelect={setDate}
                 className="rounded-md border"
                 fixedWeeks
+                defaultMonth={date}
               />
-              <Button onClick={() => setIndex(index + 1)}>Next</Button>
+              {stage1Error ? <br /> : null}
+              <p className="error">{stage1Error}</p>
+              <Button
+                onClick={() => setIndex(index + 1)}
+                disabled={stage1Disabled}
+              >
+                Next
+              </Button>
             </div>
           </div>
           <div className="slide slide-2">
