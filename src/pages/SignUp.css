@@ -10,6 +10,7 @@
   border-radius: 12px;
   border: 1px solid rgb(194, 194, 194);
   padding: 2rem;
+  min-width: 350px;
 
   display: flex;
   flex-direction: column;
@@ -22,6 +23,7 @@
   position: absolute;
   bottom: 20px;
   width: calc(30vw - 4rem);
+  min-width: 300px;
 }
 
 .page.login .header {
@@ -36,6 +38,7 @@
   border-radius: 12px;
   border: 1px solid rgb(194, 194, 194);
   padding: 2rem;
+  min-width: 350px;
 
   display: flex;
   flex-direction: column;
@@ -48,10 +51,30 @@
   position: absolute;
   bottom: 20px;
   width: calc(30vw - 4rem);
+
+  min-width: 300px;
 }
 
 .page.login .error {
   color: red;
   font-weight: 500;
   font-size: 14px;
+}
+
+@media screen and (max-width: 420px) {
+  .page.signup .form {
+    min-width: 250px;
+  }
+
+  .page.login .form {
+    min-width: 250px;
+  }
+
+  .page.signup .form .submit {
+    min-width: 200px;
+  }
+
+  .page.login .form .submit {
+    min-width: 200px;
+  }
 }
