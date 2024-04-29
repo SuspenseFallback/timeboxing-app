@@ -10,6 +10,7 @@ import SignUp from "./pages/SignUp.jsx";
 import LogIn from "./pages/LogIn.jsx";
 import GoalSetting from "./pages/GoalSetting.jsx";
 import DailyGoals from "./pages/DailyGoals.jsx";
+import WeeklyGoals from "./pages/WeeklyGoals.jsx";
 import Navbar from "./components/Navbar.jsx";
 import NotFound from "./helpers/NotFound.jsx";
 import "./index.css";
@@ -60,6 +61,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <DailyGoals />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/weekly-goals",
+        element: (
+          <ProtectedRoute>
+            <WeeklyGoals />
           </ProtectedRoute>
         ),
       },
