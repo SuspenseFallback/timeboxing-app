@@ -127,3 +127,11 @@
   font-size: 14px;
   padding: 6px;
 }
+
+.goal-setting .no-goals {
+  width: 100%;
+  height: calc(50vh - 3rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
