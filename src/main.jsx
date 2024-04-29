@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import Home from "./pages/Home.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import NewTimebox from "./pages/NewTimebox.jsx";
+import EditTimebox from "./pages/EditTimebox.jsx";
 import ViewTimebox from "./pages/ViewTimebox.jsx";
 import AllowNotifications from "./pages/AllowNotifications.jsx";
 import SignUp from "./pages/SignUp.jsx";
@@ -43,6 +44,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <NewTimebox />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/edit-timebox",
+        element: (
+          <ProtectedRoute>
+            <EditTimebox />
           </ProtectedRoute>
         ),
       },

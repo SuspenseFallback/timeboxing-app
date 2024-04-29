@@ -21,7 +21,9 @@ const Dashboard = ({ user }) => {
     setInterval(() => {
       setTime(new Date().toLocaleTimeString());
     }, 1000);
+  }, []);
 
+  useEffect(() => {
     const now = new Date();
 
     const new_times = [
@@ -35,14 +37,21 @@ const Dashboard = ({ user }) => {
 
     const today = user.boxes.filter((b) => b.date == new Date().toDateString());
 
-    if (today.length > 0) {
-      const copy = [...today[0].activities];
+    console.log(today);
 
-      copy.every((item, index) => {
-        if (item.time == new_times[0]) {
-          return false;
-        } else {
-          copy.splice(index, 1);
+    if (today.length > 0) {
+      const copy = [];
+
+      today[0].activities.forEach((item, index) => {
+        const hour = parseInt(item.time.split(":")[0]);
+        const time_hour = parseInt(new_times[0].split(":")[0]);
+
+        if (hour >= time_hour) {
+          if (item.activity) {
+            copy.push(item);
+          } else {
+            copy.push({ time: item.time, activity: "-" });
+          }
         }
       });
 
