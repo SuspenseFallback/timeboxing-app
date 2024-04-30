@@ -97,27 +97,43 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
   ];
 
   useEffect(() => {
-    console.log(user.schedule);
-    if (user.schedule && user.schedule.fixed) {
+    if (Boolean(user.schedule && user.schedule.fixed)) {
       setData(user.schedule.fixed);
-    }
-  }, []);
 
-  useEffect(() => {
-    const copy = [...data];
-    if (isCopy) {
+      let sum = 0;
+
+      const copy = [...user.schedule.fixed];
       copy.forEach((c, index) => {
-        console.log(c.active == true);
-        if (index > 0 && c.active == true) {
+        if (c.active) {
+          sum += 1;
+        }
+
+        if (index > 0 && c.active == true && isCopy) {
           c.startTime = copy[0].startTime;
           c.endTime = copy[0].endTime;
         }
       });
-    }
 
-    console.log(copy);
-    setData(copy);
+      console.log(sum);
+
+      setData(copy);
+      setNumOfChecks(sum);
+    } else {
+      const copy = [...data];
+      if (isCopy) {
+        copy.forEach((c, index) => {
+          if (index > 0 && c.active == true) {
+            c.startTime = copy[0].startTime;
+            c.endTime = copy[0].endTime;
+          }
+        });
+      }
+
+      setData(copy);
+    }
   }, [isCopy]);
+
+  // useEffect(() => {}, [isCopy]);
 
   const validate = () => {
     for (let i = 0; i < data.length; i++) {
@@ -245,7 +261,7 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
                     <div className="day-container">
                       <input
                         type="checkbox"
-                        value={d.active}
+                        checked={d.active}
                         className={d.day[0].toLowerCase()}
                         onChange={(e) => checkBox(index, e.target.checked)}
                       />

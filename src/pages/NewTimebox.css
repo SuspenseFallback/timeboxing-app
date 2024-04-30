@@ -95,6 +95,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: none !important;
 }
 
 .new-timebox .slides .slide-2 .wrapper .left .row {
@@ -146,4 +147,45 @@
 .new-timebox .hours {
   font-size: 14px;
   padding-bottom: 6px;
+}
+
+.new-timebox .slides .slide-2 .wrapper .right .row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.new-timebox input[type="checkbox"] {
+  width: 1.3em;
+  height: 1.3em;
+  background-color: white;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.new-timebox input[type="checkbox"]:before {
+  content: "N";
+  height: 1.3em;
+  width: 1.3em;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  transition: all 0.15s;
+}
+
+.new-timebox input[type="checkbox"]:checked {
+  background-color: rgb(0, 0, 0);
+}
+
+.new-timebox input[type="checkbox"]:checked:before {
+  content: "Y";
+  color: #fff;
 }

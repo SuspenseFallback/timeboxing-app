@@ -242,7 +242,7 @@ const WeeklyGoals = ({ user, nextSlide }) => {
                     <button
                       className="button"
                       disabled={!deadline || !hoursRequired || !goal}
-                      onClick={newRow}
+                      onClick={() => newRow(false)}
                     >
                       Submit, but I have more tasks
                     </button>

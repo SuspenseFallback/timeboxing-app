@@ -124,7 +124,13 @@ const SixMonthlyWorkflow = ({ user, nextSlide }) => {
               Add new +
             </button>
             {goals.length > 0 ? (
-              <button className="button" onClick={nextSlide}>
+              <button
+                className="button"
+                onClick={() => {
+                  submit();
+                  nextSlide();
+                }}
+              >
                 Next
               </button>
             ) : null}

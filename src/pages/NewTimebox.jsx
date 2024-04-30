@@ -41,6 +41,8 @@ const NewTimebox = ({ user }) => {
   const [stage1Disabled, setStage1Disabled] = useState(false);
   const [free, setFree] = useState(0);
 
+  const [fixed, setFixed] = useState(true);
+
   const [times, setTimes] = useState([
     { time: "6:00", activity: "" },
     { time: "7:00", activity: "" },
@@ -78,7 +80,7 @@ const NewTimebox = ({ user }) => {
     const copy = [...items];
     let sum = 0;
 
-    if (user.daily_goals) {
+    if (Object.keys(user.daily_goals) > 0) {
       user.daily_goals.goals.forEach((g) => {
         if (!g.reminder) {
           copy.push({ item: g.goal, minutes: g.time, id: copy.length + 1 });
@@ -97,7 +99,7 @@ const NewTimebox = ({ user }) => {
         console.log(date2);
         const date1 = new Date();
         const diffTime = Math.abs(date2.getTime() - date1.getTime());
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
         copy.push({
           item: g.goal,
           minutes: (parseInt(g.hoursRequired) * 60) / diffDays,
@@ -135,7 +137,9 @@ const NewTimebox = ({ user }) => {
     }
 
     setItems(copy);
+  }, []);
 
+  useEffect(() => {
     if (user.schedule && user.schedule.sleep) {
       const [wakeUpHour, wakeUpMinutes] =
         user.schedule.sleep.wakeUpTime.split(":");
@@ -161,8 +165,6 @@ const NewTimebox = ({ user }) => {
         parseInt(bedTimeMinutes)
       );
 
-      const minutes_diff = (bedTimeDate - wakeUpDate) / (1000 * 60);
-
       const new_times = [];
 
       while (wakeUpDate <= bedTimeDate) {
@@ -170,15 +172,13 @@ const NewTimebox = ({ user }) => {
           time: wakeUpDate.toLocaleTimeString().slice(0, 5),
           activity: "",
         });
+        console.log(new_times);
         wakeUpDate = new Date(
           wakeUpDate.setTime(wakeUpDate.getTime() + 1000 * 60 * 30)
         );
       }
 
-      console.log(new_times);
-      setTimes(new_times);
-
-      if (user.schedule && user.schedule.fixed) {
+      if (user.schedule && user.schedule.fixed && fixed) {
         const copy = [...user.schedule.fixed];
 
         copy.splice(0, 0, copy[copy.length - 1]);
@@ -232,7 +232,7 @@ const NewTimebox = ({ user }) => {
         setTimes(times_copy);
       }
     }
-  }, []);
+  }, [fixed]);
 
   useEffect(() => {
     const cur_date = date.toLocaleDateString("en-sg");
@@ -256,8 +256,6 @@ const NewTimebox = ({ user }) => {
       const length = times.filter((i) => i.activity == item.item).length;
 
       console.log(length < required);
-
-      console.log;
 
       if (length < required) {
         dis = true;
@@ -359,6 +357,16 @@ const NewTimebox = ({ user }) => {
                     })}
                   </ul>
                 </ScrollArea>
+                <div className="row">
+                  <input
+                    type="checkbox"
+                    name="fixed"
+                    id="fixed"
+                    checked={fixed}
+                    onChange={(e) => setFixed(e.target.checked)}
+                  />
+                  <p className="label">Set fixed schedule today</p>
+                </div>
               </div>
             </div>
             {fits ? (

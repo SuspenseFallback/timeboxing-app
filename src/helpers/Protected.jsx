@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getUser } from "../firebase/firebase";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import Spinner from "../components/Spinner";
 
 const ProtectedRoute = ({ children }) => {
   const [loading, set_loading] = useState(true);
   const [user, set_user] = useState(null);
+  let location = useLocation();
 
   const navigate = useNavigate();
 
@@ -19,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
         navigate("/log-in");
       }
     });
-  }, []);
+  }, [location]);
 
   const renderChildren = () => {
     return React.Children.map(children, (child) => {

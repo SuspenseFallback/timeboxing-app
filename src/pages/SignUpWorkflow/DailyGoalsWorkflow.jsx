@@ -15,7 +15,11 @@ const DailyGoalsWorkflow = ({ user, nextSlide }) => {
 
   useEffect(() => {
     if (user && user.daily_goals) {
-      setTasks(user.daily_goals.goals);
+      return setTasks(user.daily_goals.goals);
+    }
+
+    if (user && Object.keys(user.daily_goals.goals).length > 0) {
+      return setTasks(user.daily_goals.goals);
     }
   }, []);
 

@@ -147,3 +147,31 @@
 
 @media screen and (max-width: 1178px) {
 }
+
+.goal-setting .table.daily .col-1 {
+  width: 50%;
+}
+
+.goal-setting .table.daily .col-2 {
+  width: 20%;
+}
+
+.goal-setting .table.daily .col-3 {
+  width: 40%;
+}
+
+.goal-setting .table.weekly .col-1 {
+  width: 45%;
+}
+
+.goal-setting .table.weekly .col-2 {
+  width: 20%;
+}
+
+.goal-setting .table.weekly .col-3 {
+  width: 25%;
+}
+
+.goal-setting .table.weekly .col-4 {
+  width: 10%;
+}

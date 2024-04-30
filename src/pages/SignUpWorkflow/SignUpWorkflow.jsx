@@ -6,8 +6,11 @@ import School from "./School.jsx";
 import Sleep from "./Sleep.jsx";
 import Activities from "./Activities.jsx";
 import "./SignUpWorkflow.css";
+import { useNavigate } from "react-router-dom";
 
 const SignUpWorkflow = ({ user }) => {
+  const navigate = useNavigate();
+
   const [index, setIndex] = useState(1);
   const [newData, setNewData] = useState({ ...user.schedule });
 
@@ -71,7 +74,21 @@ const SignUpWorkflow = ({ user }) => {
           <div className="slide slide-8">
             <DailyGoalsWorkflow user={user} nextSlide={nextSlide} />
           </div>
-          <div className="slide slide-9"></div>
+          <div className="slide slide-9">
+            <h1 className="header">Set up complete</h1>
+            <p className="desc">Now, we can make our first timebox.</p>
+            <button
+              className="button"
+              onClick={() =>
+                navigate(
+                  "/new-timebox/" +
+                    new Date().toLocaleDateString().replaceAll("/", "-")
+                )
+              }
+            >
+              Continue
+            </button>
+          </div>
         </div>
       </div>
     </>

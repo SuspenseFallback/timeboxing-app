@@ -116,7 +116,11 @@ const Sleep = ({ user, nextSlide, newData, setNewData }) => {
           </select>
         </div>
 
-        <button className="button" onClick={submit}>
+        <button
+          className="button"
+          onClick={submit}
+          disabled={!wakeUpTime || !bedTime}
+        >
           Next
         </button>
       </div>

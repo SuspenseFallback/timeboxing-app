@@ -4,18 +4,24 @@ import "./DailyGoals.css";
 import { newDailyGoals } from "../firebase/firebase";
 import { Trash2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import Spinner from "../components/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const DailyGoals = ({ user }) => {
+  const navigate = useNavigate();
+
   const [tasks, setTasks] = useState([
-    { goal: "", time: 15, reminder: false },
-    { goal: "", time: 15, reminder: false },
-    { goal: "", time: 15, reminder: false },
+    { goal: "", time: 30, reminder: false },
+    { goal: "", time: 30, reminder: false },
+    { goal: "", time: 30, reminder: false },
   ]);
+
+  const [loading, setLoading] = useState(false);
 
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    if (user && user.daily_goals) {
+    if (user && Object.keys(user.daily_goals).length > 0) {
       setTasks(user.daily_goals.goals);
     }
   }, []);
@@ -70,15 +76,24 @@ const DailyGoals = ({ user }) => {
 
   const submit = () => {
     console.log("submit");
-    newDailyGoals({ goals: tasks, time: new Date().toString() }).then(() => {
-      window.location.replace(
-        "/new-timebox/" +
-          new Date().toLocaleDateString("en-sg").replaceAll("/", "-")
-      );
-    });
+    newDailyGoals({ goals: tasks, time: new Date().toString() }).then(
+      (data) => {
+        setLoading(true);
+        console.log(data);
+        navigate(
+          "/new-timebox/" +
+            new Date().toLocaleDateString("en-sg").replaceAll("/", "-")
+        );
+        setLoading(false);
+      }
+    );
   };
 
-  return (
+  return loading ? (
+    <div className="page first">
+      <Spinner />
+    </div>
+  ) : (
     <>
       <div className="page first daily-goals">
         <h1 className="header">Brain dump of all tasks for today</h1>
@@ -124,10 +139,10 @@ const DailyGoals = ({ user }) => {
                   >
                     <div className={"slider-wrapper"}>
                       <Slider
-                        defaultValue={[15]}
+                        defaultValue={[30]}
                         max={960}
-                        min={15}
-                        step={15}
+                        min={30}
+                        step={30}
                         value={[task.time]}
                         onValueChange={(e) => changeHours(index, e)}
                         disabled={task.reminder}

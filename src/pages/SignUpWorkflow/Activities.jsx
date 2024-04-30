@@ -237,7 +237,7 @@ const Activities = ({ user, nextSlide, newData, setNewData }) => {
           <button
             className="button button-block"
             onClick={() => {
-              if (validate()) {
+              if (validate() || option == "no") {
                 setError("");
                 submit();
               } else {

@@ -4,6 +4,8 @@ import { Calendar } from "@/components/ui/calendar";
 import Button from "../components/Button";
 import Spinner from "../components/Spinner";
 
+import { newDailyGoals } from "../firebase/firebase";
+
 import "./Dashboard.css";
 import { useNavigate } from "react-router";
 
@@ -21,8 +23,23 @@ const Dashboard = ({ user }) => {
 
   useEffect(() => {
     if (user) {
-      if (!user.six_monthly_goals || !user.weekly_goals || !user.daily_goals) {
-        navigate("/six-monthly-goals?new=true");
+      if (!user.six_monthly_goals) {
+        navigate("/six-monthly-goals");
+      }
+
+      if (!user.weekly_goals) {
+        navigate("/weekly-goals");
+      }
+
+      if (!user.daily_goals) {
+        navigate("/daily-goals");
+      }
+
+      if (
+        new Date().toLocaleDateString() !=
+        new Date(user.daily_goals.time).toLocaleDateString()
+      ) {
+        newDailyGoals({}).then(window.location.replace("/daily-goals"));
       }
     }
   }, []);
@@ -145,7 +162,16 @@ const Dashboard = ({ user }) => {
           <div className="buttons">
             {isTimebox ? (
               <>
-                <Button>View timebox</Button>
+                <Button
+                  onClick={() => {
+                    const date = new Date()
+                      .toLocaleDateString("en-sg")
+                      .replaceAll("/", "-");
+                    navigate("/view-timebox/" + date);
+                  }}
+                >
+                  View timebox
+                </Button>
                 <Button
                   onClick={() => {
                     const date = new Date()
