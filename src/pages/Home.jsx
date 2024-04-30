@@ -6,7 +6,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(import.meta.env);
+    document.title = "Home | Samayam";
   }, []);
 
   return (

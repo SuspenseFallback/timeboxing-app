@@ -18,6 +18,10 @@ const LogIn = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    document.title = "Log in | Samayam";
+  }, []);
+
+  useEffect(() => {
     if (error) {
       setError("");
     }

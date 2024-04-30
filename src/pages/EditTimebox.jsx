@@ -244,6 +244,10 @@ const EditTimebox = ({ user }) => {
   }, [date]);
 
   useEffect(() => {
+    document.title = "Edit timebox | Samayam";
+  }, []);
+
+  useEffect(() => {
     let dis = false;
     items.forEach((item) => {
       const required = Math.ceil(item.minutes / 30);

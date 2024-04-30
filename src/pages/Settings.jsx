@@ -5,6 +5,10 @@ const Settings = ({ user }) => {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
 
+  useEffect(() => {
+    document.title = "Settings | Samayam";
+  }, []);
+
   return (
     <>
       <div className="settings">

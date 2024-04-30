@@ -89,6 +89,10 @@ const DailyGoals = ({ user }) => {
     );
   };
 
+  useEffect(() => {
+    document.title = "Set daily tasks | Samayam";
+  }, []);
+
   return loading ? (
     <div className="page first">
       <Spinner />

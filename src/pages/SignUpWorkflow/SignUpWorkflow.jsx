@@ -18,6 +18,10 @@ const SignUpWorkflow = ({ user }) => {
     setIndex(index + 1);
   };
 
+  useEffect(() => {
+    document.title = "Set up | Samayam";
+  }, []);
+
   return (
     <>
       <div className="page sign-up-workflow first">

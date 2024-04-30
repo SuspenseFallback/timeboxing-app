@@ -45,6 +45,10 @@ const Dashboard = ({ user }) => {
   }, []);
 
   useEffect(() => {
+    document.title = "Dashboard | Samayam";
+  }, []);
+
+  useEffect(() => {
     setInterval(() => {
       setTime(new Date().toLocaleTimeString());
     }, 1000);

@@ -102,6 +102,10 @@ const WeeklyGoals = ({ user }) => {
     }
   };
 
+  useEffect(() => {
+    document.title = "Weekly goals | Samayam";
+  }, []);
+
   const submit = (new_tasks = tasks) => {
     console.log(new_tasks);
     newWeeklyGoals({ goals: new_tasks, time: new Date().toString() }).then(

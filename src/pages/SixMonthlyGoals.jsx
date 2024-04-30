@@ -126,6 +126,10 @@ const SixMonthlyGoals = ({ user }) => {
     );
   };
 
+  useEffect(() => {
+    document.title = "Long-term goals | Samayam";
+  }, []);
+
   return (
     <motion.div>
       <div className="page first six-monthly-goals">

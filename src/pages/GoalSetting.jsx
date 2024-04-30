@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom";
 const GoalSetting = ({ user }) => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "Set your goals | Samayam";
+  }, []);
+
   return (
     <>
       <div className="page first goal-setting">

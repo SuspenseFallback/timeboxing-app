@@ -27,6 +27,10 @@ const ViewTimebox = ({ user }) => {
     setLoading(false);
   }, [date]);
 
+  useEffect(() => {
+    document.title = "View timebox | Samayam";
+  }, []);
+
   return loading ? (
     <div className="page first">
       <Spinner />

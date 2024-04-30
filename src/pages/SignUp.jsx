@@ -69,6 +69,10 @@ const SignUp = () => {
     });
   }
 
+  useEffect(() => {
+    document.title = "Sign up | Samayam";
+  }, []);
+
   return (
     <div className="page signup first">
       <h1 className="header">Sign up</h1>
