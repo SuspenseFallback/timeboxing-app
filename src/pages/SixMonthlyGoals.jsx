@@ -28,8 +28,6 @@ const SixMonthlyGoals = ({ user }) => {
   const [weeklyHours, setWeeklyHours] = useState("");
   const [days, setDays] = useState("");
 
-  const [dialogOpen, setDialogOpen] = useState(false);
-
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
@@ -117,7 +115,6 @@ const SixMonthlyGoals = ({ user }) => {
     setDays("");
 
     setGoals(copy);
-    setDialogOpen(true);
   };
 
   const submit = () => {
@@ -133,12 +130,7 @@ const SixMonthlyGoals = ({ user }) => {
   };
 
   return (
-    <motion.div
-      initial={{ x: "100%" }}
-      animate={{ x: "0%" }}
-      transition={{ duration: 0.75, ease: "easeIn" }}
-      exit={{ x: "0%" }}
-    >
+    <motion.div>
       <div className="page first six-monthly-goals">
         <h1 className="header">Set your goals for the next six months</h1>
         <div className="layout">

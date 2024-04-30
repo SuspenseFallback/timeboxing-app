@@ -5,15 +5,13 @@
 }
 
 .weekly-goals .table {
-  height: 65vh;
+  /* height: 80vh; */
   width: 95vw;
-  border: 1px solid rgb(185, 185, 185);
+  /* border: 1px solid rgb(185, 185, 185); */
   border-radius: 12px;
 
   display: flex;
   flex-direction: column;
-
-  overflow-y: scroll;
 }
 
 .weekly-goals .table .row {
@@ -22,8 +20,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-left: 1px solid rgb(185, 185, 185);
 
-  border-bottom: 1px solid rgb(185, 185, 185);
+  /* border-bottom: 1px solid rgb(185, 185, 185); */
 }
 
 .weekly-goals .table .col {
@@ -42,11 +41,12 @@
 }
 
 .weekly-goals .table .header {
-  border-bottom: 1px solid rgb(185, 185, 185);
+  border-radius: 12px 12px 0 0;
+  /* border-bottom: 1px solid rgb(185, 185, 185); */
 }
 
 .weekly-goals .table .row .col-1 {
-  width: 50%;
+  width: 45%;
   text-align: left;
   border-right: 1px solid rgb(185, 185, 185);
   padding-left: 1rem;
@@ -54,15 +54,20 @@
 
 .weekly-goals .table .row .col-2 {
   width: 20%;
-  text-align: left;
+  text-align: center;
   border-right: 1px solid rgb(185, 185, 185);
   padding-left: 1rem;
 }
 
+.weekly-goals .table .row .col-2 input {
+  text-align: center;
+}
+
 .weekly-goals .table .row .col-3 {
-  width: 10%;
+  width: 25%;
   border-right: 1px solid rgb(185, 185, 185);
   justify-content: center;
+  min-width: 300px;
 }
 
 .weekly-goals .table .row .col-4 {
@@ -72,18 +77,17 @@
   justify-content: center;
 }
 
-.weekly-goals .table .row .col-5 {
-  width: 10%;
-  text-align: center;
-  justify-content: center;
-}
-
 .weekly-goals .table .body .col input {
   width: 90%;
+  border-bottom: none;
+}
+
+.weekly-goals .text {
+  color: #000;
 }
 
 .weekly-goals .muted {
-  color: grey;
+  color: rgb(185, 185, 185);
 }
 
 .weekly-goals .table .body .row .col-3 {
@@ -91,6 +95,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  min-width: 300px;
 }
 
 .weekly-goals .table .button-row {
@@ -112,7 +117,112 @@
 }
 
 .weekly-goals > .muted {
-  color: grey;
+  color: rgb(185, 185, 185);
   font-size: 14px;
   padding: 6px;
+}
+
+.weekly-goals .table .body .row {
+  border-top: 1px solid rgb(185, 185, 185);
+}
+
+.weekly-goals .layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 95vw;
+  min-height: 45vh;
+}
+
+.weekly-goals .questions {
+  padding-left: 2rem;
+  width: 100%;
+}
+
+.weekly-goals .questions .question {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding-top: 1rem;
+}
+
+.weekly-goals .questions .question .q-text {
+  margin: 0;
+  padding-right: 1rem;
+}
+
+.weekly-goals .questions .question input {
+  width: 30vw;
+  border: 1px solid rgb(185, 185, 185);
+  font-size: 18px;
+  margin-top: 8px;
+  width: 90%;
+}
+
+.weekly-goals .questions .question .button {
+  padding: 12px;
+  margin-top: 1rem;
+}
+
+.weekly-goals .questions .question select {
+  margin-top: 16px;
+}
+
+.weekly-goals .question-row {
+  width: 80vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weekly-goals .question-row .example {
+  font-size: 13px;
+  color: rgb(185, 185, 185);
+  cursor: pointer;
+}
+
+.weekly-goals .question-row .example:hover {
+  color: grey;
+}
+
+.weekly-goals .table .row:last-child {
+  border-bottom: 1px solid rgb(185, 185, 185);
+  border-radius: 0 0 12px 12px;
+}
+
+.weekly-goals .edit {
+  font-size: 12px;
+  color: grey;
+  width: 95vw;
+  text-align: right;
+  padding-right: 2rem;
+}
+
+.weekly-goals .table .trash-wrapper {
+  background-color: #fff;
+  transition: all 0.25s;
+  border-radius: 50px;
+  padding: 8px;
+}
+
+.weekly-goals .table .delete {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.weekly-goals .table .trash-wrapper:hover {
+  background-color: #d3d3d3;
+}
+
+.weekly-goals .content {
+  width: 30vw;
+}
+
+.weekly-goals .button-row {
+  display: flex;
+  gap: 1rem;
 }

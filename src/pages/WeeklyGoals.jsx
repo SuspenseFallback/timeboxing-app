@@ -1,125 +1,307 @@
 import React, { useEffect, useState } from "react";
 import "./WeeklyGoals.css";
-import Input from "../components/Input.jsx";
-import { Checkbox } from "@/components/ui/checkbox";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { newWeeklyGoals } from "../firebase/firebase";
 
+import { motion } from "framer-motion";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+
+import { DatePicker } from "@/components/ui/date-picker";
+
+import { Trash2 } from "lucide-react";
+
 const WeeklyGoals = ({ user }) => {
   const navigate = useNavigate();
+
   let [searchParams, setSearchParams] = useSearchParams();
   const [isNew, setIsNew] = useState(false);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [goal, setGoal] = useState("");
+  const [hoursRequired, setHoursRequired] = useState("");
+  const [deadline, setDeadline] = useState("");
 
-  const [goals, setGoals] = useState([
-    { goal: "", weeklyHours: 1, days: "weekdays" },
-    { goal: "", weeklyHours: 1, days: "weekdays" },
-    { goal: "", weeklyHours: 1, days: "weekdays" },
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  const [nextWeek, setNextWeek] = useState([]);
+  const days_week = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
 
   useEffect(() => {
     if (user && user.weekly_goals) {
-      setGoals(user.weekly_goals.goals);
+      setTasks(user.weekly_goals.goals);
     }
 
     if (searchParams.get("new")) {
       setIsNew(true);
     }
+
+    if (nextWeek.length == 0) {
+      let date = new Date();
+      const copy = [];
+
+      for (let i = 0; i < 7; i++) {
+        copy.push(date);
+        date = new Date(date.setDate(date.getDate() + 1));
+      }
+
+      setNextWeek(copy);
+    }
   }, []);
 
-  useEffect(() => {
-    console.log(goals);
-  }, [goals]);
-
   const changeGoal = (index, new_text) => {
-    const copy = [...goals];
+    const copy = [...tasks];
     copy[index].goal = new_text;
-    setGoals(copy);
+    setTasks(copy);
+  };
+
+  const deleteGoal = (index) => {
+    const copy = [...tasks];
+    copy.splice(index, 1);
+    setTasks(copy);
   };
 
   const changeHours = (index, new_text) => {
-    const copy = [...goals];
-    copy[index].weeklyHours = new_text;
-    setGoals(copy);
+    const copy = [...tasks];
+    copy[index].hoursRequired = new_text;
+    setTasks(copy);
   };
 
-  const checkWeekdays = (index, new_value) => {
-    const copy = [...goals];
-    if (new_value && goals[index].days == "weekends") {
-      copy[index].days = "both";
-    }
-
-    if (new_value && goals[index].days == "") {
-      copy[index].days = "weekdays";
-    }
-
-    if (!new_value) {
-      copy[index].days = "weekends";
-    }
-
-    setGoals(copy);
+  const changeDeadline = (index, date) => {
+    const copy = [...tasks];
+    copy[index].deadline = date.toLocaleDateString("en-sg");
+    setTasks(copy);
   };
 
-  const checkWeekends = (index, new_value) => {
-    const copy = [...goals];
-    if (new_value && goals[index].days == "weekdays") {
-      copy[index].days = "both";
+  const nextQuestion = () => {
+    if (questionIndex < 3) {
+      setQuestionIndex(questionIndex + 1);
     }
-
-    if (new_value && goals[index].days == "") {
-      copy[index].days = "weekends";
-    }
-
-    if (!new_value) {
-      copy[index].days = "weekdays";
-    }
-
-    setGoals(copy);
   };
 
-  const addItem = () => {
-    if (goals.length >= 20) {
-      return;
-    }
+  const newRow = (end = false) => {
+    setQuestionIndex(0);
+    const copy = [...tasks];
+    copy.push({ goal, hoursRequired, deadline });
+    setTasks(copy);
 
-    const copy = [...goals];
-    copy.push({ goal: "", weeklyHours: 0, days: "", numDays: 0 });
-    setGoals(copy);
+    setGoal("");
+    setHoursRequired("");
+    setDeadline("");
+
+    if (end) {
+      submit(copy);
+    }
   };
 
-  const submit = () => {
-    newWeeklyGoals({ goals: goals, time: new Date().toString() }).then(() => {
-      if (isNew) {
-        navigate("/daily-goals?new=true");
-      } else {
-        navigate("/dashboard");
+  const submit = (new_tasks = tasks) => {
+    console.log(new_tasks);
+    newWeeklyGoals({ goals: new_tasks, time: new Date().toString() }).then(
+      () => {
+        if (isNew) {
+          navigate("/daily-goals?new=true");
+        } else {
+          navigate("/dashboard");
+        }
       }
-    });
+    );
   };
 
   return (
-    <>
+    <motion.div>
       <div className="page first weekly-goals">
-        <h1 className="heade">Weekly goals</h1>
-        <div className="table">
-          <div className="header row">
-            <div className="col col-1">What is your goal?</div>
-            <div className="col col-2">Weekly hours</div>
-            <div className="col col-3">On weekdays</div>
-            <div className="col col-4">On weekends</div>
-            <div className="col col-5">Hours per day</div>
+        <h1 className="header">Set your tasks for the next week</h1>
+        <div className="layout">
+          <div className="button-row">
+            <button
+              className="button outline"
+              onClick={nextQuestion}
+              disabled={tasks.length == 20 || questionIndex != 0}
+            >
+              Add new +
+            </button>
           </div>
+
+          <div className="questions">
+            {questionIndex > 0 ? (
+              <div className="question question-1">
+                <div className="question-row">
+                  <p className="q-text">Define your task</p>
+                  {/* <Dialog>
+                    <DialogTrigger>
+                      <span className="example">(Show example)</span>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Examples of SMART tasks</DialogTitle>
+                        <DialogDescription>
+                          Specific, Measurable, Achievable, Realistic, Tangible
+                        </DialogDescription>
+                      </DialogHeader>
+                      <ul>
+                        <li>To be able to run 10K in 2 hours in 6 months.</li>
+                        <li>To pass my Advanced Python course in 1 month.</li>
+                        <li>
+                          To be able to form basic sentences in French in 1
+                          year.
+                        </li>
+                        <li>To complete my first short film in 2 years.</li>
+                      </ul>
+                    </DialogContent>
+                  </Dialog> */}
+                </div>
+                <input
+                  type="text"
+                  className="input-bottom"
+                  value={goal}
+                  onChange={(e) => setGoal(e.target.value)}
+                />
+                {questionIndex == 1 ? (
+                  <button
+                    className="button"
+                    disabled={!goal}
+                    onClick={nextQuestion}
+                  >
+                    Next
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
+            {questionIndex > 1 ? (
+              <div className="question question-2">
+                {" "}
+                <p className="q-text">
+                  How many hours do you need to complete this?
+                </p>
+                <select
+                  value={hoursRequired}
+                  onChange={(e) => setHoursRequired(e.target.value)}
+                >
+                  <option value="">--Select--</option>
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                  <option value={6}>6</option>
+                  <option value={7}>7</option>
+                  <option value={8}>8</option>
+                  <option value={9}>9</option>
+                  <option value={10}>10</option>
+                  <option value={11}>11</option>
+                  <option value={12}>12</option>
+                  <option value={13}>13</option>
+                  <option value={14}>14</option>
+                  <option value={15}>15</option>
+                  <option value={16}>16</option>
+                  <option value={17}>17</option>
+                  <option value={18}>18</option>
+                  <option value={19}>19</option>
+                  <option value={20}>20</option>
+                  <option value={21}>21</option>
+                  <option value={22}>22</option>
+                  <option value={23}>23</option>
+                  <option value={24}>24</option>
+                  <option value={25}>25</option>
+                </select>
+                {questionIndex == 2 ? (
+                  <button
+                    className="button"
+                    disabled={!hoursRequired || !goal}
+                    onClick={nextQuestion}
+                  >
+                    Next
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
+            {questionIndex > 2 ? (
+              <div className="question question-3">
+                <p className="q-text">When is your deadline?</p>
+                <select
+                  value={deadline}
+                  onChange={(e) => setDeadline(e.target.value)}
+                >
+                  <option value="">--Select--</option>
+                  {nextWeek.map((day) => {
+                    console.log(day.toLocaleDateString());
+                    return (
+                      <option value={day.toLocaleDateString()}>
+                        {days_week[day.getDay()]}
+                      </option>
+                    );
+                  })}
+                </select>
+                {questionIndex == 3 ? (
+                  <div className="button-row">
+                    <button
+                      className="button"
+                      disabled={!deadline || !hoursRequired || !goal}
+                      onClick={newRow}
+                    >
+                      Submit, but I have more tasks
+                    </button>
+                    <button
+                      className="button outline"
+                      disabled={!deadline || !hoursRequired || !goal}
+                      onClick={() => {
+                        newRow(true);
+                      }}
+                    >
+                      Submit - I have no more tasks
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+        </div>
+        {tasks.length > 0 ? <p className="edit">Click boxes to edit</p> : null}
+        <div className="table">
           <div className="body">
-            {goals.map((goal, index) => {
+            {tasks.length > 0 ? (
+              <div className="header row">
+                <div className="col col-1">Define a task</div>
+                <div className="col col-2">Hours required</div>
+                <div className="col col-3">Deadline</div>
+                <div className="col col-4">Hours per day</div>
+              </div>
+            ) : null}
+            {tasks.map((task, index) => {
+              const date_diff = Math.ceil(
+                (new Date(
+                  tasks[index].deadline.split("/")[2],
+                  parseInt(tasks[index].deadline.split("/")[1]) - 1,
+                  tasks[index].deadline.split("/")[0]
+                ) -
+                  new Date()) /
+                  (1000 * 60 * 60 * 24)
+              );
+
               return (
                 <div className="row">
                   <div className="col col-1">
+                    {index + 1}
                     <input
                       type="text"
                       className="input-bottom"
                       onChange={(e) => changeGoal(index, e.target.value)}
-                      value={goals[index].goal}
+                      value={tasks[index].goal}
                     />
+                    <div
+                      className="trash-wrapper"
+                      onClick={() => deleteGoal(index)}
+                    >
+                      <Trash2 className="delete" color="red" />
+                    </div>
                   </div>
                   <div className="col col-2">
                     <input
@@ -128,63 +310,38 @@ const WeeklyGoals = ({ user }) => {
                       onChange={(e) => changeHours(index, e.target.value)}
                       min={1}
                       max={168}
-                      value={goals[index].weeklyHours}
+                      value={tasks[index].hoursRequired}
                     />
                   </div>
                   <div className="col col-3">
-                    <input
-                      type="checkbox"
-                      onChange={(e) => checkWeekdays(index, e.target.checked)}
-                      checked={
-                        goals[index].days == "weekdays" ||
-                        goals[index].days == "both"
-                      }
-                    />
+                    <p className="text">
+                      <DatePicker
+                        date={
+                          new Date(
+                            tasks[index].deadline.split("/")[2],
+                            parseInt(tasks[index].deadline.split("/")[1]) - 1,
+                            tasks[index].deadline.split("/")[0]
+                          )
+                        }
+                        toDate={
+                          new Date(new Date().setDate(new Date().getDate() + 7))
+                        }
+                        onSelect={(date) => changeDeadline(index, date)}
+                      />
+                    </p>
                   </div>
                   <div className="col col-4">
-                    <input
-                      type="checkbox"
-                      onChange={(e) => checkWeekends(index, e.target.checked)}
-                      checked={
-                        goals[index].days == "weekends" ||
-                        goals[index].days == "both"
-                      }
-                    />
-                  </div>
-                  <div className="col col-5">
                     <p className="muted">
-                      {(
-                        goals[index].weeklyHours /
-                        (goals[index].days == "both"
-                          ? 7
-                          : goals[index].days == "weekdays"
-                          ? 5
-                          : 2)
-                      ).toFixed(2)}
+                      {(task.hoursRequired / date_diff).toFixed(2)}
                     </p>
                   </div>
                 </div>
               );
             })}
-            <div className="button-row">
-              <button
-                className="button button-block outline"
-                onClick={addItem}
-                disabled={goals.length == 20}
-              >
-                Add new
-              </button>
-            </div>
           </div>
         </div>
-        <button className="button button-block submit" onClick={submit}>
-          {isNew ? "Next" : "Submit"}
-        </button>
-        <p className="muted">
-          You can change these once they have been submitted.
-        </p>
       </div>
-    </>
+    </motion.div>
   );
 };
 
