@@ -6,9 +6,9 @@ import { Slider } from "@/components/ui/slider";
 
 const DailyGoalsWorkflow = ({ user, nextSlide }) => {
   const [tasks, setTasks] = useState([
-    { goal: "", time: 15, reminder: false },
-    { goal: "", time: 15, reminder: false },
-    { goal: "", time: 15, reminder: false },
+    { goal: "", time: 30, reminder: false },
+    { goal: "", time: 30, reminder: false },
+    { goal: "", time: 30, reminder: false },
   ]);
 
   const [disabled, setDisabled] = useState(true);
@@ -120,10 +120,10 @@ const DailyGoalsWorkflow = ({ user, nextSlide }) => {
                   >
                     <div className={"slider-wrapper"}>
                       <Slider
-                        defaultValue={[15]}
+                        defaultValue={[30]}
                         max={960}
-                        min={15}
-                        step={15}
+                        min={30}
+                        step={30}
                         value={[task.time]}
                         onValueChange={(e) => changeHours(index, e)}
                         disabled={task.reminder}

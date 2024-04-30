@@ -89,7 +89,7 @@
 
 .new-timebox .slides .slide-2 .wrapper .left {
   height: 60vh;
-  width: 40vw;
+  width: 50vw;
 
   display: flex;
   flex-direction: column;
@@ -97,17 +97,16 @@
   align-items: center;
 }
 
-.new-timebox .slides .slide-2 .wrapper .left .og-list li {
-  padding: 8px;
-}
-
-.new-timebox .slides .slide-2 .wrapper .left .og-list li span {
-  user-select: none;
+.new-timebox .slides .slide-2 .wrapper .left .row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
 }
 
 .new-timebox .slides .slide-2 .wrapper .right {
   height: 60vh;
-  width: 70vw;
+  width: 60vw;
 
   display: flex;
   flex-direction: column;

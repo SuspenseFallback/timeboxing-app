@@ -44,7 +44,7 @@ export function SortableItem({ children, id }: PropsWithChildren<Props>) {
     [attributes, listeners, setActivatorNodeRef]
   );
   const style: CSSProperties = {
-    opacity: isDragging ? 0.4 : undefined,
+    opacity: isDragging ? 0.4 : "1",
     transform: CSS.Translate.toString(transform),
     transition,
   };

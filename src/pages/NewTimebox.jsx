@@ -32,19 +32,17 @@ const NewTimebox = ({ user }) => {
   );
 
   const [index, setIndex] = useState(0);
-  const [items, setItems] = useState([
-    { item: "Free time", hours: 1, id: 1 },
-    { item: "Free time", hours: 1, id: 2 },
-  ]);
+  const [items, setItems] = useState([]);
 
+  const [fits, setFits] = useState(false);
   const [disabled, setDisabled] = useState(true);
 
   const [stage1Error, setStage1Error] = useState("");
   const [stage1Disabled, setStage1Disabled] = useState(false);
 
   const [times, setTimes] = useState([
-    { time: "6:00", activity: "Free time" },
-    { time: "7:00", activity: "Free time" },
+    { time: "6:00", activity: "" },
+    { time: "7:00", activity: "" },
     { time: "8:00", activity: "" },
     { time: "9:00", activity: "" },
     { time: "10:00", activity: "" },
@@ -65,7 +63,148 @@ const NewTimebox = ({ user }) => {
   useEffect(() => {
     document.title = "New timebox";
 
-    // setItems(copy);
+    const copy = [...items];
+    let sum = 0;
+
+    if (user.daily_goals) {
+      user.daily_goals.goals.forEach((g) => {
+        if (!g.reminder) {
+          copy.push({ item: g.goal, minutes: g.time, id: copy.length + 1 });
+          sum += g.time;
+        }
+      });
+    }
+
+    if (user.weekly_goals) {
+      user.weekly_goals.goals.forEach((g) => {
+        console.log(g);
+        copy.push({
+          item: g.goal,
+          minutes: parseInt(g.hoursRequired) * 60,
+          id: copy.length + 1,
+        });
+        sum += parseInt(g.hoursRequired) * 60;
+      });
+    }
+
+    if (user.six_monthly_goals) {
+      user.six_monthly_goals.goals.forEach((g) => {
+        if (g.days == "both") {
+          copy.push({
+            item: g.goal,
+            minutes: Math.round((parseInt(g.weeklyHours) * 60) / 7),
+            id: copy.length + 1,
+          });
+          sum += Math.round((parseInt(g.weeklyHours) * 60) / 7);
+        } else if (g.days == "weekends" && new Date().getDay() % 6 == 0) {
+          copy.push({
+            item: g.goal,
+            minutes: parseInt(g.weeklyHours) * 30,
+            id: copy.length + 1,
+          });
+          sum += parseInt(g.weeklyHours) * 30;
+        } else if (g.days == "weekdays" && new Date().getDay() % 6 != 0) {
+          copy.push({
+            item: g.goal,
+            minutes: parseInt(g.weeklyHours) * 12,
+            id: copy.length + 1,
+          });
+          sum += parseInt(g.weeklyHours) * 12;
+        }
+      });
+    }
+
+    setItems(copy);
+
+    if (user.schedule && user.schedule.sleep) {
+      const [wakeUpHour, wakeUpMinutes] =
+        user.schedule.sleep.wakeUpTime.split(":");
+
+      const [bedTimeHour, bedTimeMinutes] =
+        user.schedule.sleep.bedTime.split(":");
+
+      const today = new Date();
+
+      let wakeUpDate = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+        parseInt(wakeUpHour),
+        parseInt(wakeUpMinutes)
+      );
+
+      const bedTimeDate = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+        parseInt(bedTimeHour),
+        parseInt(bedTimeMinutes)
+      );
+
+      const minutes_diff = (bedTimeDate - wakeUpDate) / (1000 * 60);
+
+      if (sum <= minutes_diff) {
+        setFits(true);
+      }
+
+      const new_times = [];
+
+      while (wakeUpDate <= bedTimeDate) {
+        new_times.push({
+          time: wakeUpDate.toLocaleTimeString().slice(0, 5),
+          activity: "",
+        });
+        wakeUpDate = new Date(
+          wakeUpDate.setTime(wakeUpDate.getTime() + 1000 * 60 * 30)
+        );
+      }
+
+      setTimes(new_times);
+    }
+
+    if (user.schedule && user.schedule.fixed) {
+      const copy = [...user.schedule.fixed];
+
+      copy.splice(0, 0, copy[copy.length - 1]);
+      copy.splice(copy.length - 1, 1);
+
+      const today = copy[new Date().getDay()];
+      console.log(today);
+      const [startHour, startMinutes] = today.startTime.split(":");
+      const [endHour, endMinutes] = today.endTime.split(":");
+
+      let startDate = new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate(),
+        parseInt(startHour),
+        parseInt(startMinutes)
+      );
+
+      const endDate = new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate(),
+        parseInt(endHour),
+        parseInt(endMinutes)
+      );
+
+      const times_copy = [...times];
+
+      while (startDate <= endDate) {
+        times_copy.forEach((i, index) => {
+          if (i.time == startDate.toLocaleTimeString().slice(0, 5)) {
+            times_copy[index].activity = today.activity;
+          }
+        });
+
+        startDate = new Date(
+          startDate.setTime(startDate.getTime() + 1000 * 60 * 30)
+        );
+      }
+
+      setTimes(times_copy);
+    }
   }, []);
 
   useEffect(() => {
@@ -164,12 +303,14 @@ const NewTimebox = ({ user }) => {
                   renderItem={(item, index) => (
                     <SortableList.Item id={item.id}>
                       {item.item}
-                      <SortableList.DragHandle />
+                      <div className="row">
+                        <p className="time">{item.minutes} min</p>
+                        <SortableList.DragHandle />
+                      </div>
                     </SortableList.Item>
                   )}
                 />
               </div>
-              <ArrowRight />
               <div className="right">
                 <ScrollArea className="time-scroll rounded-md border p-4">
                   <ul className="times-wrapper">
