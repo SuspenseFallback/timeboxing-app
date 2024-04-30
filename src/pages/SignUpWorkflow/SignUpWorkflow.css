@@ -1,0 +1,129 @@
+.sign-up-workflow {
+  width: 700vw;
+  height: 90vh;
+
+  position: relative;
+}
+
+.sign-up-workflow .slides {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 700vw;
+  height: 90vh;
+
+  transition: all 0.5s;
+}
+
+.sign-up-workflow .slides .slide {
+  width: 100vw;
+  height: 90vh;
+}
+
+.sign-up-workflow .slides.index-1 {
+  left: 0;
+}
+
+.sign-up-workflow .slides.index-2 {
+  left: -100vw;
+}
+
+.sign-up-workflow .slides.index-3 {
+  left: -200vw;
+}
+
+.sign-up-workflow .slides.index-4 {
+  left: -300vw;
+}
+
+.sign-up-workflow .slides.index-5 {
+  left: -400vw;
+}
+
+.sign-up-workflow .slides.index-6 {
+  left: -500vw;
+}
+
+.sign-up-workflow .slides.index-7 {
+  left: -600vw;
+}
+
+.sign-up-workflow .slides .slide-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-up-workflow .slides .slide-1 .header {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.sign-up-workflow .slides .slide-1 .desc {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: grey;
+}
+
+.sign-up-workflow .slides .slide-1 .button {
+  margin-top: 3rem;
+  padding: 12px 18px;
+}
+
+.workflow.six-monthly-goals .header {
+  /* padding: 0; */
+}
+
+.workflow.six-monthly-goals .subheader {
+  color: grey;
+  font-size: 1.6rem !important;
+  padding: 0;
+}
+
+.workflow.six-monthly-goals .layout {
+  justify-content: center;
+}
+
+.school .header {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.sign-up-workflow .progress-bar {
+  width: 35vw;
+  height: 6px;
+  margin-top: 1rem;
+}
+
+.school .question-container {
+  margin-top: 5vh;
+}
+
+.sign-up-workflow .slides .slide-4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-up-workflow .slides .slide-4 p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: grey;
+}
+
+.sign-up-workflow .slides .slide-4 .button {
+  margin-top: 3rem;
+  padding: 12px 18px;
+}
+
+.weekly-goals.workflow .layout {
+  justify-content: center;
+}

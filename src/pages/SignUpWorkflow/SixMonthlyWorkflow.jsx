@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./SixMonthlyGoals.css";
+import "../SixMonthlyGoals.css";
+import { Progress } from "@/components/ui/progress";
 
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { newSixMonthlyGoals } from "../firebase/firebase";
+import { newSixMonthlyGoals } from "../../firebase/firebase";
 
 import { motion } from "framer-motion";
 
@@ -13,13 +13,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Trash2 } from "lucide-react";
 
-const SixMonthlyGoals = ({ user }) => {
-  const navigate = useNavigate();
-  let [searchParams, setSearchParams] = useSearchParams();
-  const [isNew, setIsNew] = useState(false);
+const SixMonthlyWorkflow = ({ user, nextSlide }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [goal, setGoal] = useState("");
   const [weeklyHours, setWeeklyHours] = useState("");
@@ -31,19 +29,7 @@ const SixMonthlyGoals = ({ user }) => {
     if (user && user.six_monthly_goals) {
       setGoals(user.six_monthly_goals.goals);
     }
-
-    if (searchParams.get("new")) {
-      setIsNew(true);
-    }
   }, []);
-
-  useEffect(() => {
-    console.log(goal, weeklyHours, days);
-  }, [goal, weeklyHours, days]);
-
-  useEffect(() => {
-    console.log(goals);
-  }, [goals]);
 
   const changeGoal = (index, new_text) => {
     const copy = [...goals];
@@ -117,19 +103,17 @@ const SixMonthlyGoals = ({ user }) => {
   const submit = () => {
     newSixMonthlyGoals({ goals: goals, time: new Date().toString() }).then(
       () => {
-        if (isNew) {
-          navigate("/weekly-goals?new=true");
-        } else {
-          navigate("/dashboard");
-        }
+        nextSlide();
       }
     );
   };
 
   return (
     <motion.div>
-      <div className="page first six-monthly-goals">
-        <h1 className="header">Set your goals for the next six months</h1>
+      <div className="page first six-monthly-goals workflow">
+        <h1 className="header">Step 1:</h1>
+        <h1 className="subheader">Set your goals for the next few months</h1>
+        <Progress value={16} className="progress-bar" />
         <div className="layout">
           <div className="button-row">
             <button
@@ -139,6 +123,14 @@ const SixMonthlyGoals = ({ user }) => {
             >
               Add new +
             </button>
+            {goals.length > 0 ? (
+              <button
+                className="button"
+                onClick={nextSlide}
+              >
+                Skip
+              </button>
+            ) : null}
           </div>
 
           <div className="questions">
@@ -348,15 +340,9 @@ const SixMonthlyGoals = ({ user }) => {
             })}
           </div>
         </div>
-        {/* <button className="button button-block submit" onClick={submit}>
-          {isNew ? "Next" : "Submit"}
-        </button>
-        <p className="muted">
-          You can change these once they have been submitted.
-        </p> */}
       </div>
     </motion.div>
   );
 };
 
-export default SixMonthlyGoals;
+export default SixMonthlyWorkflow;

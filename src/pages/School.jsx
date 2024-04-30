@@ -4,8 +4,11 @@ import "./School.css";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Spinner from "@/components/Spinner";
+import { Progress } from "@/components/ui/progress";
 
-const School = () => {
+import { newSchedule } from "../firebase/firebase";
+
+const School = ({ user, nextSlide }) => {
   const [option, setOption] = useState("yes");
   const [isCopy, setIsCopy] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -113,7 +116,10 @@ const School = () => {
     for (let i = 0; i < data.length; i++) {
       const item = data[i];
 
-      if ((item.startTime == "" || item.endTime == "") && item.active) {
+      if (
+        (item.startTime == "" || item.endTime == "" || item.activity == "") &&
+        item.active
+      ) {
         return false;
       }
     }
@@ -162,6 +168,29 @@ const School = () => {
     setData(copy);
   };
 
+  const changeActivity = (index, activity) => {
+    const copy = [...data];
+    copy[index].activity = activity;
+    setData(copy);
+
+    if (isCopy) {
+      copy.forEach((c, index) => {
+        if (index > 0 && c.active) {
+          c.startTime = copy[0].startTime;
+          c.endTime = copy[0].endTime;
+        }
+      });
+    }
+
+    setData(copy);
+  };
+
+  const submit = () => {
+    newSchedule(option == "yes" ? data : false).then(() => {
+      nextSlide();
+    });
+  };
+
   return loading ? (
     <>
       <div className="page first">
@@ -171,6 +200,8 @@ const School = () => {
   ) : (
     <>
       <div className="page first school">
+        <h1 className="header">Step 2:</h1>
+        <Progress value={33} className="progress-bar" />
         <div className="question-container">
           <p className="question">
             Do you have a fixed schedule (work/college/school) for the next 6
@@ -243,6 +274,8 @@ const School = () => {
                         disabled={!d.active}
                         className="input-bottom"
                         placeholder="Activity name"
+                        value={d.activity}
+                        onChange={(e) => changeActivity(index, e.target.value)}
                       />
                     </div>
                   </div>
@@ -267,10 +300,11 @@ const School = () => {
           <p className="error">{error}</p>
           <button
             className="button button-block"
-            disabled={numOfChecks == 0}
+            disabled={numOfChecks == 0 && option == "yes"}
             onClick={() => {
               if (validate()) {
                 setError("");
+                submit();
               } else {
                 setError("Please fill in all fields.");
               }

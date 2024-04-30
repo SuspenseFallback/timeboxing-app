@@ -200,6 +200,22 @@ export const newSixMonthlyGoals = async (data) => {
   });
 };
 
+export const newSchedule = async (data) => {
+  getUser((user) => {
+    if (user) {
+      const userDoc = doc(db, "users", user.id);
+
+      updateDoc(userDoc, {
+        schedule: data,
+      }).then((data) => {
+        return data;
+      });
+    } else {
+      return [{}, { code: 401, message: "Not authenticated" }];
+    }
+  });
+};
+
 // messaging
 
 if ("serviceWorker" in navigator) {
