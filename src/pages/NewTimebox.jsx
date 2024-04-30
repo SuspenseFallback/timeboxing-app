@@ -61,6 +61,22 @@ const NewTimebox = ({ user }) => {
   ]);
 
   useEffect(() => {
+    let sum = 0;
+    times.forEach((time) => {
+      if (time.activity == "") {
+        sum += 30;
+      }
+    });
+    let other = 0;
+    if (items) {
+      items.forEach((item) => {
+        other += item.minutes;
+      });
+    }
+    setFits(other <= sum);
+  }, [times]);
+
+  useEffect(() => {
     document.title = "New timebox";
 
     const copy = [...items];
@@ -77,10 +93,18 @@ const NewTimebox = ({ user }) => {
 
     if (user.weekly_goals) {
       user.weekly_goals.goals.forEach((g) => {
-        console.log(g);
+        const date2 = new Date(
+          g.deadline.split("/")[2],
+          g.deadline.split("/")[1] - 1,
+          g.deadline.split("/")[0]
+        );
+        console.log(date2);
+        const date1 = new Date();
+        const diffTime = Math.abs(date2.getTime() - date1.getTime());
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
         copy.push({
           item: g.goal,
-          minutes: parseInt(g.hoursRequired) * 60,
+          minutes: (parseInt(g.hoursRequired) * 60) / diffDays,
           id: copy.length + 1,
         });
         sum += parseInt(g.hoursRequired) * 60;
@@ -143,10 +167,6 @@ const NewTimebox = ({ user }) => {
 
       const minutes_diff = (bedTimeDate - wakeUpDate) / (1000 * 60);
 
-      if (sum <= minutes_diff) {
-        setFits(true);
-      }
-
       const new_times = [];
 
       while (wakeUpDate <= bedTimeDate) {
@@ -159,51 +179,56 @@ const NewTimebox = ({ user }) => {
         );
       }
 
+      console.log(new_times);
       setTimes(new_times);
-    }
 
-    if (user.schedule && user.schedule.fixed) {
-      const copy = [...user.schedule.fixed];
+      if (user.schedule && user.schedule.fixed) {
+        const copy = [...user.schedule.fixed];
 
-      copy.splice(0, 0, copy[copy.length - 1]);
-      copy.splice(copy.length - 1, 1);
+        copy.splice(0, 0, copy[copy.length - 1]);
+        copy.splice(copy.length - 1, 1);
 
-      const today = copy[new Date().getDay()];
-      console.log(today);
-      const [startHour, startMinutes] = today.startTime.split(":");
-      const [endHour, endMinutes] = today.endTime.split(":");
+        const today = copy[new Date().getDay()];
+        if (!today.active) {
+          return;
+        }
 
-      let startDate = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth(),
-        new Date().getDate(),
-        parseInt(startHour),
-        parseInt(startMinutes)
-      );
+        const [startHour, startMinutes] = today.startTime.split(":");
+        const [endHour, endMinutes] = today.endTime.split(":");
 
-      const endDate = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth(),
-        new Date().getDate(),
-        parseInt(endHour),
-        parseInt(endMinutes)
-      );
-
-      const times_copy = [...times];
-
-      while (startDate <= endDate) {
-        times_copy.forEach((i, index) => {
-          if (i.time == startDate.toLocaleTimeString().slice(0, 5)) {
-            times_copy[index].activity = today.activity;
-          }
-        });
-
-        startDate = new Date(
-          startDate.setTime(startDate.getTime() + 1000 * 60 * 30)
+        let startDate = new Date(
+          new Date().getFullYear(),
+          new Date().getMonth(),
+          new Date().getDate(),
+          parseInt(startHour),
+          parseInt(startMinutes)
         );
-      }
 
-      setTimes(times_copy);
+        const endDate = new Date(
+          new Date().getFullYear(),
+          new Date().getMonth(),
+          new Date().getDate(),
+          parseInt(endHour),
+          parseInt(endMinutes)
+        );
+
+        const times_copy = [...new_times];
+
+        while (startDate <= endDate) {
+          times_copy.forEach((i, index) => {
+            if (i.time == startDate.toLocaleTimeString().slice(0, 5)) {
+              times_copy[index].activity = today.activity;
+            }
+          });
+
+          startDate = new Date(
+            startDate.setTime(startDate.getTime() + 1000 * 60 * 30)
+          );
+        }
+
+        console.log(times_copy);
+        setTimes(times_copy);
+      }
     }
   }, []);
 
@@ -297,19 +322,21 @@ const NewTimebox = ({ user }) => {
             </div>
             <div className="wrapper">
               <div className="left">
-                <SortableList
-                  items={items}
-                  onChange={setItems}
-                  renderItem={(item, index) => (
-                    <SortableList.Item id={item.id}>
-                      {item.item}
-                      <div className="row">
-                        <p className="time">{item.minutes} min</p>
-                        <SortableList.DragHandle />
-                      </div>
-                    </SortableList.Item>
-                  )}
-                />
+                <ScrollArea className="item-scroll rounded-md border p-4">
+                  <SortableList
+                    items={items}
+                    onChange={setItems}
+                    renderItem={(item, index) => (
+                      <SortableList.Item id={item.id}>
+                        {item.item}
+                        <div className="row">
+                          <p className="time">{item.minutes} min</p>
+                          <SortableList.DragHandle />
+                        </div>
+                      </SortableList.Item>
+                    )}
+                  />
+                </ScrollArea>
               </div>
               <div className="right">
                 <ScrollArea className="time-scroll rounded-md border p-4">
@@ -336,9 +363,16 @@ const NewTimebox = ({ user }) => {
                 </ScrollArea>
               </div>
             </div>
-            <p className="desc">
-              Remember to include both free time slots and all of your goals!
-            </p>
+            {fits ? (
+              <p className="desc">
+                Remember to include both free time slots and all of your goals!
+              </p>
+            ) : (
+              <p className="error">
+                You don't have enough time to do all your tasks. Please
+                prioritize and put in the ones you need.
+              </p>
+            )}
             <div className="button-row">
               <Button className="outline" onClick={() => setIndex(index - 1)}>
                 Back
