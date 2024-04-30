@@ -16,9 +16,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useNavigate, useParams } from "react-router";
+import { SortableList } from "../components";
 
 const NewTimebox = ({ user }) => {
   const navigate = useNavigate();
+
   const { day } = useParams();
 
   const [date, setDate] = useState(
@@ -29,19 +31,16 @@ const NewTimebox = ({ user }) => {
     )
   );
 
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState(0);
   const [items, setItems] = useState([
-    { item: "Free time", hours: 1 },
-    { item: "Free time", hours: 1 },
+    { item: "Free time", hours: 1, id: 1 },
+    { item: "Free time", hours: 1, id: 2 },
   ]);
 
   const [disabled, setDisabled] = useState(true);
-  const [sum, setSum] = useState(2);
 
   const [stage1Error, setStage1Error] = useState("");
   const [stage1Disabled, setStage1Disabled] = useState(false);
-  const [stage2Error, setStage2Error] = useState("");
-  const [stage2Disabled, setStage2Disabled] = useState(false);
 
   const [times, setTimes] = useState([
     { time: "6:00", activity: "Free time" },
@@ -66,111 +65,7 @@ const NewTimebox = ({ user }) => {
   useEffect(() => {
     document.title = "New timebox";
 
-    const copy = [...items];
-
-    if (user.daily_goals) {
-      user.daily_goals.goals.forEach((g) => {
-        if (g.days == "both") {
-          copy.push({
-            item: g.goal,
-            hours: Math.ceil(
-              g.weeklyHours /
-                (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
-            ),
-          });
-        } else {
-          const num = new Date().getDate();
-
-          if (num % 6 == 0 && g.days == "weekends") {
-            copy.push({
-              item: g.goal,
-              hours: Math.ceil(
-                g.weeklyHours /
-                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
-              ),
-            });
-          } else if (num % 6 != 0 && g.days == "weekdays") {
-            copy.push({
-              item: g.goal,
-              hours: Math.ceil(
-                g.weeklyHours /
-                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
-              ),
-            });
-          }
-        }
-      });
-    }
-
-    if (user.weekly_goals) {
-      user.weekly_goals.goals.forEach((g) => {
-        if (g.days == "both") {
-          copy.push({
-            item: g.goal,
-            hours: Math.ceil(
-              g.weeklyHours /
-                (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
-            ),
-          });
-        } else {
-          const num = new Date().getDate();
-
-          if (num % 6 == 0 && g.days == "weekends") {
-            copy.push({
-              item: g.goal,
-              hours: Math.ceil(
-                g.weeklyHours /
-                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
-              ),
-            });
-          } else if (num % 6 != 0 && g.days == "weekdays") {
-            copy.push({
-              item: g.goal,
-              hours: Math.ceil(
-                g.weeklyHours /
-                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
-              ),
-            });
-          }
-        }
-      });
-    }
-
-    if (user.six_monthly_goals) {
-      user.six_monthly_goals.goals.forEach((g) => {
-        if (g.days == "both") {
-          copy.push({
-            item: g.goal,
-            hours: Math.ceil(
-              g.weeklyHours /
-                (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
-            ),
-          });
-        } else {
-          const num = new Date().getDate();
-
-          if (num % 6 == 0 && g.days == "weekends") {
-            copy.push({
-              item: g.goal,
-              hours: Math.ceil(
-                g.weeklyHours /
-                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
-              ),
-            });
-          } else if (num % 6 != 0 && g.days == "weekdays") {
-            copy.push({
-              item: g.goal,
-              hours: Math.ceil(
-                g.weeklyHours /
-                  (g.days == "both" ? 7 : g.days == "weekdays" ? 5 : 2)
-              ),
-            });
-          }
-        }
-      });
-    }
-
-    setItems(copy);
+    // setItems(copy);
   }, []);
 
   useEffect(() => {
@@ -211,67 +106,10 @@ const NewTimebox = ({ user }) => {
     setDisabled(dis);
   }, [times]);
 
-  useEffect(() => {
-    let acc = 0;
-
-    items.forEach((i) => {
-      acc += i.hours;
-    });
-
-    setSum(acc);
-
-    if (acc >= 18) {
-      setStage2Disabled(true);
-      setStage2Error(true);
-    } else {
-      setStage2Disabled(false);
-      setStage2Error(false);
-    }
-  }, [items]);
-
-  const deleteItem = (i) => {
-    const copy = [...items];
-    copy.splice(i, 1);
-    setItems(copy);
-  };
-
-  const changeItem = (i, text) => {
-    const copy = [...items];
-    copy[i].item = text;
-    setItems(copy);
-  };
-
-  const addItem = () => {
-    const copy = [...items];
-    copy.push({ item: "", hours: 1 });
-    setItems(copy);
-  };
-
   const changeTime = (i, text) => {
     const copy = [...times];
     copy[i].activity = text;
     setTimes(copy);
-  };
-
-  const toStage3 = () => {
-    const copy = [...times];
-    const items_copy = [...items];
-
-    items_copy.forEach((item, index) => {
-      for (var i = 0; i < item.hours - 1; i++) {
-        items_copy.splice(index, 0, item);
-      }
-    });
-
-    if (items_copy.length < copy.length) {
-      items_copy.forEach((item, index) => {
-        copy[index].activity = item.item;
-      });
-    }
-
-    console.log(copy, items_copy);
-    setTimes(copy);
-    setIndex(index + 1);
   };
 
   const submit = () => {
@@ -290,7 +128,7 @@ const NewTimebox = ({ user }) => {
         <div className={`slides index-${index}`}>
           <div className="slide slide-1">
             <div className="text-container">
-              <h2 className="header">Step 1 of 3</h2>
+              <h2 className="header">Step 1 of 2</h2>
               <p className="caption">Pick a date</p>
             </div>
             <div className="calendar-wrapper">
@@ -315,105 +153,21 @@ const NewTimebox = ({ user }) => {
           </div>
           <div className="slide slide-2">
             <div className="text-container">
-              <h2 className="header">Step 2 of 3</h2>
-              <p className="caption">What are your goals for today?</p>
-            </div>
-            <div className="items-wrapper">
-              {items.map((item, index) => {
-                return (
-                  <div
-                    className={"item " + (index <= 1 ? "wide" : "")}
-                    key={index}
-                  >
-                    {index <= 1 ? (
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <div className="help">
-                              <CircleHelp />{" "}
-                            </div>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>
-                              You need at least 2 free hours.{" "}
-                              <span className="link">Learn more</span>
-                            </p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    ) : null}
-                    <button
-                      className="icon"
-                      disabled={index <= 1 ? true : items.length == 3}
-                      onClick={() => deleteItem(index)}
-                    >
-                      <Trash2 />
-                    </button>
-                    <p className="index">{index + 1}</p>
-                    <Input
-                      value={items[index].item}
-                      onChange={(e) => changeItem(index, e.target.value)}
-                      disabled={index <= 1}
-                    />
-                    <span className="hours">H: {item.hours}</span>
-                  </div>
-                );
-              })}
-            </div>
-            {stage2Error ? (
-              <p className="error">
-                Too many hours - please prioritize your tasks
-              </p>
-            ) : (
-              <p className="hours">Hours: {sum}</p>
-            )}
-            <div className="button-row">
-              <Button
-                className="outline"
-                onClick={() =>
-                  setItems([
-                    { item: "Free time", hours: 1 },
-                    { item: "Free time", hours: 1 },
-                    { item: "", hours: 1 },
-                    { item: "", hours: 1 },
-                    { item: "", hours: 1 },
-                  ])
-                }
-              >
-                Reset
-              </Button>
-              <Button onClick={addItem} disabled={items.length >= 24}>
-                Add item
-              </Button>
-            </div>
-
-            <br />
-            <div className="button-row">
-              <Button className="outline" onClick={() => setIndex(index - 1)}>
-                Back
-              </Button>
-              <Button onClick={toStage3} disabled={items.includes("")}>
-                Next
-              </Button>
-            </div>
-          </div>
-          <div className="slide slide-3">
-            <div className="text-container">
-              <h2 className="header">Step 3 of 3</h2>
+              <h2 className="header">Step 2 of 2</h2>
               <p className="caption">Create timebox</p>
             </div>
             <div className="wrapper">
               <div className="left">
-                <ol className="og-list">
-                  {items.map((item, index) => {
-                    return (
-                      <li key={index + 1000}>
-                        <span>{index + 1}. </span>
-                        {item.item}, hours: {item.hours}
-                      </li>
-                    );
-                  })}
-                </ol>
+                <SortableList
+                  items={items}
+                  onChange={setItems}
+                  renderItem={(item, index) => (
+                    <SortableList.Item id={item.id}>
+                      {item.item}
+                      <SortableList.DragHandle />
+                    </SortableList.Item>
+                  )}
+                />
               </div>
               <ArrowRight />
               <div className="right">
