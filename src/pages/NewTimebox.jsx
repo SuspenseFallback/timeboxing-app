@@ -231,6 +231,14 @@ const NewTimebox = ({ user }) => {
         setFree(other);
         setTimes(times_copy);
       }
+
+      if (!fixed) {
+        const times_copy = [...new_times];
+        times_copy.forEach((t, i) => {
+          times_copy[i].activity = "";
+        });
+        setTimes(times_copy);
+      }
     }
   }, [fixed]);
 
@@ -254,8 +262,7 @@ const NewTimebox = ({ user }) => {
     items.forEach((item) => {
       const required = Math.ceil(item.minutes / 30);
       const length = times.filter((i) => i.activity == item.item).length;
-
-      console.log(length < required);
+      console.log(item, required);
 
       if (length < required) {
         dis = true;
@@ -360,8 +367,8 @@ const NewTimebox = ({ user }) => {
                 <div className="row">
                   <input
                     type="checkbox"
-                    name="fixed"
-                    id="fixed"
+                    name="fixedCheck"
+                    id="fixedCheck"
                     checked={fixed}
                     onChange={(e) => setFixed(e.target.checked)}
                   />
