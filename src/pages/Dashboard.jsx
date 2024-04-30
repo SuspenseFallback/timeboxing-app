@@ -49,17 +49,19 @@ const Dashboard = ({ user }) => {
   }, []);
 
   useEffect(() => {
-    setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
-    }, 1000);
+    setTime(new Date().toLocaleTimeString());
   }, []);
 
   useEffect(() => {
-    const date_str = date.toLocaleDateString("en-sg");
+    if (date) {
+      const date_str = date.toLocaleDateString("en-sg");
 
-    const box = user.boxes.filter((b) => b.date == date_str);
+      const box = user.boxes.filter((b) => b.date == date_str);
 
-    setRightIsTimebox(box.length != 0);
+      setRightIsTimebox(box.length != 0);
+    } else {
+      setRightIsTimebox(false);
+    }
   }, [date]);
 
   useEffect(() => {
@@ -168,20 +170,20 @@ const Dashboard = ({ user }) => {
               <>
                 <Button
                   onClick={() => {
-                    const date = new Date()
+                    const new_date = new Date()
                       .toLocaleDateString("en-sg")
                       .replaceAll("/", "-");
-                    navigate("/view-timebox/" + date);
+                    navigate("/view-timebox/" + new_date);
                   }}
                 >
                   View timebox
                 </Button>
                 <Button
                   onClick={() => {
-                    const date = new Date()
+                    const new_date = new Date()
                       .toLocaleDateString("en-sg")
                       .replaceAll("/", "-");
-                    navigate("/edit-timebox/" + date);
+                    navigate("/edit-timebox/" + new_date);
                   }}
                 >
                   Edit timebox
@@ -207,18 +209,27 @@ const Dashboard = ({ user }) => {
           />
           {rightIsTimebox ? (
             <>
-              <p className="text">
-                There is a timebox for {date.toLocaleDateString("en-sg")}!
-              </p>
+              {date ? (
+                <p className="text">
+                  There is a timebox for {date.toLocaleDateString("en-sg")}!
+                </p>
+              ) : (
+                <p className="text">Please select a date</p>
+              )}
               <Button onClick={() => navigate("/new-timebox")}>
                 View timebox
               </Button>
             </>
           ) : (
             <>
-              <p className="text">
-                There is no timebox for {date.toLocaleDateString("en-sg")}.
-              </p>
+              {date ? (
+                <p className="text">
+                  There is no timebox for {date.toLocaleDateString("en-sg")}.
+                </p>
+              ) : (
+                <p className="text">Please select a date</p>
+              )}
+
               <Button onClick={() => navigate("/new-timebox")}>
                 Create timebox
               </Button>

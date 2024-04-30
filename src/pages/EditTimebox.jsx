@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../pages/EditTimebox.css";
-import { Calendar } from "@/components/ui/calendar";
-import { Trash2, ArrowRight, CircleHelp } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

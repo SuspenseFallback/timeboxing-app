@@ -243,16 +243,21 @@ const NewTimebox = ({ user }) => {
   }, [fixed]);
 
   useEffect(() => {
-    const cur_date = date.toLocaleDateString("en-sg");
+    if (date) {
+      const cur_date = date.toLocaleDateString("en-sg");
 
-    const box = user.boxes.filter((b) => b.date == cur_date);
+      const box = user.boxes.filter((b) => b.date == cur_date);
 
-    if (box.length > 0) {
-      setStage1Error("You already have a timebox for this day.");
-      setStage1Disabled(true);
+      if (box.length > 0) {
+        setStage1Error("You already have a timebox for this day.");
+        setStage1Disabled(true);
+      } else {
+        setStage1Error("");
+        setStage1Disabled(false);
+      }
     } else {
-      setStage1Error("");
-      setStage1Disabled(false);
+      setStage1Error("Please select a day.");
+      setStage1Disabled(true);
     }
   }, [date]);
 
