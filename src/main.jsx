@@ -12,6 +12,7 @@ import GoalSetting from "./pages/GoalSetting.jsx";
 import Settings from "./pages/Settings.jsx";
 import DailyGoals from "./pages/DailyGoals.jsx";
 import WeeklyGoals from "./pages/WeeklyGoals.jsx";
+import School from "./pages/School.jsx";
 import SixMonthlyGoals from "./pages/SixMonthlyGoals.jsx";
 import Navbar from "./components/Navbar.jsx";
 import NotFound from "./helpers/NotFound.jsx";
@@ -63,6 +64,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Settings />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/school-settings",
+        element: (
+          <ProtectedRoute>
+            <School />
           </ProtectedRoute>
         ),
       },

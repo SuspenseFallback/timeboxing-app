@@ -1,0 +1,174 @@
+.school .question-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  width: 50vw;
+}
+
+.school .question-container .question {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.school .data-container {
+  margin-top: 5vh;
+
+  width: 550px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.school .data-container .row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  padding: 8px;
+}
+
+.school .data-container .row .day-container {
+  display: flex;
+}
+
+.school .data-container .row .day-container .day {
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+}
+
+.school .data-container .row .day-container input {
+  width: 1.7em;
+  height: 1.7em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.school .data-container .row .day-container input:checked {
+  background-color: rgb(0, 0, 0);
+}
+
+.school .data-container .row .day-container input:before {
+  height: 1.7em;
+  width: 1.7em;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  transition: all 0.15s;
+}
+
+.school .data-container .row .day-container input:checked:before {
+  color: white;
+}
+
+.school .data-container .row .day-container .m:before {
+  content: "M";
+}
+
+.school .data-container .row .day-container .t:before {
+  content: "T";
+}
+
+.school .data-container .row .day-container .w:before {
+  content: "W";
+}
+
+.school .data-container .row .day-container .f:before {
+  content: "F";
+}
+
+.school .data-container .row .day-container .s:before {
+  content: "S";
+}
+
+.school .data-container .row .inputs-container {
+  display: flex;
+  flex-direction: row;
+
+  gap: 1rem;
+}
+
+.school .data-container .row .inputs-container select:disabled {
+  color: grey;
+}
+
+.school .data-container .row .inputs-container select {
+  transition: all 0.1s;
+}
+
+.school .check {
+  display: flex;
+  gap: 12px;
+
+  width: 550px;
+
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.school .check input {
+  width: 1.3em;
+  height: 1.3em;
+  background-color: white;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.school .check input:before {
+  content: "N";
+  height: 1.3em;
+  width: 1.3em;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  transition: all 0.15s;
+}
+
+.school .check input:checked {
+  background-color: rgb(0, 0, 0);
+}
+
+.school .check input:checked:before {
+  content: "Y";
+  color: #fff;
+}
+
+.school .bottom-group {
+  margin-top: 3rem;
+}
+
+.school .bottom-group .error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  padding: 8px;
+}
+
+.school .button-block {
+  width: 550px;
+}
