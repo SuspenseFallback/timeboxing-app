@@ -21,6 +21,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import axios from "axios";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -202,20 +203,32 @@ export const newSixMonthlyGoals = async (data) => {
 // messaging
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register(new URL("../service-worker.js", import.meta.url))
-    .then((registration) => {
-      console.log("Service Worker registered with scope:", registration);
+  getUser((user) => {
+    if (user) {
+      navigator.serviceWorker
+        .register(new URL("../service-worker.js", import.meta.url))
+        .then((registration) => {
+          console.log("Service Worker registered with scope:", registration);
 
-      getToken(messaging, {
-        serviceWorkerRegistration: registration,
-        vapidKey:
-          "BLvkBwI6BosymWMscxHeIeE1Je8Qg42IGluxYeTigWDvI0WjAxgTL6La09gvjTqDgqfLTm8G-nXPJnDDoScs4Fc",
-      }).then((currentToken) => {
-        console.log("currentToken", currentToken);
-      });
-    })
-    .catch((error) => {
-      console.error("Service Worker registration failed:", error);
-    });
+          getToken(messaging, {
+            serviceWorkerRegistration: registration,
+            vapidKey:
+              "BLvkBwI6BosymWMscxHeIeE1Je8Qg42IGluxYeTigWDvI0WjAxgTL6La09gvjTqDgqfLTm8G-nXPJnDDoScs4Fc",
+          }).then((currentToken) => {
+            axios
+              .post(
+                "https://timeboxing-server.onrender.com/token",
+                JSON.stringify({ token: currentToken, user: user }),
+                { headers: { "Content-Type": "application/json" } }
+              )
+              .then(() => {
+                console.log("Request complete");
+              });
+          });
+        })
+        .catch((error) => {
+          console.error("Service Worker registration failed:", error);
+        });
+    }
+  });
 }

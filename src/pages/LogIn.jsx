@@ -70,6 +70,12 @@ const LogIn = () => {
         <Button onClick={handleSubmit} className="submit" disabled={disabled}>
           Submit
         </Button>
+        <p className="sign-up">
+          Don't have an account?{" "}
+          <span className="link" onClick={() => navigate("/sign-up")}>
+            Sign up
+          </span>
+        </p>
       </div>
     </div>
   );

@@ -1,14 +1,13 @@
 // service-worker.js
+
 self.addEventListener("push", (event) => {
-  console.log("push", event.data.json());
+  console.log("push", event.data.json().data.title);
   const options = {
-    body: event.data.json().body,
+    body: event.data.json().data.body,
   };
+
   event.waitUntil(
-    self.registration.showNotification(
-      event.data.json().notification.title,
-      options
-    )
+    self.registration.showNotification(event.data.json().data.title, options)
   );
 });
 

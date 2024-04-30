@@ -61,6 +61,18 @@
   font-size: 14px;
 }
 
+.page.login .sign-up,
+.page.signup .log-in {
+  font-size: 14px;
+}
+
+.page.login .sign-up .link,
+.page.signup .log-in .link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 420px) {
   .page.signup .form {
     min-width: 250px;

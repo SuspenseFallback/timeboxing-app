@@ -174,7 +174,7 @@ const NewTimebox = ({ user }) => {
   }, []);
 
   useEffect(() => {
-    const cur_date = date.toLocaleDateString();
+    const cur_date = date.toLocaleDateString("en-sg");
 
     const box = user.boxes.filter((b) => b.date == cur_date);
     console.log(box);

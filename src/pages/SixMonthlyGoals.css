@@ -5,15 +5,13 @@
 }
 
 .six-monthly-goals .table {
-  height: 65vh;
+  /* height: 80vh; */
   width: 95vw;
-  border: 1px solid rgb(185, 185, 185);
+  /* border: 1px solid rgb(185, 185, 185); */
   border-radius: 12px;
 
   display: flex;
   flex-direction: column;
-
-  overflow-y: scroll;
 }
 
 .six-monthly-goals .table .row {
@@ -22,8 +20,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-left: 1px solid rgb(185, 185, 185);
 
-  border-bottom: 1px solid rgb(185, 185, 185);
+  /* border-bottom: 1px solid rgb(185, 185, 185); */
 }
 
 .six-monthly-goals .table .col {
@@ -42,7 +41,8 @@
 }
 
 .six-monthly-goals .table .header {
-  border-bottom: 1px solid rgb(185, 185, 185);
+  border-radius: 12px 12px 0 0;
+  /* border-bottom: 1px solid rgb(185, 185, 185); */
 }
 
 .six-monthly-goals .table .row .col-1 {
@@ -54,9 +54,13 @@
 
 .six-monthly-goals .table .row .col-2 {
   width: 20%;
-  text-align: left;
+  text-align: center;
   border-right: 1px solid rgb(185, 185, 185);
   padding-left: 1rem;
+}
+
+.six-monthly-goals .table .row .col-2 input {
+  text-align: center;
 }
 
 .six-monthly-goals .table .row .col-3 {
@@ -80,10 +84,11 @@
 
 .six-monthly-goals .table .body .col input {
   width: 90%;
+  border-bottom: none;
 }
 
 .six-monthly-goals .muted {
-  color: grey;
+  color: rgb(185, 185, 185);
 }
 
 .six-monthly-goals .table .body .row .col-3 {
@@ -112,7 +117,112 @@
 }
 
 .six-monthly-goals > .muted {
-  color: grey;
+  color: rgb(185, 185, 185);
   font-size: 14px;
   padding: 6px;
+}
+
+.six-monthly-goals .table .body .row {
+  border-top: 1px solid rgb(185, 185, 185);
+}
+
+.six-monthly-goals .layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 95vw;
+  min-height: 45vh;
+}
+
+.six-monthly-goals .questions {
+  padding-left: 2rem;
+  width: 100%;
+}
+
+.six-monthly-goals .questions .question {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding-top: 1rem;
+}
+
+.six-monthly-goals .questions .question .q-text {
+  margin: 0;
+  padding-right: 1rem;
+}
+
+.six-monthly-goals .questions .question input {
+  width: 30vw;
+  border: 1px solid rgb(185, 185, 185);
+  font-size: 18px;
+  margin-top: 8px;
+  width: 90%;
+}
+
+.six-monthly-goals .questions .question .button {
+  padding: 12px;
+  margin-top: 1rem;
+}
+
+.six-monthly-goals .questions .question select {
+  margin-top: 16px;
+}
+
+.six-monthly-goals .question-row {
+  width: 80vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.six-monthly-goals .question-row .example {
+  font-size: 13px;
+  color: rgb(185, 185, 185);
+  cursor: pointer;
+}
+
+.six-monthly-goals .question-row .example:hover {
+  color: grey;
+}
+
+.six-monthly-goals .table .row:last-child {
+  border-bottom: 1px solid rgb(185, 185, 185);
+  border-radius: 0 0 12px 12px;
+}
+
+.six-monthly-goals .edit {
+  font-size: 12px;
+  color: grey;
+  width: 95vw;
+  text-align: right;
+  padding-right: 2rem;
+}
+
+.six-monthly-goals .table .trash-wrapper {
+  background-color: #fff;
+  transition: all 0.25s;
+  border-radius: 50px;
+  padding: 8px;
+}
+
+.six-monthly-goals .table .delete {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.six-monthly-goals .table .trash-wrapper:hover {
+  background-color: #d3d3d3;
+}
+
+.six-monthly-goals .content {
+  width: 30vw;
+}
+
+.six-monthly-goals .button-row {
+  display: flex;
+  gap: 1rem;
 }

@@ -34,7 +34,7 @@ const Dashboard = ({ user }) => {
   }, []);
 
   useEffect(() => {
-    const date_str = date.toLocaleDateString();
+    const date_str = date.toLocaleDateString("en-sg");
 
     const box = user.boxes.filter((b) => b.date == date_str);
 
@@ -58,7 +58,7 @@ const Dashboard = ({ user }) => {
     setTimes(new_times);
 
     const today = user.boxes.filter(
-      (b) => b.date == new Date().toLocaleDateString()
+      (b) => b.date == new Date().toLocaleDateString("en-sg")
     );
 
     console.log(today);
@@ -178,7 +178,7 @@ const Dashboard = ({ user }) => {
           {rightIsTimebox ? (
             <>
               <p className="text">
-                There is a timebox for {date.toLocaleDateString()}!
+                There is a timebox for {date.toLocaleDateString("en-sg")}!
               </p>
               <Button onClick={() => navigate("/new-timebox")}>
                 View timebox
@@ -187,7 +187,7 @@ const Dashboard = ({ user }) => {
           ) : (
             <>
               <p className="text">
-                There is no timebox for {date.toLocaleDateString()}.
+                There is no timebox for {date.toLocaleDateString("en-sg")}.
               </p>
               <Button onClick={() => navigate("/new-timebox")}>
                 Create timebox

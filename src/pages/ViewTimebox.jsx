@@ -62,7 +62,9 @@ const ViewTimebox = ({ user }) => {
               onSelect={(time) =>
                 window.location.replace(
                   "/view-timebox/" +
-                    new Date(time).toLocaleDateString().replaceAll("/", "-")
+                    new Date(time)
+                      .toLocaleDateString("en-sg")
+                      .replaceAll("/", "-")
                 )
               }
             />

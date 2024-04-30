@@ -9,6 +9,7 @@ import AllowNotifications from "./pages/AllowNotifications.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import LogIn from "./pages/LogIn.jsx";
 import GoalSetting from "./pages/GoalSetting.jsx";
+import Settings from "./pages/Settings.jsx";
 import DailyGoals from "./pages/DailyGoals.jsx";
 import WeeklyGoals from "./pages/WeeklyGoals.jsx";
 import SixMonthlyGoals from "./pages/SixMonthlyGoals.jsx";
@@ -23,7 +24,7 @@ import ProtectedRoute from "./helpers/Protected.jsx";
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js", { scope: "/" });
+    navigator.serviceWorker.register("/sw.js", { scope: "/", type: "module" });
   });
 }
 
@@ -54,6 +55,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <GoalSetting />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/settings",
+        element: (
+          <ProtectedRoute>
+            <Settings />
           </ProtectedRoute>
         ),
       },

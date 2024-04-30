@@ -47,7 +47,7 @@ const Navbar = () => {
             onClick={() => {
               navigate(
                 "/view-timebox/" +
-                  new Date().toLocaleDateString().replaceAll("/", "-")
+                  new Date().toLocaleDateString("en-sg").replaceAll("/", "-")
               );
             }}
           >
@@ -68,7 +68,7 @@ const Navbar = () => {
             onClick={() =>
               navigate(
                 "/new-timebox/" +
-                  new Date().toLocaleDateString().replaceAll("/", "-")
+                  new Date().toLocaleDateString("en-sg").replaceAll("/", "-")
               )
             }
           >
@@ -85,7 +85,7 @@ const Navbar = () => {
                     <User className="mr-2 h-4 w-4" />
                     <p className="text">Profile</p>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/settings")}>
                     <Settings className="mr-2 h-4 w-4" />
                     <p className="text">Settings</p>
                   </DropdownMenuItem>
