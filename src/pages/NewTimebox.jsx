@@ -39,6 +39,7 @@ const NewTimebox = ({ user }) => {
 
   const [stage1Error, setStage1Error] = useState("");
   const [stage1Disabled, setStage1Disabled] = useState(false);
+  const [free, setFree] = useState(0);
 
   const [times, setTimes] = useState([
     { time: "6:00", activity: "" },
@@ -67,13 +68,8 @@ const NewTimebox = ({ user }) => {
         sum += 30;
       }
     });
-    let other = 0;
-    if (items) {
-      items.forEach((item) => {
-        other += item.minutes;
-      });
-    }
-    setFits(other <= sum);
+
+    setFits(free <= sum);
   }, [times]);
 
   useEffect(() => {
@@ -226,7 +222,13 @@ const NewTimebox = ({ user }) => {
           );
         }
 
-        console.log(times_copy);
+        let other = 0;
+        if (items) {
+          items.forEach((item) => {
+            other += item.minutes;
+          });
+        }
+        setFree(other);
         setTimes(times_copy);
       }
     }
@@ -248,20 +250,16 @@ const NewTimebox = ({ user }) => {
   }, [date]);
 
   useEffect(() => {
-    const copy = [];
-
-    times.forEach((time) => {
-      copy.push(time.activity);
-    });
-
-    if (copy.filter((t) => t == "Free time") < 2) {
-      return setDisabled(true);
-    }
-
     let dis = false;
-
     items.forEach((item) => {
-      if (!copy.includes(item.item)) {
+      const required = Math.ceil(item.minutes / 30);
+      const length = times.filter((i) => i.activity == item.item).length;
+
+      console.log(length < required);
+
+      console.log;
+
+      if (length < required) {
         dis = true;
         return;
       }

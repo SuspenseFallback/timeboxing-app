@@ -71,7 +71,10 @@ const DailyGoals = ({ user }) => {
   const submit = () => {
     console.log("submit");
     newDailyGoals({ goals: tasks, time: new Date().toString() }).then(() => {
-      // window.location.assign("/dashboard");
+      window.location.replace(
+        "/new-timebox/" +
+          new Date().toLocaleDateString("en-sg").replaceAll("/", "-")
+      );
     });
   };
 

@@ -59,19 +59,11 @@ const Navbar = () => {
               navigate("/goal-setting");
             }}
           >
-            Goals
+            Goals and tasks
           </div>
         </div>
         <div className="nav-buttons">
-          <div
-            className="nav-button"
-            onClick={() =>
-              navigate(
-                "/new-timebox/" +
-                  new Date().toLocaleDateString("en-sg").replaceAll("/", "-")
-              )
-            }
-          >
+          <div className="nav-button" onClick={() => navigate("/daily-goals")}>
             New timebox
           </div>
           {user ? (
@@ -81,10 +73,6 @@ const Navbar = () => {
                   <div className="nav-button">My account</div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    <p className="text">Profile</p>
-                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate("/settings")}>
                     <Settings className="mr-2 h-4 w-4" />
                     <p className="text">Settings</p>

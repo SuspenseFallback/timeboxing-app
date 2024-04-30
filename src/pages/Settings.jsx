@@ -3,6 +3,7 @@ import "./Settings.css";
 
 const Settings = ({ user }) => {
   const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
 
   return (
     <>
@@ -13,6 +14,12 @@ const Settings = ({ user }) => {
             <div className="group group-1">
               <p className="title">Change username</p>
             </div>
+            <div className="group group-2">
+              <p className="title">Change email</p>
+            </div>
+            <div className="group group-2">
+              <p className="title">Sleep settings</p>
+            </div>
           </div>
           <div className="col-2">
             <div className="group group-1">
@@ -21,6 +28,25 @@ const Settings = ({ user }) => {
                 className="input-bottom"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+              />
+              <button className="button button-block">Save</button>
+            </div>
+            <div className="group group-2">
+              <input
+                type="text"
+                className="input-bottom"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <button className="button button-block">Save</button>
+            </div>
+            <div className="group group-3">
+              <p className="label">Wake up time</p>
+              <input
+                type="text"
+                className="input-bottom"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <button className="button button-block">Save</button>
             </div>
