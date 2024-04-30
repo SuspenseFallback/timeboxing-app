@@ -84,7 +84,7 @@ const Sleep = ({ user, nextSlide, newData, setNewData }) => {
         <div className="text-container">
           <h1 className="header">Step 3:</h1>
           <h1 className="subheader">Sleep cycle</h1>
-          <Progress value={37.5} className="progress-bar" />
+          <Progress value={50} className="progress-bar" />
         </div>
         <div className="wake-up">
           <p className="title">Wake up time</p>

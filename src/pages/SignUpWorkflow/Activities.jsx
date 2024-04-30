@@ -142,7 +142,7 @@ const Activities = ({ user, nextSlide, newData, setNewData }) => {
     <>
       <div className="page first activities">
         <h1 className="header">Step 4:</h1>
-        <Progress value={50} className="progress-bar" />
+        <Progress value={66} className="progress-bar" />
         <div className="question-container">
           <p className="question">Do you have any other fixed activities?</p>
           <div className="options">

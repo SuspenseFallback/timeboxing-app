@@ -21,7 +21,7 @@ import { DatePicker } from "@/components/ui/date-picker";
 
 import { Trash2 } from "lucide-react";
 
-import { Slider } from "@/components/ui/slider"
+import { Slider } from "@/components/ui/slider";
 
 const WeeklyGoals = ({ user, nextSlide }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -108,9 +108,9 @@ const WeeklyGoals = ({ user, nextSlide }) => {
   return (
     <motion.div>
       <div className="page first weekly-goals workflow">
-        <h1 className="header">Step 3:</h1>
+        <h1 className="header">Step 5:</h1>
         <h1 className="subheader">Set your tasks for the week</h1>
-        <Progress value={50} className="progress-bar" />
+        <Progress value={83} className="progress-bar" />
         <div className="layout">
           <div className="button-row">
             <button

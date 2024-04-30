@@ -217,7 +217,7 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
     <>
       <div className="page first school">
         <h1 className="header">Step 2:</h1>
-        <Progress value={25} className="progress-bar" />
+        <Progress value={33} className="progress-bar" />
         <div className="question-container">
           <p className="question">
             Do you have a fixed schedule (work/college/school) for the next 6
