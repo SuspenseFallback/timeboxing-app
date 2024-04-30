@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./School.css";
+import "./Activities.css";
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -7,43 +7,14 @@ import Spinner from "@/components/Spinner";
 import { Progress } from "@/components/ui/progress";
 
 import { newSchedule } from "../../firebase/firebase";
+import { Trash2 } from "lucide-react";
 
-const School = ({ user, nextSlide, newData, setNewData }) => {
+const Activities = ({ user, nextSlide, newData, setNewData }) => {
   const [option, setOption] = useState("yes");
-  const [isCopy, setIsCopy] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [numOfChecks, setNumOfChecks] = useState(0);
-
   const [error, setError] = useState("");
 
-  const [data, setData] = useState([
-    { day: "Monday", active: false, startTime: "", endTime: "", activity: "" },
-    { day: "Tuesday", active: false, startTime: "", endTime: "", activity: "" },
-    {
-      day: "Wednesday",
-      active: false,
-      startTime: "",
-      endTime: "",
-      activity: "",
-    },
-    {
-      day: "Thursday",
-      active: false,
-      startTime: "",
-      endTime: "",
-      activity: "",
-    },
-    { day: "Friday", active: false, startTime: "", endTime: "", activity: "" },
-    {
-      day: "Saturday",
-      active: false,
-      startTime: "",
-      endTime: "",
-      activity: "",
-    },
-    { day: "Sunday", active: false, startTime: "", endTime: "", activity: "" },
-  ]);
-
+  const days_week = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
   const timeOpts = [
     "0:00",
     "0:30",
@@ -96,36 +67,25 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
     "23:30",
   ];
 
+  const [data, setData] = useState([
+    { day: "", startTime: "", endTime: "", activity: "" },
+  ]);
+
   useEffect(() => {
-    console.log(user.schedule);
-    if (user.schedule && user.schedule.fixed) {
-      setData(user.schedule.fixed);
+    if (newData && newData.activities) {
+      setData(newData.activities);
     }
   }, []);
-
-  useEffect(() => {
-    const copy = [...data];
-    if (isCopy) {
-      copy.forEach((c, index) => {
-        console.log(c.active == true);
-        if (index > 0 && c.active == true) {
-          c.startTime = copy[0].startTime;
-          c.endTime = copy[0].endTime;
-        }
-      });
-    }
-
-    console.log(copy);
-    setData(copy);
-  }, [isCopy]);
 
   const validate = () => {
     for (let i = 0; i < data.length; i++) {
       const item = data[i];
 
       if (
-        (item.startTime == "" || item.endTime == "" || item.activity == "") &&
-        item.active
+        item.startTime == "" ||
+        item.endTime == "" ||
+        item.activity == "" ||
+        item.day == ""
       ) {
         return false;
       }
@@ -134,27 +94,15 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
     return true;
   };
 
-  const checkBox = (index, checked) => {
+  const changeDay = (index, day) => {
     const copy = [...data];
-    copy[index].active = checked;
+    copy[index].day = day;
     setData(copy);
-    setNumOfChecks(numOfChecks + (checked ? 1 : -1));
   };
 
   const changeStartTime = (index, startTime) => {
     const copy = [...data];
     copy[index].startTime = startTime;
-    setData(copy);
-
-    if (isCopy) {
-      copy.forEach((c, index) => {
-        if (index > 0 && c.active) {
-          c.startTime = copy[0].startTime;
-          c.endTime = copy[0].endTime;
-        }
-      });
-    }
-
     setData(copy);
   };
 
@@ -162,47 +110,24 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
     const copy = [...data];
     copy[index].endTime = endTime;
     setData(copy);
-
-    if (isCopy) {
-      copy.forEach((c, index) => {
-        if (index > 0 && c.active) {
-          c.startTime = copy[0].startTime;
-          c.endTime = copy[0].endTime;
-        }
-      });
-    }
-
-    setData(copy);
   };
 
   const changeActivity = (index, activity) => {
     const copy = [...data];
     copy[index].activity = activity;
     setData(copy);
+  };
 
-    if (isCopy) {
-      copy.forEach((c, index) => {
-        if (index > 0 && c.active) {
-          c.startTime = copy[0].startTime;
-          c.endTime = copy[0].endTime;
-        }
-      });
-    }
-
+  const addItem = () => {
+    const copy = [...data];
+    copy.push({ day: "", startTime: "", endTime: "", activity: "" });
     setData(copy);
   };
 
+  const deleteItem = (index) => {};
+
   const submit = () => {
-    const final =
-      option == "yes"
-        ? { ...user.schedule, fixed: data }
-        : { ...user.schedule, fixed: false };
-    newSchedule(
-      option == "yes"
-        ? { ...user.schedule, fixed: data }
-        : { ...user.schedule, fixed: false }
-    ).then(() => {
-      setNewData(final);
+    newSchedule({ ...newData, activities: data }).then(() => {
       nextSlide();
     });
   };
@@ -215,14 +140,11 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
     </>
   ) : (
     <>
-      <div className="page first school">
-        <h1 className="header">Step 2:</h1>
-        <Progress value={25} className="progress-bar" />
+      <div className="page first activities">
+        <h1 className="header">Step 4:</h1>
+        <Progress value={50} className="progress-bar" />
         <div className="question-container">
-          <p className="question">
-            Do you have a fixed schedule (work/college/school) for the next 6
-            months?
-          </p>
+          <p className="question">Do you have any other fixed activities?</p>
           <div className="options">
             <RadioGroup value={option} onValueChange={setOption}>
               <div className="flex items-center space-x-2">
@@ -242,21 +164,24 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
               {data.map((d, index) => {
                 return (
                   <div className="row" key={index}>
-                    <div className="day-container">
-                      <input
-                        type="checkbox"
-                        value={d.active}
-                        className={d.day[0].toLowerCase()}
-                        onChange={(e) => checkBox(index, e.target.checked)}
-                      />
-                    </div>
                     <div className="inputs-container">
+                      <select
+                        name="day"
+                        id="day"
+                        className=""
+                        value={d.day}
+                        onChange={(e) => changeDay(index, e.target.value)}
+                      >
+                        <option value="">Day</option>
+                        {days_week.map((opt) => {
+                          return <option value={opt}>{opt}</option>;
+                        })}
+                      </select>
                       <select
                         name="startTime"
                         id="startTime"
                         className=""
                         value={d.startTime}
-                        disabled={!d.active || (index != 0 && isCopy)}
                         onChange={(e) => changeStartTime(index, e.target.value)}
                       >
                         <option value="">Start time</option>
@@ -272,8 +197,6 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
                         name="endTime"
                         id="endTime"
                         value={d.endTime}
-                        className=""
-                        disabled={!d.active || (index != 0 && isCopy)}
                         onChange={(e) => changeEndTime(index, e.target.value)}
                       >
                         <option value="">End time</option>
@@ -287,36 +210,32 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
                       </select>
                       <input
                         type="text"
-                        disabled={!d.active}
                         className="input-bottom"
                         placeholder="Activity name"
                         value={d.activity}
                         onChange={(e) => changeActivity(index, e.target.value)}
                       />
+                      <div
+                        className="trash-wrapper"
+                        onClick={() => deleteItem(index)}
+                      >
+                        <Trash2 className="delete" color="red" />
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
-            {numOfChecks > 1 ? (
-              <div className="check">
-                <input
-                  type="checkbox"
-                  name="copy"
-                  id="copy"
-                  value={isCopy}
-                  onChange={(e) => setIsCopy(e.target.checked)}
-                />
-                <p className="label">Copy time to all days</p>
-              </div>
-            ) : null}
           </>
         ) : null}
         <div className="bottom-group">
           <p className="error">{error}</p>
+          <button className="button button-block outline" onClick={addItem}>
+            Add item +
+          </button>
+          <br />
           <button
             className="button button-block"
-            disabled={numOfChecks == 0 && option == "yes"}
             onClick={() => {
               if (validate()) {
                 setError("");
@@ -334,4 +253,4 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
   );
 };
 
-export default School;
+export default Activities;

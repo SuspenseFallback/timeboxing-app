@@ -3,10 +3,12 @@ import SixMonthlyWorkflow from "./SixMonthlyWorkflow.jsx";
 import WeeklyWorkflow from "./WeeklyWorkflow.jsx";
 import School from "./School.jsx";
 import Sleep from "./Sleep.jsx";
+import Activities from "./Activities.jsx";
 import "./SignUpWorkflow.css";
 
 const SignUpWorkflow = ({ user }) => {
   const [index, setIndex] = useState(1);
+  const [newData, setNewData] = useState({ ...user.schedule });
 
   const nextSlide = () => {
     setIndex(index + 1);
@@ -30,12 +32,29 @@ const SignUpWorkflow = ({ user }) => {
             <SixMonthlyWorkflow user={user} nextSlide={nextSlide} />
           </div>
           <div className="slide slide-3">
-            <School user={user} nextSlide={nextSlide} />
+            <School
+              user={user}
+              nextSlide={nextSlide}
+              newData={newData}
+              setNewData={setNewData}
+            />
           </div>
           <div className="slide slide-4">
-            <Sleep user={user} nextSlide={nextSlide} />
+            <Sleep
+              user={user}
+              nextSlide={nextSlide}
+              newData={newData}
+              setNewData={setNewData}
+            />
           </div>
-          <div className="slide slide-5"></div>
+          <div className="slide slide-5">
+            <Activities
+              user={user}
+              nextSlide={nextSlide}
+              newData={newData}
+              setNewData={setNewData}
+            />
+          </div>
           <div className="slide slide-6">
             <p>
               Thank you for answering those questions about your goals and your

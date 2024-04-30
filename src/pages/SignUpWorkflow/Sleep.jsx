@@ -4,7 +4,7 @@ import "./Sleep.css";
 import { Progress } from "@/components/ui/progress";
 import { newSchedule } from "../../firebase/firebase";
 
-const Sleep = ({ user, nextSlide }) => {
+const Sleep = ({ user, nextSlide, newData, setNewData }) => {
   const [wakeUpTime, setWakeUpTime] = useState("");
   const [bedTime, setBedTime] = useState("");
 
@@ -71,8 +71,9 @@ const Sleep = ({ user, nextSlide }) => {
 
   const submit = () => {
     const data = { wakeUpTime, bedTime };
-    const schedule = { ...user.schedule, sleep: data };
+    const schedule = { ...newData, sleep: data };
     newSchedule(schedule).then(() => {
+      setNewData(schedule);
       nextSlide();
     });
   };
