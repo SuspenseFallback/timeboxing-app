@@ -1,5 +1,5 @@
 .sign-up-workflow {
-  width: 800vw;
+  width: 900vw;
   height: 90vh;
 
   position: relative;
@@ -15,7 +15,7 @@
   left: 0;
   top: 0;
 
-  width: 800vw;
+  width: 900vw;
   height: 90vh;
 
   transition: all 0.5s;
@@ -52,6 +52,14 @@
 
 .sign-up-workflow .slides.index-7 {
   left: -600vw;
+}
+
+.sign-up-workflow .slides.index-8 {
+  left: -700vw;
+}
+
+.sign-up-workflow .slides.index-9 {
+  left: -800vw;
 }
 
 .sign-up-workflow .slides .slide-1 {

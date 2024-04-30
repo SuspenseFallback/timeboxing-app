@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./DailyGoals.css";
-
-import { newDailyGoals } from "../firebase/firebase";
+import "../DailyGoals.css";
+import { newDailyGoals } from "../../firebase/firebase";
 import { Trash2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
-const DailyGoals = ({ user }) => {
+const DailyGoalsWorkflow = ({ user, nextSlide }) => {
   const [tasks, setTasks] = useState([
     { goal: "", time: 15, reminder: false },
     { goal: "", time: 15, reminder: false },
@@ -24,6 +23,7 @@ const DailyGoals = ({ user }) => {
     for (let i = 0; i < tasks.length; i++) {
       const item = tasks[i];
 
+      console.log("goal", item.goal);
       if (item.goal == "") {
         return setDisabled(true);
       }
@@ -51,6 +51,13 @@ const DailyGoals = ({ user }) => {
     setTasks(copy);
   };
 
+  const deleteGoal = (index) => {
+    const copy = [...tasks];
+    copy.splice(index, 1);
+
+    setTasks(copy);
+  };
+
   const addItem = () => {
     if (tasks.length >= 20) {
       return;
@@ -61,17 +68,9 @@ const DailyGoals = ({ user }) => {
     setTasks(copy);
   };
 
-  const deleteGoal = (index) => {
-    const copy = [...tasks];
-    copy.splice(index, 1);
-
-    setTasks(copy);
-  };
-
   const submit = () => {
-    console.log("submit");
     newDailyGoals({ goals: tasks, time: new Date().toString() }).then(() => {
-      // window.location.assign("/dashboard");
+      nextSlide();
     });
   };
 
@@ -137,13 +136,13 @@ const DailyGoals = ({ user }) => {
             })}
             <div className="button-column">
               <button
-                className="button outline"
+                className="button  outline"
                 onClick={addItem}
                 disabled={tasks.length == 20}
               >
                 Add new +
               </button>
-              <button className="button" onClick={submit} disabled={disabled}>
+              <button className="button" disabled={disabled} onClick={submit}>
                 I have no more goals
               </button>
             </div>
@@ -154,4 +153,4 @@ const DailyGoals = ({ user }) => {
   );
 };
 
-export default DailyGoals;
+export default DailyGoalsWorkflow;

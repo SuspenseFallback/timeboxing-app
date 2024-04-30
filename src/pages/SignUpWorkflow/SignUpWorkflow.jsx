@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SixMonthlyWorkflow from "./SixMonthlyWorkflow.jsx";
 import WeeklyWorkflow from "./WeeklyWorkflow.jsx";
+import DailyGoalsWorkflow from "./DailyGoalsWorkflow.jsx";
 import School from "./School.jsx";
 import Sleep from "./Sleep.jsx";
 import Activities from "./Activities.jsx";
@@ -67,7 +68,10 @@ const SignUpWorkflow = ({ user }) => {
           <div className="slide slide-7">
             <WeeklyWorkflow user={user} nextSlide={nextSlide} />
           </div>
-          <div className="slide slide-8"></div>
+          <div className="slide slide-8">
+            <DailyGoalsWorkflow user={user} nextSlide={nextSlide} />
+          </div>
+          <div className="slide slide-9"></div>
         </div>
       </div>
     </>

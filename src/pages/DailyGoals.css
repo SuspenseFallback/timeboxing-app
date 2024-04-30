@@ -131,3 +131,8 @@
 .daily-goals .col.disabled .border-primary {
   border-color: rgb(171, 171, 171);
 }
+
+.daily-goals .table .trash-wrapper:disabled {
+  background-color: rgb(224, 224, 224);
+  cursor: not-allowed;
+}
