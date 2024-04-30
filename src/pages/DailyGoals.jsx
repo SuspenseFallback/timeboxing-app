@@ -1,189 +1,132 @@
 import React, { useEffect, useState } from "react";
 import "./DailyGoals.css";
-import Input from "../components/Input.jsx";
-import { Checkbox } from "@/components/ui/checkbox";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { newDailyGoals } from "../firebase/firebase";
+import { Trash2 } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 
 const DailyGoals = ({ user }) => {
   const navigate = useNavigate();
-  let [searchParams, setSearchParams] = useSearchParams();
 
-  const [isNew, setIsNew] = useState(false);
-
-  const [goals, setGoals] = useState([
-    { goal: "", weeklyHours: 1, days: "weekdays" },
-    { goal: "", weeklyHours: 1, days: "weekdays" },
-    { goal: "", weeklyHours: 1, days: "weekdays" },
+  const [tasks, setTasks] = useState([
+    { goal: "", time: 15, reminder: false },
+    { goal: "", time: 15, reminder: false },
+    { goal: "", time: 15, reminder: false },
   ]);
 
   useEffect(() => {
     if (user && user.daily_goals) {
-      setGoals(user.daily_goals.goals);
-    }
-
-    if (searchParams.get("new")) {
-      setIsNew(true);
+      setTasks(user.daily_goals.goals);
     }
   }, []);
 
-  useEffect(() => {
-    console.log(goals);
-  }, [goals]);
-
   const changeGoal = (index, new_text) => {
-    const copy = [...goals];
+    const copy = [...tasks];
     copy[index].goal = new_text;
-    setGoals(copy);
+    setTasks(copy);
   };
 
   const changeHours = (index, new_text) => {
-    const copy = [...goals];
-    copy[index].weeklyHours = new_text;
-    setGoals(copy);
+    const copy = [...tasks];
+    copy[index].time = new_text;
+    setTasks(copy);
   };
 
-  const checkWeekdays = (index, new_value) => {
-    const copy = [...goals];
-    if (new_value && goals[index].days == "weekends") {
-      copy[index].days = "both";
-    }
+  const checkReminder = (index, new_value) => {
+    const copy = [...tasks];
+    copy[index].reminder = new_value;
 
-    if (new_value && goals[index].days == "") {
-      copy[index].days = "weekdays";
-    }
-
-    if (!new_value) {
-      copy[index].days = "weekends";
-    }
-
-    setGoals(copy);
-  };
-
-  const checkWeekends = (index, new_value) => {
-    const copy = [...goals];
-    if (new_value && goals[index].days == "weekdays") {
-      copy[index].days = "both";
-    }
-
-    if (new_value && goals[index].days == "") {
-      copy[index].days = "weekends";
-    }
-
-    if (!new_value) {
-      copy[index].days = "weekdays";
-    }
-
-    setGoals(copy);
+    setTasks(copy);
   };
 
   const addItem = () => {
-    if (goals.length >= 20) {
+    if (tasks.length >= 20) {
       return;
     }
 
-    const copy = [...goals];
-    copy.push({ goal: "", weeklyHours: 0, days: "", numDays: 0 });
-    setGoals(copy);
+    const copy = [...tasks];
+    copy.push({ goal: "", time: 0 });
+    setTasks(copy);
   };
 
   const submit = () => {
-    newDailyGoals({ goals: goals, time: new Date().toString() }).then(() => {
-      if (isNew) {
-        window.location.assign("/dashboard");
-      } else {
-        navigate("/dashboard");
-      }
+    newDailyGoals({ goals: tasks, time: new Date().toString() }).then(() => {
+      window.location.assign("/dashboard");
     });
   };
 
   return (
     <>
       <div className="page first daily-goals">
-        <h1 className="heade">Daily goals</h1>
+        <h1 className="header">Brain dump of all tasks for today</h1>
         <div className="table">
           <div className="header row">
-            <div className="col col-1">What is your goal?</div>
-            <div className="col col-2">Weekly hours</div>
-            <div className="col col-3">On weekdays</div>
-            <div className="col col-4">On weekends</div>
-            <div className="col col-5">Hours per day</div>
+            <div className="col col-1">What is your task?</div>
+            <div className="col col-2">Is this a reminder?</div>
+            <div className="col col-3">No. of hours</div>
           </div>
           <div className="body">
-            {goals.map((goal, index) => {
+            {tasks.map((task, index) => {
               return (
                 <div className="row">
                   <div className="col col-1">
+                    {index + 1}
+                    {"  "}
                     <input
                       type="text"
                       className="input-bottom"
                       onChange={(e) => changeGoal(index, e.target.value)}
-                      value={goals[index].goal}
+                      value={task.goal}
                     />
+                    <div
+                      className="trash-wrapper"
+                      onClick={() => deleteGoal(index)}
+                    >
+                      <Trash2 className="delete" color="red" />
+                    </div>
                   </div>
                   <div className="col col-2">
                     <input
-                      className="input-bottom"
-                      type="number"
-                      onChange={(e) => changeHours(index, e.target.value)}
-                      min={1}
-                      max={168}
-                      value={goals[index].weeklyHours}
-                    />
-                  </div>
-                  <div className="col col-3">
-                    <input
                       type="checkbox"
-                      onChange={(e) => checkWeekdays(index, e.target.checked)}
-                      checked={
-                        goals[index].days == "weekdays" ||
-                        goals[index].days == "both"
-                      }
+                      value={task.reminder}
+                      className="checkbox"
+                      onChange={(e) => {
+                        checkReminder(index, e.target.checked);
+                      }}
                     />
                   </div>
-                  <div className="col col-4">
-                    <input
-                      type="checkbox"
-                      onChange={(e) => checkWeekends(index, e.target.checked)}
-                      checked={
-                        goals[index].days == "weekends" ||
-                        goals[index].days == "both"
-                      }
-                    />
-                  </div>
-                  <div className="col col-5">
-                    <p className="muted">
-                      {(
-                        goals[index].weeklyHours /
-                        (goals[index].days == "both"
-                          ? 7
-                          : goals[index].days == "weekdays"
-                          ? 5
-                          : 2)
-                      ).toFixed(2)}
-                    </p>
+                  <div
+                    className={"col col-3 " + (task.reminder ? "disabled" : "")}
+                  >
+                    <div className={"slider-wrapper"}>
+                      <Slider
+                        defaultValue={[15]}
+                        max={960}
+                        min={15}
+                        step={15}
+                        value={[task.time]}
+                        onValueChange={(e) => changeHours(index, e)}
+                        disabled={task.reminder}
+                      />
+                    </div>
+                    {task.time} minutes
                   </div>
                 </div>
               );
             })}
-            <div className="button-row">
+            <div className="button-column">
               <button
-                className="button button-block outline"
+                className="button  outline"
                 onClick={addItem}
-                disabled={goals.length == 20}
+                disabled={tasks.length == 20}
               >
-                Add new
+                Add new +
               </button>
+              <button className="button">Next</button>
             </div>
           </div>
         </div>
-        <button className="button button-block submit" onClick={submit}>
-          Submit
-        </button>
-        <p className="muted">
-          You can change these once they have been submitted.
-        </p>
       </div>
     </>
   );

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SixMonthlyWorkflow from "./SixMonthlyWorkflow.jsx";
 import WeeklyWorkflow from "./WeeklyWorkflow.jsx";
-import School from "../School.jsx";
+import School from "./School.jsx";
+import Sleep from "./Sleep.jsx";
 import "./SignUpWorkflow.css";
 
 const SignUpWorkflow = ({ user }) => {
@@ -32,6 +33,10 @@ const SignUpWorkflow = ({ user }) => {
             <School user={user} nextSlide={nextSlide} />
           </div>
           <div className="slide slide-4">
+            <Sleep user={user} nextSlide={nextSlide} />
+          </div>
+          <div className="slide slide-5"></div>
+          <div className="slide slide-6">
             <p>
               Thank you for answering those questions about your goals and your
               schedule. Now, let's start the timeboxing journey!
@@ -40,11 +45,10 @@ const SignUpWorkflow = ({ user }) => {
               Continue
             </button>
           </div>
-          <div className="slide slide-5">
+          <div className="slide slide-7">
             <WeeklyWorkflow user={user} nextSlide={nextSlide} />
           </div>
-          <div className="slide slide-6"></div>
-          <div className="slide slide-7"></div>
+          <div className="slide slide-8"></div>
         </div>
       </div>
     </>

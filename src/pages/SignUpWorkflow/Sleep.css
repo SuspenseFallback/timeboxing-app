@@ -1,0 +1,55 @@
+.sleep {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around !important;
+}
+
+.sleep .progress-bar {
+  width: 35vw;
+  height: 6px;
+  margin-top: 1rem;
+}
+
+.sleep .text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sleep .header {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.sleep .subheader {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: grey;
+}
+
+.sleep .wake-up {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sleep .wake-up .title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 1rem;
+}
+
+.sleep .bed-time {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sleep .bed-time .title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 1rem;
+}

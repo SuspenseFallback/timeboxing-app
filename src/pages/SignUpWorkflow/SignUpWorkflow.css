@@ -1,5 +1,5 @@
 .sign-up-workflow {
-  width: 700vw;
+  width: 800vw;
   height: 90vh;
 
   position: relative;
@@ -15,7 +15,7 @@
   left: 0;
   top: 0;
 
-  width: 700vw;
+  width: 800vw;
   height: 90vh;
 
   transition: all 0.5s;

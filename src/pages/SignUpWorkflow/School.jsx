@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Spinner from "@/components/Spinner";
 import { Progress } from "@/components/ui/progress";
 
-import { newSchedule } from "../firebase/firebase";
+import { newSchedule } from "../../firebase/firebase";
 
 const School = ({ user, nextSlide }) => {
   const [option, setOption] = useState("yes");
@@ -186,7 +186,12 @@ const School = ({ user, nextSlide }) => {
   };
 
   const submit = () => {
-    newSchedule(option == "yes" ? data : false).then(() => {
+    console.log({ ...user.schedule, fixed: data });
+    newSchedule(
+      option == "yes"
+        ? { ...user.schedule, fixed: data }
+        : { ...user.schedule, fixed: false }
+    ).then(() => {
       nextSlide();
     });
   };
@@ -201,7 +206,7 @@ const School = ({ user, nextSlide }) => {
     <>
       <div className="page first school">
         <h1 className="header">Step 2:</h1>
-        <Progress value={33} className="progress-bar" />
+        <Progress value={25} className="progress-bar" />
         <div className="question-container">
           <p className="question">
             Do you have a fixed schedule (work/college/school) for the next 6
