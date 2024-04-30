@@ -71,6 +71,8 @@ const NewTimebox = ({ user }) => {
       }
     });
 
+    console.log(free, sum);
+
     setFits(free <= sum);
   }, [times]);
 
@@ -80,7 +82,7 @@ const NewTimebox = ({ user }) => {
     const copy = [...items];
     let sum = 0;
 
-    if (Object.keys(user.daily_goals) > 0) {
+    if (Object.keys(user.daily_goals) > 0 || user.daily_goals) {
       user.daily_goals.goals.forEach((g) => {
         if (!g.reminder) {
           copy.push({ item: g.goal, minutes: g.time, id: copy.length + 1 });
@@ -96,7 +98,6 @@ const NewTimebox = ({ user }) => {
           g.deadline.split("/")[1] - 1,
           g.deadline.split("/")[0]
         );
-        console.log(date2);
         const date1 = new Date();
         const diffTime = Math.abs(date2.getTime() - date1.getTime());
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
@@ -136,6 +137,13 @@ const NewTimebox = ({ user }) => {
       });
     }
 
+    let other = 0;
+    if (copy) {
+      copy.forEach((item) => {
+        other += parseInt(item.minutes);
+      });
+    }
+    setFree(other);
     setItems(copy);
   }, []);
 
@@ -172,7 +180,6 @@ const NewTimebox = ({ user }) => {
           time: wakeUpDate.toLocaleTimeString().slice(0, 5),
           activity: "",
         });
-        console.log(new_times);
         wakeUpDate = new Date(
           wakeUpDate.setTime(wakeUpDate.getTime() + 1000 * 60 * 30)
         );
@@ -222,13 +229,6 @@ const NewTimebox = ({ user }) => {
           );
         }
 
-        let other = 0;
-        if (items) {
-          items.forEach((item) => {
-            other += item.minutes;
-          });
-        }
-        setFree(other);
         setTimes(times_copy);
       }
 
@@ -246,7 +246,6 @@ const NewTimebox = ({ user }) => {
     const cur_date = date.toLocaleDateString("en-sg");
 
     const box = user.boxes.filter((b) => b.date == cur_date);
-    console.log(box);
 
     if (box.length > 0) {
       setStage1Error("You already have a timebox for this day.");
@@ -258,19 +257,22 @@ const NewTimebox = ({ user }) => {
   }, [date]);
 
   useEffect(() => {
-    let dis = false;
-    items.forEach((item) => {
-      const required = Math.ceil(item.minutes / 30);
-      const length = times.filter((i) => i.activity == item.item).length;
-      console.log(item, required);
+    if (fits) {
+      let dis = false;
+      items.forEach((item) => {
+        const required = Math.ceil(item.minutes / 30);
+        const length = times.filter((i) => i.activity == item.item).length;
 
-      if (length < required) {
-        dis = true;
-        return;
-      }
-    });
+        if (length < required) {
+          dis = true;
+          return;
+        }
+      });
 
-    setDisabled(dis);
+      setDisabled(dis);
+    } else {
+      setDisabled(false);
+    }
   }, [times]);
 
   const changeTime = (i, text) => {
