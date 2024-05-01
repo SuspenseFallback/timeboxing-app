@@ -62,7 +62,7 @@ const EditTimebox = ({ user }) => {
 
     const box = user.boxes.filter((b) => b.date == day.replaceAll("-", "/"));
 
-    if (box) {
+    if (box.length > 0) {
       const new_box = box[0];
 
       new_box.activities.forEach((b, index) => {
@@ -70,6 +70,128 @@ const EditTimebox = ({ user }) => {
       });
 
       setTimes(box[0].activities);
+
+      let new_sum = 0;
+
+      box[0].activities.forEach((time) => {
+        if (time.activity == "") {
+          new_sum += 30;
+        }
+      });
+
+      console.log(new_sum);
+
+      setSum(new_sum);
+    } else {
+      if (user.schedule && user.schedule.sleep) {
+        const [wakeUpHour, wakeUpMinutes] =
+          user.schedule.sleep.wakeUpTime.split(":");
+
+        const [bedTimeHour, bedTimeMinutes] =
+          user.schedule.sleep.bedTime.split(":");
+
+        const today = new Date();
+
+        let wakeUpDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate(),
+          parseInt(wakeUpHour),
+          parseInt(wakeUpMinutes)
+        );
+
+        const bedTimeDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate(),
+          parseInt(bedTimeHour),
+          parseInt(bedTimeMinutes)
+        );
+
+        const new_times = [];
+
+        new_times.push({
+          time: wakeUpDate.toLocaleTimeString().slice(0, 5),
+          activity: "Wake up",
+        });
+        wakeUpDate = new Date(
+          wakeUpDate.setTime(wakeUpDate.getTime() + 1000 * 60 * 30)
+        );
+
+        while (wakeUpDate < bedTimeDate) {
+          new_times.push({
+            time: wakeUpDate.toLocaleTimeString().slice(0, 5),
+            activity: "",
+          });
+          wakeUpDate = new Date(
+            wakeUpDate.setTime(wakeUpDate.getTime() + 1000 * 60 * 30)
+          );
+        }
+
+        new_times.push({
+          time: wakeUpDate.toLocaleTimeString().slice(0, 5),
+          activity: "Bed time",
+        });
+        wakeUpDate = new Date(
+          wakeUpDate.setTime(wakeUpDate.getTime() + 1000 * 60 * 30)
+        );
+
+        if (user.schedule && user.schedule.fixed) {
+          const copy = [...user.schedule.fixed];
+
+          copy.splice(0, 0, copy[copy.length - 1]);
+          copy.splice(copy.length - 1, 1);
+
+          const today = copy[new Date().getDay()];
+          if (!today.active) {
+            return;
+          }
+
+          const [startHour, startMinutes] = today.startTime.split(":");
+          const [endHour, endMinutes] = today.endTime.split(":");
+
+          let startDate = new Date(
+            new Date().getFullYear(),
+            new Date().getMonth(),
+            new Date().getDate(),
+            parseInt(startHour),
+            parseInt(startMinutes)
+          );
+
+          const endDate = new Date(
+            new Date().getFullYear(),
+            new Date().getMonth(),
+            new Date().getDate(),
+            parseInt(endHour),
+            parseInt(endMinutes)
+          );
+
+          const times_copy = [...new_times];
+
+          while (startDate <= endDate) {
+            times_copy.forEach((i, index) => {
+              if (i.time == startDate.toLocaleTimeString().slice(0, 5)) {
+                times_copy[index].activity = today.activity;
+              }
+            });
+
+            startDate = new Date(
+              startDate.setTime(startDate.getTime() + 1000 * 60 * 30)
+            );
+          }
+
+          let other_sum = 0;
+
+          times_copy.forEach((time) => {
+            if (time.activity == "") {
+              other_sum += 30;
+            }
+          });
+
+          setSum(other_sum);
+          setTimes(times_copy);
+        }
+      }
     }
 
     const copy = [...items];
@@ -146,17 +268,7 @@ const EditTimebox = ({ user }) => {
       });
     }
 
-    let new_sum = 0;
-    box[0].activities.forEach((time) => {
-      if (time.activity == "") {
-        new_sum += 30;
-      }
-    });
-
-    console.log(new_sum);
-
     setFree(other);
-    setSum(new_sum);
     setItems(copy);
   }, []);
 
@@ -187,12 +299,6 @@ const EditTimebox = ({ user }) => {
     const copy = [...times];
     copy[i].activity = text;
     setTimes(copy);
-  };
-
-  const changeItemTime = (i, text, activity) => {
-    const copy = [...items];
-    copy[i].time = text;
-    setItems(copy);
   };
 
   const submit = () => {
