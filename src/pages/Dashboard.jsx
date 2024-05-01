@@ -87,9 +87,9 @@ const Dashboard = ({ user }) => {
     console.log(today);
 
     if (today.length > 0) {
-      navigate(
-        "/edit-timebox/" + new Date().toLocaleDateString().replaceAll("/", "-")
-      );
+      // navigate(
+      //   "/edit-timebox/" + new Date().toLocaleDateString().replaceAll("/", "-")
+      // );
       const copy = [];
 
       today[0].activities.forEach((item, index) => {
