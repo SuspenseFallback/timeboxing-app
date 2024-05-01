@@ -331,7 +331,7 @@ const School = ({ user, nextSlide, newData, setNewData }) => {
         <div className="bottom-group">
           <p className="error">{error}</p>
           <button
-            className="button button-block"
+            className="button"
             disabled={numOfChecks == 0 && option == "yes"}
             onClick={() => {
               if (validate()) {

@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./Settings.css";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+
 const Settings = ({ user }) => {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
@@ -36,7 +46,31 @@ const Settings = ({ user }) => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-              <button className="button button-block">Save</button>
+              {username ? (
+                <Dialog>
+                  <DialogTrigger>
+                    <div
+                      className={
+                        "button button-block " + (username ? "" : "disabled")
+                      }
+                    >
+                      Save
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Are you sure?</DialogTitle>
+                      <DialogDescription>
+                        Are you sure you want to change your username?
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <button className="button outline">Cancel</button>
+                      <button className="button">Proceed</button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              ) : null}
             </div>
             <div className="group group-2">
               <input
@@ -45,7 +79,31 @@ const Settings = ({ user }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <button className="button button-block">Save</button>
+              {username ? (
+                <Dialog>
+                  <DialogTrigger>
+                    <div
+                      className={
+                        "button button-block " + (username ? "" : "disabled")
+                      }
+                    >
+                      Save
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Are you sure?</DialogTitle>
+                      <DialogDescription>
+                        Are you sure you want to change your email?
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <button className="button outline">Cancel</button>
+                      <button className="button">Proceed</button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              ) : null}
             </div>
             <div className="group group-3">
               <button

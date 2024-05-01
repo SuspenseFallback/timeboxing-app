@@ -251,7 +251,7 @@ const WeeklyGoals = ({ user }) => {
                       disabled={!deadline || !hoursRequired || !goal}
                       onClick={newRow}
                     >
-                      Submit, but I have more tasks
+                      Add tasks
                     </button>
                     <button
                       className="button outline"
@@ -260,7 +260,7 @@ const WeeklyGoals = ({ user }) => {
                         newRow(true);
                       }}
                     >
-                      Submit - I have no more tasks
+                      No more tasks
                     </button>
                   </div>
                 ) : null}

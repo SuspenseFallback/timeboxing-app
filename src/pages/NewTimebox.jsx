@@ -40,6 +40,7 @@ const NewTimebox = ({ user }) => {
   const [stage1Error, setStage1Error] = useState("");
   const [stage1Disabled, setStage1Disabled] = useState(false);
   const [free, setFree] = useState(0);
+  const [sum, setSum] = useState(0);
 
   const [fixed, setFixed] = useState(true);
 
@@ -64,15 +65,6 @@ const NewTimebox = ({ user }) => {
   ]);
 
   useEffect(() => {
-    let sum = 0;
-    times.forEach((time) => {
-      if (time.activity == "") {
-        sum += 30;
-      }
-    });
-
-    console.log(free, sum);
-
     setFits(free <= sum);
   }, [times]);
 
@@ -82,7 +74,7 @@ const NewTimebox = ({ user }) => {
     const copy = [...items];
     let sum = 0;
 
-    if (Object.keys(user.daily_goals) > 0 || user.daily_goals) {
+    if (user.daily_goals) {
       user.daily_goals.goals.forEach((g) => {
         if (!g.reminder) {
           copy.push({ item: g.goal, minutes: g.time, id: copy.length + 1 });
@@ -143,7 +135,16 @@ const NewTimebox = ({ user }) => {
         other += parseInt(item.minutes);
       });
     }
+    let new_sum = 0;
+    times.forEach((time) => {
+      if (time.activity == "") {
+        new_sum += 30;
+      }
+    });
+
     setFree(other);
+    setSum(new_sum);
+    console.log(copy);
     setItems(copy);
   }, []);
 
@@ -175,7 +176,15 @@ const NewTimebox = ({ user }) => {
 
       const new_times = [];
 
-      while (wakeUpDate <= bedTimeDate) {
+      new_times.push({
+        time: wakeUpDate.toLocaleTimeString().slice(0, 5),
+        activity: "Wake up",
+      });
+      wakeUpDate = new Date(
+        wakeUpDate.setTime(wakeUpDate.getTime() + 1000 * 60 * 30)
+      );
+
+      while (wakeUpDate < bedTimeDate) {
         new_times.push({
           time: wakeUpDate.toLocaleTimeString().slice(0, 5),
           activity: "",
@@ -184,6 +193,14 @@ const NewTimebox = ({ user }) => {
           wakeUpDate.setTime(wakeUpDate.getTime() + 1000 * 60 * 30)
         );
       }
+
+      new_times.push({
+        time: wakeUpDate.toLocaleTimeString().slice(0, 5),
+        activity: "Bed time",
+      });
+      wakeUpDate = new Date(
+        wakeUpDate.setTime(wakeUpDate.getTime() + 1000 * 60 * 30)
+      );
 
       if (user.schedule && user.schedule.fixed && fixed) {
         const copy = [...user.schedule.fixed];
@@ -309,6 +326,9 @@ const NewTimebox = ({ user }) => {
               <Calendar
                 mode="single"
                 fromDate={new Date()}
+                toDate={new Date().setTime(
+                  new Date().getTime() + 1000 * 60 * 60 * 24 * 7
+                )}
                 selected={date}
                 onSelect={setDate}
                 className="rounded-md border"
@@ -384,9 +404,7 @@ const NewTimebox = ({ user }) => {
               </div>
             </div>
             {fits ? (
-              <p className="desc">
-                Remember to include both free time slots and all of your goals!
-              </p>
+              <p className="desc">Remember to include all of your !</p>
             ) : (
               <p className="error">
                 You don't have enough time to do all your tasks. Please

@@ -230,12 +230,12 @@ const Activities = ({ user, nextSlide, newData, setNewData }) => {
         ) : null}
         <div className="bottom-group">
           <p className="error">{error}</p>
-          <button className="button button-block outline" onClick={addItem}>
+          <button className="button outline add-item" onClick={addItem}>
             Add item +
           </button>
           <br />
           <button
-            className="button button-block"
+            className="button"
             onClick={() => {
               if (validate() || option == "no") {
                 setError("");

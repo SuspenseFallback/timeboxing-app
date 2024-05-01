@@ -91,3 +91,9 @@
   color: grey;
   font-weight: 500;
 }
+
+.settings .button.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: #363636;
+}

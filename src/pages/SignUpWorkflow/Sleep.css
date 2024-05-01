@@ -4,6 +4,14 @@
   justify-content: space-around !important;
 }
 
+.sleep .container {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around !important;
+  align-items: center;
+}
+
 .sleep .progress-bar {
   width: 35vw;
   height: 6px;
@@ -52,4 +60,8 @@
   font-weight: bold;
   font-size: 1.2rem;
   padding: 1rem;
+}
+
+.sleep .button {
+  padding: 12px 18px;
 }

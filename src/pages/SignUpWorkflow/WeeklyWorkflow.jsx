@@ -132,7 +132,7 @@ const WeeklyGoals = ({ user, nextSlide }) => {
               <div className="question question-1">
                 <div className="question-row">
                   <p className="q-text">Define your task</p>
-                  {/* <Dialog>
+                  <Dialog>
                     <DialogTrigger>
                       <span className="example">(Show example)</span>
                     </DialogTrigger>
@@ -144,16 +144,13 @@ const WeeklyGoals = ({ user, nextSlide }) => {
                         </DialogDescription>
                       </DialogHeader>
                       <ul>
-                        <li>To be able to run 10K in 2 hours in 6 months.</li>
-                        <li>To pass my Advanced Python course in 1 month.</li>
-                        <li>
-                          To be able to form basic sentences in French in 1
-                          year.
-                        </li>
-                        <li>To complete my first short film in 2 years.</li>
+                        <li>Finish my worksheet</li>
+                        <li>Pass my exam</li>
+                        <li>Run 5k</li>
+                        <li>Take a vlog</li>
                       </ul>
                     </DialogContent>
-                  </Dialog> */}
+                  </Dialog>
                 </div>
                 <input
                   type="text"
@@ -244,7 +241,7 @@ const WeeklyGoals = ({ user, nextSlide }) => {
                       disabled={!deadline || !hoursRequired || !goal}
                       onClick={() => newRow(false)}
                     >
-                      Submit, but I have more tasks
+                      Add tasks
                     </button>
                     <button
                       className="button outline"
@@ -253,7 +250,7 @@ const WeeklyGoals = ({ user, nextSlide }) => {
                         newRow(true);
                       }}
                     >
-                      Submit - I have no more tasks
+                      No more tasks
                     </button>
                   </div>
                 ) : null}

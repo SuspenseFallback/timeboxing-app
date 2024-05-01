@@ -166,7 +166,7 @@ const DailyGoals = ({ user }) => {
                 Add new +
               </button>
               <button className="button" onClick={submit} disabled={disabled}>
-                I have no more goals
+                I have no more tasks
               </button>
             </div>
           </div>

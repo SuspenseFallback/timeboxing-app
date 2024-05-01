@@ -32,7 +32,7 @@ const Dashboard = ({ user }) => {
       }
 
       if (!user.daily_goals) {
-        navigate("/daily-goals");
+        return navigate("/daily-goals");
       }
 
       if (
@@ -87,6 +87,9 @@ const Dashboard = ({ user }) => {
     console.log(today);
 
     if (today.length > 0) {
+      navigate(
+        "/edit-timebox/" + new Date().toLocaleDateString().replaceAll("/", "-")
+      );
       const copy = [];
 
       today[0].activities.forEach((item, index) => {
@@ -104,6 +107,7 @@ const Dashboard = ({ user }) => {
 
       setActivities(copy);
     } else {
+      navigate("/daily-goals");
       setIsTimebox(false);
     }
 
@@ -192,7 +196,9 @@ const Dashboard = ({ user }) => {
             ) : (
               <>
                 <p>You have not created a timebox for today.</p>
-                <Button>Create timebox</Button>
+                <Button onClick={() => navigate("/daily-goals")}>
+                  Create today's timebox
+                </Button>
               </>
             )}
           </div>

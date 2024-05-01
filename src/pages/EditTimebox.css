@@ -11,7 +11,7 @@
   align-items: center;
 
   width: 100vw;
-  height: 80vh;
+  height: 90vh;
 
   position: absolute;
   left: 0;
@@ -21,11 +21,11 @@
 
 .edit-timebox .slides .slide {
   width: 100vw;
-  height: 80vh;
+  height: 90vh;
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -53,7 +53,7 @@
   gap: 1rem;
 }
 
-.edit-timebox .slides .slide-2 .wrapper {
+.edit-timebox .slides .slide-1 .wrapper {
   height: 60vh;
   width: 100vw;
 
@@ -63,12 +63,12 @@
   align-items: center;
 }
 
-.edit-timebox .slides .slide-2 .wrapper svg {
+.edit-timebox .slides .slide-1 .wrapper svg {
   width: 30px;
   height: 30px;
 }
 
-.edit-timebox .slides .slide-2 .wrapper .left {
+.edit-timebox .slides .slide-1 .wrapper .left {
   height: 60vh;
   width: 50vw;
 
@@ -78,15 +78,15 @@
   align-items: center;
 }
 
-.edit-timebox .slides .slide-2 .wrapper .left .row {
+.edit-timebox .slides .slide-1 .wrapper .left .row {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 16px;
 }
 
-.edit-timebox .slides .slide-2 .wrapper .right {
-  height: 60vh;
+.edit-timebox .slides .slide-1 .wrapper .right {
+  height: 90vh;
   width: 60vw;
 
   display: flex;
@@ -97,7 +97,7 @@
 
 .edit-timebox .wrapper .right .time-scroll {
   width: 40vw;
-  height: 50vh;
+  height: 80vh;
 }
 
 .edit-timebox .wrapper .right ul {
@@ -110,10 +110,20 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: 8px;
+  width: 40vw;
 }
 
-.edit-timebox .slides .slide-2 .desc {
+.edit-timebox .wrapper .left ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 35vw;
+  padding: 2px;
+}
+
+.edit-timebox .slides .slide-1 .desc {
   color: grey;
   font-size: 14px;
   padding: 16px;
@@ -127,4 +137,26 @@
 .edit-timebox .hours {
   font-size: 14px;
   padding-bottom: 6px;
+}
+
+.edit-timebox .row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3vh;
+}
+
+.edit-timebox .text-group {
+  margin-bottom: 5vh;
+}
+
+.edit-timebox .text-group p {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }

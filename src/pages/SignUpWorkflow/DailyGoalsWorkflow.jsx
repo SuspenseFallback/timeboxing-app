@@ -18,9 +18,9 @@ const DailyGoalsWorkflow = ({ user, nextSlide }) => {
       return setTasks(user.daily_goals.goals);
     }
 
-    if (user && Object.keys(user.daily_goals.goals).length > 0) {
-      return setTasks(user.daily_goals.goals);
-    }
+    // if (user && Object.keys(user.daily_goals.goals).length > 0) {
+    //   return setTasks(user.daily_goals.goals);
+    // }
   }, []);
 
   useEffect(() => {
@@ -147,7 +147,7 @@ const DailyGoalsWorkflow = ({ user, nextSlide }) => {
                 Add new +
               </button>
               <button className="button" disabled={disabled} onClick={submit}>
-                I have no more goals
+                I have no more tasks
               </button>
             </div>
           </div>

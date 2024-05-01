@@ -81,48 +81,50 @@ const Sleep = ({ user, nextSlide, newData, setNewData }) => {
   return (
     <>
       <div className="page first sleep">
-        <div className="text-container">
-          <h1 className="header">Step 3:</h1>
-          <h1 className="subheader">Sleep cycle</h1>
-          <Progress value={50} className="progress-bar" />
-        </div>
-        <div className="wake-up">
-          <p className="title">Wake up time</p>
-          <select
-            name="wakeUpTime"
-            id="wakeUpTime"
-            value={wakeUpTime}
-            onChange={(e) => setWakeUpTime(e.target.value)}
-          >
-            <option value="">--Select--</option>
-            {timeOpts.map((opt) => {
-              return <option value={opt}>{opt}</option>;
-            })}
-          </select>
-        </div>
+        <div className="container">
+          <div className="text-container">
+            <h1 className="header">Step 3:</h1>
+            <h1 className="subheader">Sleep cycle</h1>
+            <Progress value={50} className="progress-bar" />
+          </div>
+          <div className="wake-up">
+            <p className="title">Wake up time</p>
+            <select
+              name="wakeUpTime"
+              id="wakeUpTime"
+              value={wakeUpTime}
+              onChange={(e) => setWakeUpTime(e.target.value)}
+            >
+              <option value="">--Select--</option>
+              {timeOpts.map((opt) => {
+                return <option value={opt}>{opt}</option>;
+              })}
+            </select>
+          </div>
 
-        <div className="bed-time">
-          <p className="title">Bed time</p>
-          <select
-            name="bedTime"
-            id="bedTime"
-            value={bedTime}
-            onChange={(e) => setBedTime(e.target.value)}
-          >
-            <option value="">--Select--</option>
-            {sleepTimeOpts.map((opt) => {
-              return <option value={opt}>{opt}</option>;
-            })}
-          </select>
-        </div>
+          <div className="bed-time">
+            <p className="title">Bed time</p>
+            <select
+              name="bedTime"
+              id="bedTime"
+              value={bedTime}
+              onChange={(e) => setBedTime(e.target.value)}
+            >
+              <option value="">--Select--</option>
+              {sleepTimeOpts.map((opt) => {
+                return <option value={opt}>{opt}</option>;
+              })}
+            </select>
+          </div>
 
-        <button
-          className="button"
-          onClick={submit}
-          disabled={!wakeUpTime || !bedTime}
-        >
-          Next
-        </button>
+          <button
+            className="button"
+            onClick={submit}
+            disabled={!wakeUpTime || !bedTime}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );

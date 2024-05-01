@@ -117,7 +117,7 @@
 
 .new-timebox .wrapper .right .time-scroll {
   width: 40vw;
-  height: 50vh;
+  height: 70vh;
 }
 
 .new-timebox .wrapper .right ul {
@@ -130,7 +130,7 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: 8px;
+  padding: 4px;
 }
 
 .new-timebox .slides .slide-2 .desc {

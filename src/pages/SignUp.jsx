@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SignUp.css";
 
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -112,7 +112,7 @@ const SixMonthlyWorkflow = ({ user, nextSlide }) => {
     <motion.div>
       <div className="page first six-monthly-goals workflow">
         <h1 className="header">Step 1:</h1>
-        <h1 className="subheader">Set your goals for the next few months</h1>
+        <h1 className="subheader">Set your goals for the next 6 months</h1>
         <Progress value={16} className="progress-bar" />
         <div className="layout">
           <div className="button-row">
